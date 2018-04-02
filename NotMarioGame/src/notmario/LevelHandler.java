@@ -15,13 +15,16 @@ public class LevelHandler {
 		
 		currentLevel = 0;
 		platformIndex = 0;
-		createMenu();
+		createMenu();     //create all levels and save them in levelCollection
 		createLevel1();
 		createLevel2();
 		createLevel3();
 		
 	}
 	
+	/**
+	 * This method draws each rectangle in the current row
+	 */
 	public void draw() {
 		
 		for(platformIndex = 0; platformIndex <= levelCollection[currentLevel].length; platformIndex++) {
@@ -29,6 +32,10 @@ public class LevelHandler {
 		}
 	}
 	
+	/**
+	 * this method moves each rectangle in the current row
+	 * @param direction
+	 */
 	public void move(int direction) {
 		
 		for(platformIndex = 0; platformIndex <= levelCollection[currentLevel].length; platformIndex++) {
@@ -36,6 +43,10 @@ public class LevelHandler {
 		}
 	}
 	
+	/**
+	 * this method changes the current level by moving down one row in the array levelCollection
+	 * @param count
+	 */
 	public void setLevel(int count) {
 		currentLevel = count;
 	}

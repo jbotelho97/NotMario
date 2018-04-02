@@ -6,8 +6,8 @@ import processing.core.PApplet;
 public class MyWorld extends PApplet implements ApplicationConstants 
 {
 	private long frame_ = 0L;
-	Rectangle platform;
-	Character player1_;
+	//Rectangle platform;
+	//Character player1_;
 	LevelHandler myGame;
 	
 	private int currentLevel = 0;
