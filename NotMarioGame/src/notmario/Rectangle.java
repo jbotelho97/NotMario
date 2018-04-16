@@ -7,7 +7,7 @@ public class Rectangle {
 	private static PApplet app_; 
 	private static int appSetCounter_ = 0;
 
-	private float x_, y_, vx_, w_, h_, r, b, g;
+	private float x_, y_, playerSpeedX_, w_, h_, r, b, g;
 	
 	/**
 	 * Builds the rectangle by setting its status variables
@@ -24,6 +24,7 @@ public class Rectangle {
 		r = red;
 		b = blue;
 		g = green;
+		playerSpeedX_ = 0.01f;
 	}
 	
 	/**
@@ -53,7 +54,7 @@ public class Rectangle {
 	}
 	
 	public void move(int direction) {
-		x_ += (vx_*direction);
+		x_ += (playerSpeedX_*direction);
 	}
 
 	/**

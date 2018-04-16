@@ -7,7 +7,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 {
 	private long frame_ = 0L;
 	//Rectangle platform;
-	//Character player1_;
+	Character player1_;
 	LevelHandler myGame;
 	
 	private int currentLevel = 0;
@@ -32,7 +32,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 
 //		platform = new Rectangle(-30, -25, 60, 5, 255, 255, 255);
 //
-//		player1_ = new Character(-25, 25, 1, 255, 255, 255);
+		player1_ = new Character(0, 0, 1, 255, 0, 0);
 
 		setupGraphicClasses_(); // passes a reference of this app window to all graphical classes as a static variable
 	}
@@ -56,11 +56,12 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			myGame.draw();
 
 //			platform.draw();
-//			player1_.draw();
+			player1_.draw();
 		}
 
 		if(animate_) {
 //			player1_.animate(dir1_, move_);
+			myGame.move((int)dir1_, move_);
 		}
 	}
 
@@ -111,7 +112,8 @@ public class MyWorld extends PApplet implements ApplicationConstants
 	
 	public void levelWin() {
 		animate_ = false;
-		myGame.setLevel(currentLevel+1);
+		currentLevel+=1;
+		myGame.setLevel(currentLevel);
 		animate_ = true;
 	}
 
