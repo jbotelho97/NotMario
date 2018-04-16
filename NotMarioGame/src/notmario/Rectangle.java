@@ -24,7 +24,7 @@ public class Rectangle {
 		r = red;
 		b = blue;
 		g = green;
-		playerSpeedX_ = 0.01f;
+		playerSpeedX_ = 0.1f;
 	}
 	
 	/**

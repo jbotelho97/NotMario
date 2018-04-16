@@ -12,7 +12,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 	
 	private int currentLevel = 0;
 	private boolean animate_ = true;
-	private boolean move_;
+	private boolean move_, aButton, dButton;
 	private float dir1_;
 
 	public void settings() {
@@ -69,18 +69,20 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		switch(key) {
 		//move left
 		case 'a':
-			dir1_ = -1;
+			dir1_ = 1;
 			move_ = true;
+			aButton = true;
 			break;
 			//move right
 		case 'd':
-			dir1_ = 1;
+			dir1_ = -1;
 			move_ = true;
+			dButton = true;
 			break;
 			//player 1 jump command
 		case 'w':
 //			player1_.jump();
-			move_ = true;
+//			move_ = true;
 			break;
 		}
 	}
@@ -90,12 +92,10 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		switch(key) {
 		//Causes all keys to stop movement (except jump)
 		case 'a':
-			dir1_ = 0;
-			move_ = false;
+			aButton = false;
 			break;
 		case 'd':
-			dir1_ = 0;
-			move_ = false;
+			dButton = false;
 			break;
 			//toggle the player's reference and attack boxes
 		case 't':
@@ -106,6 +106,12 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			animate_ = !animate_;
 			break;
 		}
+		
+		if(aButton || dButton)
+			move_ = true;
+		else
+			dir1_ = 0;
+			move_ = false;
 
 
 	}
