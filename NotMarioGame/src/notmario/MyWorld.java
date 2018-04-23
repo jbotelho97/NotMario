@@ -29,9 +29,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		frameRate(400);
 		
 		myGame = new LevelHandler();
-
-//		platform = new Rectangle(-30, -25, 60, 5, 255, 255, 255);
-//
+		
 		player1_ = new Character(0, 0, 1, 255, 0, 0);
 
 		setupGraphicClasses_(); // passes a reference of this app window to all graphical classes as a static variable
@@ -43,7 +41,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		//  Draw all objects
 		if (frame_ % 5 == 0) 
 		{
-			background(0);
+			background(255);
 
 			// define world reference frame:  
 			//    Origin at windows's center and 
@@ -60,8 +58,11 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		}
 
 		if(animate_) {
-//			player1_.animate(dir1_, move_);
+			player1_.animate();
 			myGame.move((int)dir1_, move_);
+			
+			if(myGame.isInside(player1_))
+				System.out.println("true");
 		}
 	}
 
@@ -81,7 +82,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			break;
 			//player 1 jump command
 		case 'w':
-//			player1_.jump();
+			player1_.jump();
 //			move_ = true;
 			break;
 		}

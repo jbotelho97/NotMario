@@ -76,14 +76,24 @@ public class Rectangle {
 
 	}
 
-	/** Tells whether the point whose coordinates are passed is inside this object
+	/** Tells whether the character is inside the platform
 	 * 
-	 * @param x  x coordinate of the point (in world coordinates)
-	 * @param y x coordinate of the point (in world coordinates)
+	 * @param Character 
 	 * @return true if (x, y) is inside this object
 	 */
-	public boolean isInside(float x, float y)
+	public boolean isInside(Character player)
 	{		
-		return ((x >= x_) && (x <= x_ + w_) && (y >= y_) && (y <= y_ + h_));
+		boolean result;
+		if((player.x_ >= x_) && (player.x_ <= x_ + w_) && (player.y_ >= y_) && (player.y_ - player.height/2<= y_ + h_)) {
+			player.land();
+			result = true;
+		}
+		else if((player.x_+player.width >= x_) && (player.x_ + player.width <= x_ + w_) && (player.y_ >= y_) && (player.y_ - player.height/2 <= y_ + h_)) {
+			player.land();
+			result = true;
+		}
+		else
+			result = false;
+		return result;
 	}
 }

@@ -1,5 +1,7 @@
 package notmario;
 
+import java.awt.Image;
+
 import processing.core.PApplet;
 
 public class Character implements ApplicationConstants 
@@ -11,9 +13,10 @@ public class Character implements ApplicationConstants
 		
 		private boolean ref_ = false;
 		private boolean airborne = false;
-		private float x_, y_, size_, angle_, vy_, width, height;
+		public float x_, y_, size_, angle_, vy_, width, height;
 		//color
 		private float r_, b_, g_;
+		private Image sprite;
 		
 		/**
 		 * Main constructor of a character. It is given a location, size and color while being
@@ -71,11 +74,17 @@ public class Character implements ApplicationConstants
 			
 			app_.rect(x_, y_, width, height);
 			
+			app_.fill(0);
+			app_.ellipse(x_, y_, 1, 1);
+			app_.ellipse(x_ + width, y_, 1, 1);
+			
 			app_.popMatrix();
 		}
 		
-		public void animate(float a, boolean move) {
 		
+		public void animate() {
+			if(airborne)
+				y_ += (vy_ += gravity);
 		}
 		
 		/**
@@ -90,7 +99,7 @@ public class Character implements ApplicationConstants
 		 */
 		public void jump() {
 			if(airborne == false) {
-				vy_ = 0.12f;
+				vy_ = 0.1f;
 				airborne = true;
 			}
 		}

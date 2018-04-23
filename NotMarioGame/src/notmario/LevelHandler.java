@@ -50,6 +50,19 @@ public class LevelHandler {
 	}
 	
 	/**
+	 * This method tests if the character has landed on any platforms.
+	 */
+	public boolean isInside(Character player) {
+		boolean result = false;
+		for(platformIndex = 0; platformIndex <= levelCollection[currentLevel].length; platformIndex++) {
+			if(levelCollection[currentLevel][platformIndex] == null)
+				break;
+			result = levelCollection[currentLevel][platformIndex].isInside(player);
+		}
+		return result;
+	}
+	
+	/**
 	 * this method changes the current level by moving down one row in the array levelCollection
 	 * @param count
 	 */
@@ -59,8 +72,8 @@ public class LevelHandler {
 	
 	public void createMenu() {
 		
-		levelCollection[0][0] = new Rectangle(0, 0, 25, 25, 255, 0, 0);
-		levelCollection[0][1] = new Rectangle(-25, 0, 25, 25, 255, 0, 0);
+		levelCollection[0][0] = new Rectangle(0, -30, 25, 25, 255, 0, 0);
+		levelCollection[0][1] = new Rectangle(-25, -30, 25, 25, 255, 0, 0);
 	}
 	
 	public void createLevel1() {
