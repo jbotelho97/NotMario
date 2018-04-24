@@ -9,8 +9,10 @@ package notmario;
 import processing.core.PApplet;
 
 import java.awt.Image;
-import javax.swing.ImageIcon;
+/*
+Delete if not used!
 import java.awt.Graphics;
+ */
 
 public abstract class Enemy {
 
@@ -26,7 +28,7 @@ public abstract class Enemy {
     height -> height of sprite
      */
     private float xcor, ycor, size, angle, velXLocal, velXWorld, width, height;
-    private boolean los; //If this instance is true this sees an enemy.
+    private boolean isLeft;
     private Image sprite; //The sprite of the enemy stored as an image.
     /*
     Necessary for initialization of Character and detects MyWorld
@@ -35,7 +37,7 @@ public abstract class Enemy {
     private static PApplet app_;
 
     //Initialized the enemy at a specific xcor, ycor and with the corresponding sprite.
-    public void init(float x_, float y_, int hits, float w, float h, ImageIcon img) {
+    public void init(float x_, float y_, int hits, float w, float h, Image img) {
         xcor = x_;
         ycor = y_;
         size = 1;
@@ -43,7 +45,19 @@ public abstract class Enemy {
         health = hits;
         width = w;
         height = h;
-        sprite = img.getImage();
+        sprite = img;
+        isLeft = true;
+    }
+
+    public void initNull(){
+        xcor = 0;
+        ycor = 0;
+        size = 0;
+        angle = 0;
+        health = 0;
+        width = 0;
+        height  = 0;
+        isLeft = true;
     }
 
     protected static int setup(PApplet theApp)
@@ -80,9 +94,17 @@ public abstract class Enemy {
     public float getHeight(){
         return height;
     }
-
+    public Image getSprite(){
+        return sprite;
+    }
 
 
     //Updates the enemies co-ordinates based on its movement pattern. Different for every enemy class.
     public abstract void move();
+
+    //Switches between animation stances
+    public abstract void animate();
+
+
+
 }
