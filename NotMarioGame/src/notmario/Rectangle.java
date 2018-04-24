@@ -7,7 +7,7 @@ public class Rectangle {
 	private static PApplet app_; 
 	private static int appSetCounter_ = 0;
 
-	private float x_, y_, vx_, w_, h_, r, b, g;
+	private float x_, y_, playerSpeedX_, w_, h_, r, b, g;
 	
 	/**
 	 * Builds the rectangle by setting its status variables
@@ -24,6 +24,7 @@ public class Rectangle {
 		r = red;
 		b = blue;
 		g = green;
+		playerSpeedX_ = 0.1f;
 	}
 	
 	/**
@@ -53,7 +54,7 @@ public class Rectangle {
 	}
 	
 	public void move(int direction) {
-		x_ += (vx_*direction);
+		x_ += (playerSpeedX_*direction);
 	}
 
 	/**
@@ -75,14 +76,24 @@ public class Rectangle {
 
 	}
 
-	/** Tells whether the point whose coordinates are passed is inside this object
+	/** Tells whether the character is inside the platform
 	 * 
-	 * @param x  x coordinate of the point (in world coordinates)
-	 * @param y x coordinate of the point (in world coordinates)
+	 * @param Character 
 	 * @return true if (x, y) is inside this object
 	 */
-	public boolean isInside(float x, float y)
+	public boolean isInside(Character player)
 	{		
-		return ((x >= x_) && (x <= x_ + w_) && (y >= y_) && (y <= y_ + h_));
+		boolean result;
+		if((player.x_ >= x_) && (player.x_ <= x_ + w_) && (player.y_ >= y_) && (player.y_ - player.height/2<= y_ + h_)) {
+			player.land();
+			result = true;
+		}
+		else if((player.x_+player.width >= x_) && (player.x_ + player.width <= x_ + w_) && (player.y_ >= y_) && (player.y_ - player.height/2 <= y_ + h_)) {
+			player.land();
+			result = true;
+		}
+		else
+			result = false;
+		return result;
 	}
 }

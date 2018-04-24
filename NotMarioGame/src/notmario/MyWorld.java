@@ -7,12 +7,12 @@ public class MyWorld extends PApplet implements ApplicationConstants
 {
 	private long frame_ = 0L;
 	//Rectangle platform;
-	//Character player1_;
+	Character player1_;
 	LevelHandler myGame;
 	
 	private int currentLevel = 0;
 	private boolean animate_ = true;
-	private boolean move_;
+	private boolean move_, aButton, dButton;
 	private float dir1_;
 
 	public void settings() {
@@ -29,10 +29,8 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		frameRate(400);
 		
 		myGame = new LevelHandler();
-
-//		platform = new Rectangle(-30, -25, 60, 5, 255, 255, 255);
-//
-//		player1_ = new Character(-25, 25, 1, 255, 255, 255);
+		
+		player1_ = new Character(0, 0, 1, 255, 0, 0);
 
 		setupGraphicClasses_(); // passes a reference of this app window to all graphical classes as a static variable
 	}
@@ -43,7 +41,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		//  Draw all objects
 		if (frame_ % 5 == 0) 
 		{
-			background(0);
+			background(255);
 
 			// define world reference frame:  
 			//    Origin at windows's center and 
@@ -56,11 +54,15 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			myGame.draw();
 
 //			platform.draw();
-//			player1_.draw();
+			player1_.draw();
 		}
 
 		if(animate_) {
-//			player1_.animate(dir1_, move_);
+			player1_.animate();
+			myGame.move((int)dir1_, move_);
+			
+			if(myGame.isInside(player1_))
+				System.out.println("true");
 		}
 	}
 
@@ -68,18 +70,20 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		switch(key) {
 		//move left
 		case 'a':
-			dir1_ = -1;
+			dir1_ = 1;
 			move_ = true;
+			aButton = true;
 			break;
 			//move right
 		case 'd':
-			dir1_ = 1;
+			dir1_ = -1;
 			move_ = true;
+			dButton = true;
 			break;
 			//player 1 jump command
 		case 'w':
-//			player1_.jump();
-			move_ = true;
+			player1_.jump();
+//			move_ = true;
 			break;
 		}
 	}
@@ -89,12 +93,10 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		switch(key) {
 		//Causes all keys to stop movement (except jump)
 		case 'a':
-			dir1_ = 0;
-			move_ = false;
+			aButton = false;
 			break;
 		case 'd':
-			dir1_ = 0;
-			move_ = false;
+			dButton = false;
 			break;
 			//toggle the player's reference and attack boxes
 		case 't':
@@ -105,13 +107,20 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			animate_ = !animate_;
 			break;
 		}
+		
+		if(aButton || dButton)
+			move_ = true;
+		else
+			dir1_ = 0;
+			move_ = false;
 
 
 	}
 	
 	public void levelWin() {
 		animate_ = false;
-		myGame.setLevel(currentLevel+1);
+		currentLevel+=1;
+		myGame.setLevel(currentLevel);
 		animate_ = true;
 	}
 
