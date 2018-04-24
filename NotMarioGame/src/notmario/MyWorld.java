@@ -80,7 +80,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			}
 
 			if (enemies[j].getHealth() > 0) {
-				newEnemies[i] = enemies[i];
+				newEnemies[i] = enemies[j];
 				i++;
 			}
 		}
