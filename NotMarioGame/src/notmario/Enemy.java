@@ -12,28 +12,40 @@ import java.awt.Graphics;
 
 public abstract class Enemy {
 
-    private int xcor, ycor, health; //x-coordinate of center, y-coordinate of center, health remaining
-    private boolean los; //If this instance sees an enemy.
+    private int health; //health or hits remaining
+    /*
+    xcor -> x-coordinate
+    ycor -> y-coordinate
+    size -> size of enemy
+    angle -> delete if we don't use rolling
+    velXLocal -> velocity relative to the ground
+    velXWorld -> cancels out scrolling
+    width -> width of sprite
+    height -> height of sprite
+     */
+    private float xcor, ycor, size, angle, velXLocal, velXWorld, width, height;
+    private boolean los; //If this instance is true this sees an enemy.
     private Image sprite; //The sprite of the enemy stored as an image.
 
-    //True if the player character is within the enemies line-of-sight
-    abstract boolean detect();
-
     //Initialized the enemy at a specific xcor, ycor and with the corresponding sprite.
-    public void init(int x, int y, ImageIcon img){
-        xcor = x;
-        ycor = y;
+    public void init(float x_, float y_, int hits, float w, float h, ImageIcon img) {
+        xcor = x_;
+        ycor = y_;
+        size = 1;
+        angle = 0;
+        health = hits;
+        width = w;
+        height = h;
         sprite = img.getImage();
     }
 
-    //Updates the enemies co-ordinates based on its movement pattern.
-    public void updateCoor(int x, int y){
-        xcor = x;
-        ycor = y;
+    public int getHealth() {
+        return health;
     }
 
-    //Change when I have time to understand PApplet graphics
-    public void paintComponent(Graphics g){
-        g.drawImage(sprite, xcor, ycor, null);
+    //Updates the enemies co-ordinates based on its movement pattern.
+    public void updateCoor(int x, int y) {
+        xcor = x;
+        ycor = y;
     }
 }
