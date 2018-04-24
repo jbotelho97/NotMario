@@ -38,14 +38,13 @@ public abstract class Enemy {
         height = h;
         sprite = img.getImage();
     }
-
+    //Method returns the current health.
     public int getHealth() {
         return health;
     }
 
     //Updates the enemies co-ordinates based on its movement pattern.
-    public void updateCoor(int x, int y) {
-        xcor = x;
-        ycor = y;
+    public void move(){
+
     }
 }
