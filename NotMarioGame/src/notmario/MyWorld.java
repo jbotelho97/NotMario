@@ -65,7 +65,9 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		if(animate_) {
 			player1_.animate();
 			myGame.move((int)dir1_, move_);
-			
+
+
+
 			if(myGame.isInside(player1_))
 				System.out.println("true");
 		}
@@ -161,6 +163,11 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			System.exit(-1);;
 		}
 		if (LevelHandler.setup(this) != 1)
+		{
+			println("A graphic classe\'s setup() method was called illegally before this class");
+			System.exit(-1);;
+		}
+		if (Enemy.setup(this) != 1)
 		{
 			println("A graphic classe\'s setup() method was called illegally before this class");
 			System.exit(-1);;

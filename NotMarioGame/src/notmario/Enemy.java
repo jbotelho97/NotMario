@@ -6,6 +6,8 @@ This uses the Template Method Pattern
  */
 
 package notmario;
+import processing.core.PApplet;
+
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import java.awt.Graphics;
@@ -26,6 +28,11 @@ public abstract class Enemy {
     private float xcor, ycor, size, angle, velXLocal, velXWorld, width, height;
     private boolean los; //If this instance is true this sees an enemy.
     private Image sprite; //The sprite of the enemy stored as an image.
+    /*
+    Necessary for initialization of Character and detects MyWorld
+     */
+    private static int appSetCounter_ = 0;
+    private static PApplet app_;
 
     //Initialized the enemy at a specific xcor, ycor and with the corresponding sprite.
     public void init(float x_, float y_, int hits, float w, float h, ImageIcon img) {
@@ -38,13 +45,44 @@ public abstract class Enemy {
         height = h;
         sprite = img.getImage();
     }
+
+    protected static int setup(PApplet theApp)
+    {
+
+
+        if (appSetCounter_ == 0)
+        {
+            app_ = theApp;
+            appSetCounter_ = 1;
+        }
+        else
+            appSetCounter_ = 2;
+
+        return appSetCounter_;
+
+    }
+
     //Method returns the current health.
     public int getHealth() {
         return health;
     }
 
-    //Updates the enemies co-ordinates based on its movement pattern.
-    public void move(){
-
+    //Method to get co-ordinates. Returns x-cor and y-cor and width/height
+    public float getXcoor(){
+        return xcor;
     }
+    public float getYcoor(){
+        return ycor;
+    }
+    public float getWidth() {
+        return width;
+    }
+    public float getHeight(){
+        return height;
+    }
+
+
+
+    //Updates the enemies co-ordinates based on its movement pattern. Different for every enemy class.
+    public abstract void move();
 }
