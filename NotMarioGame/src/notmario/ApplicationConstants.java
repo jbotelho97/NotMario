@@ -21,7 +21,7 @@ public interface ApplicationConstants {
 
 	//  dimensions of my world
 	float WORLD_WIDTH = 100;
-	float WORLD_HEIGHT = 75;
+	float WORLD_HEIGHT = 80;
 
 	float XMAX = WORLD_WIDTH/2, XMIN = -WORLD_WIDTH/2;
 	float YMAX = WORLD_HEIGHT/2, YMIN = -WORLD_HEIGHT/2;
@@ -31,6 +31,7 @@ public interface ApplicationConstants {
 	//  WORLD GRAVITY
 	//====================================================
 	float gravity = -0.0005f;
+	
 	
 	
 	//  conversion factors
