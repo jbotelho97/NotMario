@@ -9,6 +9,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 	//Rectangle platform;
 	Character player1_;
 	LevelHandler myGame;
+	Enemy[] enemies;
 	
 	private int currentLevel = 0;
 	private boolean animate_ = true;
@@ -31,12 +32,16 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		myGame = new LevelHandler();
 		
 		player1_ = new Character(0, 0, 1, 255, 0, 0);
+		
+		enemies = new Enemy[20];
 
 		setupGraphicClasses_(); // passes a reference of this app window to all graphical classes as a static variable
 	}
 
 	public void draw() {
 		frame_++;
+		
+		cleanEnemies();
 
 		//  Draw all objects
 		if (frame_ % 5 == 0) 
@@ -66,6 +71,22 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		}
 	}
 
+	public void cleanEnemies() {
+		int i = 0;
+		Enemy[] newEnemies = new Enemy[enemies.length];
+		for (int j = 0; j < enemies.length; j++) {
+			if (enemies[j] == null) {
+				return;
+			}
+
+			if (enemies[j].getHealth() > 0) {
+				newEnemies[i] = enemies[j];
+				i++;
+			}
+		}
+		enemies = newEnemies;
+	}
+	
 	public void keyPressed() {
 		switch(key) {
 		//move left
