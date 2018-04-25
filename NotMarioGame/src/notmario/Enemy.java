@@ -24,11 +24,13 @@ public abstract class Enemy {
     angle -> delete if we don't use rolling
     velXLocal -> velocity relative to the ground
     velXWorld -> cancels out scrolling
+    velYLocal -> vertical velocity relative to the ground
+    velYWorld -> cancels out screen movement
     width -> width of sprite
     height -> height of sprite
      */
-    private float xcor, ycor, size, angle, velXLocal, velXWorld, width, height;
-    private boolean isLeft;
+    private float xcor, ycor, size, angle, velXLocal, velXWorld, width, height, velYLocal, velYWorld;
+    private boolean isLeft, airborne; //Checks if the enemy is facing left. Airbone checks if instance is airborne.
     private Image sprite; //The sprite of the enemy stored as an image.
     /*
     Necessary for initialization of Character and detects MyWorld
@@ -62,8 +64,6 @@ public abstract class Enemy {
 
     protected static int setup(PApplet theApp)
     {
-
-
         if (appSetCounter_ == 0)
         {
             app_ = theApp;
@@ -73,7 +73,6 @@ public abstract class Enemy {
             appSetCounter_ = 2;
 
         return appSetCounter_;
-
     }
 
     //Method returns the current health.
@@ -98,13 +97,22 @@ public abstract class Enemy {
         return sprite;
     }
 
+    //Methods to change speed / direction
+    public void setVelXL(float a){velXLocal = a;}
+    public void setVelXG(float a){velXWorld = a;}
+    public void setVelYL(float a){velYLocal = a;}
+    public void setVelYG(float a){velYWorld = a;}
+
+    //Methods to set or change xcor and ycor
+    public void setXcor(float a){xcor = a;}
+    public void setYcor(float a){ycor = a;}
+
+    //Methods to set/change health remaining
+    public void setHealth(int a){health = a;}
 
     //Updates the enemies co-ordinates based on its movement pattern. Different for every enemy class.
-    public abstract void move();
+    public abstract void moveCycle();
 
     //Switches between animation stances
     public abstract void animate();
-
-
-
 }
