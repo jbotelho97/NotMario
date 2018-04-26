@@ -2,6 +2,9 @@ package notmario;
 
 
 import processing.core.PApplet;
+import processing.core.PFont;
+
+import java.awt.font.*;
 
 public class MyWorld extends PApplet implements ApplicationConstants 
 {
@@ -10,8 +13,10 @@ public class MyWorld extends PApplet implements ApplicationConstants
 	Character player1_;
 	LevelHandler myGame;
 	Enemy[] enemies;
-	
-	private int currentLevel = 0;
+    PFont f;
+
+
+    private int currentLevel = 0;
 	private boolean animate_ = true;
 	private boolean move_, aButton, dButton;
 	private float dir1_;
@@ -38,6 +43,8 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		enemies[0] = new Spud(10,-5.0f);
 		//enemies[1] = new Spudzilla(-10,2.50f);
 
+        f = createFont("Arial",16,false); // Arial, 16 point, anti-aliasing off for right now
+
 		setupGraphicClasses_(); // passes a reference of this app window to all graphical classes as a static variable
 	}
 
@@ -58,16 +65,19 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			translate(WORLD_ORIGIN_X, WORLD_ORIGIN_Y); 
 			scale(WORLD_TO_PIXEL, -WORLD_TO_PIXEL);
 			stroke(0);
-			
+
+
+
 			myGame.draw();
 
 //			platform.draw();
 			player1_.draw();
 			//TESTING ENEMIES - Jack
 			enemies[0].draw();
+            drawHealth(player1_.health); //Temporary Health Bar -Jack
 			//enemies[1].draw();
             point(0,0);
-            point(enemies[0].getXcoor(),enemies[0].getYcoor());
+            point(10,0);
 		}
 
 		if(animate_) {
@@ -77,7 +87,18 @@ public class MyWorld extends PApplet implements ApplicationConstants
             point(enemies[0].getXcoor(),enemies[0].getYcoor());
 			//enemies[1].passiveMove((int)dir1_, move_);
             myGame.isInside(player1_);
-            enemies[0].collision(player1_);
+            int x = enemies[0].collision(player1_);
+            switch(x){
+                case 1: //Player hits an enemy on the head
+                    player1_.jump();
+                    break;
+                case 0: //Player hits nothing
+                    break;
+                case -1: //Player collides with an enemy.
+                    player1_.takeHit(enemies[0]);
+                    myGame.move(75, true);
+                    enemies[0].passiveMove(75, true);
+            }
 
 
 
@@ -86,6 +107,16 @@ public class MyWorld extends PApplet implements ApplicationConstants
 				//System.out.println("true");
 		}
 	}
+
+	public void drawHealth(int h){
+	    textFont(f,2);
+	    fill(0);
+	    scale(1,-1);
+	    textAlign(LEFT);
+	    String s = "Player Health : " + h;
+	    text(s, -50, 35);
+
+    }
 
 	public void cleanEnemies() {
 		int i = 0;

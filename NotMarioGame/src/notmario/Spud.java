@@ -14,7 +14,7 @@ public class Spud extends Enemy {
 
     //Standard initialization of a new spud.
     public Spud(float x, float y){
-        super.init(x, y, 1, 5,5, spudIcon);
+        super.init(x, y, 1, 5,5, 25, spudIcon);
         xspeed = 1.0f;
     }
 

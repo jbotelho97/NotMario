@@ -34,6 +34,7 @@ public abstract class Enemy implements ApplicationConstants {
     public float angle; //temp
     private boolean isLeft, airborne, isMoving; //Checks if the enemy is facing left. Airbone checks if instance is airborne, isMoving is true if it is moving.
     private Image sprite; //The sprite of the enemy stored as an image.
+    private int damage;
     /*
     Necessary for initialization of Character and detects MyWorld
      */
@@ -41,7 +42,7 @@ public abstract class Enemy implements ApplicationConstants {
     private static PApplet app_;
 
     //Initialized the enemy at a specific xcor, ycor and with the corresponding sprite.
-    public void init(float x_, float y_, int hits, float w, float h, Image img) {
+    public void init(float x_, float y_, int hits, float w, float h, int d, Image img) {
         xcor = x_;
         ycor = y_;
         size = 1;
@@ -50,6 +51,7 @@ public abstract class Enemy implements ApplicationConstants {
         width = w;
         height = h;
         sprite = img;
+        damage = d;
         isLeft = true;
         playerSpeedX = 0.1f;
 
@@ -103,6 +105,7 @@ public abstract class Enemy implements ApplicationConstants {
         return sprite;
     }
     public boolean getMove(){return isMoving;}
+    public int getDamage(){return damage;}
 
     //Methods to change speed / direction
     public void setVelXL(float a){velXLocal = a;}
@@ -157,13 +160,14 @@ public abstract class Enemy implements ApplicationConstants {
     public int collision(Character p){
 
         boolean result;
-        if((p.x_ + p.width /4 >= xcor) && (p.x_ - p.width/4 <= xcor + width) && (p.y_  - p.height/2 >= ycor - 0.1f) && (p.y_ - p.height/2 <= ycor + 0.1f)){
-            System.out.println("Hit successful.");
+        if((p.x_ + p.width /4 >= xcor) && (p.x_ - p.width/4 <= xcor + width) && (p.y_  - p.height/2 >= ycor + height - 0.1f) && (p.y_ - p.height/2 <= ycor + height + 0.1f)){
+            //System.out.println("Hit successful.");
             takeHit();
+            return 1;
         }
         else if((p.x_ + p.width/2 >= xcor) && (p.x_ - p.width/2 <= xcor + width) && (p.y_ - p.height/2 <= ycor) && (p.y_ - p.height/2 >= ycor - height)){
-            System.out.println("You got hit");
-            System.out.println("Px: " + p.x_ + " Py: " + p.y_ + " Sx: " + xcor + " Sy: " + ycor);
+            //System.out.println("You got hit");
+           // System.out.println("Px: " + p.x_ + " Py: " + p.y_ + " Sx: " + xcor + " Sy: " + ycor);
             return -1;
         }
         return 0;

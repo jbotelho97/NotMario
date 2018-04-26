@@ -16,6 +16,7 @@ public class Character implements ApplicationConstants
 		public float x_, y_, size_, angle_, vy_, width, height;
 		//color
 		private float r_, b_, g_;
+		public int health;
 		private Image sprite;
 		
 		/**
@@ -36,7 +37,7 @@ public class Character implements ApplicationConstants
 			size_ = size;
 			width = 5;
 			height = 10;
-			
+			health = 100;
 			r_ = r;
 			b_ = b;
 			g_ = g;
@@ -49,7 +50,6 @@ public class Character implements ApplicationConstants
 		
 		/**
 		 * draws all components of character onto the window. Passed a reference to the PApplet
-		 * @param theApp
 		 */
 		public void draw() {
 			
@@ -103,6 +103,7 @@ public class Character implements ApplicationConstants
 				airborne = true;
 			}
 		}
+
 		
 		/**
 		 * Sets the y velocity to zero
@@ -111,7 +112,16 @@ public class Character implements ApplicationConstants
 			vy_ = 0f;
 			airborne = false;
 		}
-	
+
+		//Takes a hit
+		public void takeHit(Enemy e){
+			health -= e.getDamage();
+			if (health <= 0){
+				System.out.println("You died!");
+				System.exit(0);
+			}
+		}
+
 	/**
 	 * Passes a reference of the window to the player to use when drawing
 	 * @param theApp
