@@ -117,9 +117,13 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		//Causes all keys to stop movement (except jump)
 		case 'a':
 			aButton = false;
+			if(dButton)
+				dir1_ = -1;
 			break;
 		case 'd':
 			dButton = false;
+			if(aButton)
+				dir1_ = 1;
 			break;
 			//toggle the player's reference and attack boxes
 		case 't':
@@ -133,9 +137,10 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		
 		if(aButton || dButton)
 			move_ = true;
-		else
+		else {
 			dir1_ = 0;
 			move_ = false;
+		}
 
 
 	}
