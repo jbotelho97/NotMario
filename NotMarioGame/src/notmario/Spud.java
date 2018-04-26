@@ -10,11 +10,12 @@ import java.awt.Image;
 public class Spud extends Enemy {
 
     private Image spudIcon; //Spud's sprite
+    private int xspeed; //Spud's current speed/direction horizontally.
     private boolean isMoving; //Is true if spud is moving, false if spud is dead or not moving.
 
     //Standard initialization of a new spud.
     public Spud(float x, float y){
-        super.init(x, y, 1, 5,5, spudIcon);
+        super.init(x, y, 1, 4,4, spudIcon);
     }
 
     //For a null spud.
@@ -25,7 +26,7 @@ public class Spud extends Enemy {
     //Spud's unique move-cycle
     public void moveCycle(){
         isMoving = true;
-        setVelXL(1);
+        setVelXL(xspeed);
     }
 
     public void animate(){}

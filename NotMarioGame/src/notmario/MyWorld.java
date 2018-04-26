@@ -35,6 +35,8 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		
 		enemies = new Enemy[20];
 
+		enemies[0] = new Spud(10,-1.5f);
+
 		setupGraphicClasses_(); // passes a reference of this app window to all graphical classes as a static variable
 	}
 
@@ -60,6 +62,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 
 //			platform.draw();
 			player1_.draw();
+			enemies[0].draw();
 		}
 
 		if(animate_) {
@@ -68,8 +71,8 @@ public class MyWorld extends PApplet implements ApplicationConstants
 
 
 
-			if(myGame.isInside(player1_))
-				System.out.println("true");
+			if(myGame.isInside(player1_));
+				//System.out.println("true");
 		}
 	}
 
@@ -155,22 +158,22 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		if (Rectangle.setup(this) != 1)
 		{
 			println("A graphic classe\'s setup() method was called illegally before this class");
-			System.exit(-1);;
+			System.exit(-1);
 		}
 		if (Character.setup(this) != 1)
 		{
 			println("A graphic classe\'s setup() method was called illegally before this class");
-			System.exit(-1);;
+			System.exit(-1);
 		}
 		if (LevelHandler.setup(this) != 1)
 		{
 			println("A graphic classe\'s setup() method was called illegally before this class");
-			System.exit(-1);;
+			System.exit(-1);
 		}
 		if (Enemy.setup(this) != 1)
 		{
 			println("A graphic classe\'s setup() method was called illegally before this class");
-			System.exit(-1);;
+			System.exit(-1);
 		}
 	}
 

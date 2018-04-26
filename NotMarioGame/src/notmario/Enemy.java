@@ -14,7 +14,7 @@ Delete if not used!
 import java.awt.Graphics;
  */
 
-public abstract class Enemy {
+public abstract class Enemy implements ApplicationConstants {
 
     private int health; //health or hits remaining
     /*
@@ -29,7 +29,8 @@ public abstract class Enemy {
     width -> width of sprite
     height -> height of sprite
      */
-    private float xcor, ycor, size, angle, velXLocal, velXWorld, width, height, velYLocal, velYWorld;
+    private float xcor, ycor, size, velXLocal, velXWorld, width, height, velYLocal, velYWorld;
+    public float angle; //temp
     private boolean isLeft, airborne; //Checks if the enemy is facing left. Airbone checks if instance is airborne.
     private Image sprite; //The sprite of the enemy stored as an image.
     /*
@@ -109,6 +110,57 @@ public abstract class Enemy {
 
     //Methods to set/change health remaining
     public void setHealth(int a){health = a;}
+
+    //Method to land enemy based off character.land()
+    public void land(){
+        velYLocal = 0.0f;
+        airborne = false;
+    }
+
+    //Allows enemy to fall
+    public void fall(){
+        if(airborne){
+            ycor += (velYLocal += gravity);
+        }
+    }
+    /*
+    Draws enemy sprite.
+    NOTE: Right now I have a temp method that will show the same box depending on enemy type.
+    Will change later -Jack
+     */
+    public void draw(){
+        // we use this object's instance variable to access the application's instance methods and variables
+        app_.pushMatrix();
+
+        //move to correct location, size, and orientation on the window
+        app_.translate(xcor-width/2, ycor-height/2);
+        app_.rotate(angle);
+        app_.scale(size);
+
+//			//to see reference frames and attack boxes
+//			if(ref_) {
+//				app_.noFill();
+//				app_.stroke(255, 0, 0);
+//				app_.rect(REFERENCE_BOX_OFFSET_X, REFERENCE_BOX_OFFSET_Y, REFERENCE_BOX_W, REFERENCE_BOX_H);
+//
+//			}
+
+        app_.stroke(0);
+        app_.fill(0, 0, 255);
+
+        app_.rect(xcor, ycor, width, height);
+
+        app_.fill(0);
+        app_.ellipse(xcor, ycor, 1, 1);
+        app_.ellipse(xcor + width, ycor, 1, 1);
+
+        app_.popMatrix();
+    }
+
+    //Handles collision between character and enemy. This is a rough version
+    public boolean collision(Character p){
+        return false;
+    }
 
     //Updates the enemies co-ordinates based on its movement pattern. Different for every enemy class.
     public abstract void moveCycle();
