@@ -13,7 +13,7 @@ public class Spudzilla extends Enemy {
     private int xspeed; //Spudzilla's current speed/direction horizontally.
 
     public Spudzilla(float x, float y){
-        super.init(x, y, 1, 10,20, 75, spudIcon);
+        super.init(x, y, 2, 10,20, 75, spudIcon);
     }
 
     //For a null spud.

@@ -40,7 +40,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		
 		enemies = new Enemy[20];
 
-		enemies[0] = new Spud(10,-5.0f);
+		enemies[0] = new Spud(10,-5.0f);//Test Spud
 		//enemies[1] = new Spudzilla(-10,2.50f);
 
         f = createFont("Arial",16,false); // Arial, 16 point, anti-aliasing off for right now
