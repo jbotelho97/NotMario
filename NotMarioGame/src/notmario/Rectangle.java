@@ -97,7 +97,7 @@ public class Rectangle {
 		return result;
 	}
 
-	//Method for enemy collision. This is just tempoary until I find a better place to put it. -Jack
+	//Method for enemy collision. This is just temporary until I find a better place to put it. -Jack
 	public boolean enemyInside(Enemy e){
 		boolean result;
 		if((e.getXcoor() >= x_) && (e.getXcoor() <= x_ + w_) && (e.getYcoor() >= y_) && (e.getYcoor() - e.getHeight()/2<= y_ + h_)) {

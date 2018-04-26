@@ -28,10 +28,11 @@ public abstract class Enemy implements ApplicationConstants {
     velYWorld -> cancels out screen movement
     width -> width of sprite
     height -> height of sprite
+    playerSpeedX -> temp -Jack
      */
-    private float xcor, ycor, size, velXLocal, velXWorld, width, height, velYLocal, velYWorld;
+    private float xcor, ycor, size, velXLocal, velXWorld, width, height, velYLocal, velYWorld,playerSpeedX;
     public float angle; //temp
-    private boolean isLeft, airborne; //Checks if the enemy is facing left. Airbone checks if instance is airborne.
+    private boolean isLeft, airborne, isMoving; //Checks if the enemy is facing left. Airbone checks if instance is airborne, isMoving is true if it is moving.
     private Image sprite; //The sprite of the enemy stored as an image.
     /*
     Necessary for initialization of Character and detects MyWorld
@@ -50,6 +51,8 @@ public abstract class Enemy implements ApplicationConstants {
         height = h;
         sprite = img;
         isLeft = true;
+        playerSpeedX = 0.1f;
+
     }
 
     public void initNull(){
@@ -61,6 +64,8 @@ public abstract class Enemy implements ApplicationConstants {
         width = 0;
         height  = 0;
         isLeft = true;
+        playerSpeedX = 0.1f;
+        die();
     }
 
     protected static int setup(PApplet theApp)
@@ -97,6 +102,7 @@ public abstract class Enemy implements ApplicationConstants {
     public Image getSprite(){
         return sprite;
     }
+    public boolean getMove(){return isMoving;}
 
     //Methods to change speed / direction
     public void setVelXL(float a){velXLocal = a;}
@@ -107,6 +113,7 @@ public abstract class Enemy implements ApplicationConstants {
     //Methods to set or change xcor and ycor
     public void setXcor(float a){xcor = a;}
     public void setYcor(float a){ycor = a;}
+    public void setMove(boolean a){isMoving = a;}
 
     //Methods to set/change health remaining
     public void setHealth(int a){health = a;}
@@ -129,39 +136,57 @@ public abstract class Enemy implements ApplicationConstants {
     Will change later -Jack
      */
     public void draw(){
-        // we use this object's instance variable to access the application's instance methods and variables
         app_.pushMatrix();
-
-        //move to correct location, size, and orientation on the window
-        app_.translate(xcor-width/2, ycor-height/2);
-        app_.rotate(angle);
-        app_.scale(size);
-
-//			//to see reference frames and attack boxes
-//			if(ref_) {
-//				app_.noFill();
-//				app_.stroke(255, 0, 0);
-//				app_.rect(REFERENCE_BOX_OFFSET_X, REFERENCE_BOX_OFFSET_Y, REFERENCE_BOX_W, REFERENCE_BOX_H);
-//
-//			}
 
         app_.stroke(0);
         app_.fill(0, 0, 255);
 
         app_.rect(xcor, ycor, width, height);
 
-        app_.fill(0);
-        app_.ellipse(xcor, ycor, 1, 1);
-        app_.ellipse(xcor + width, ycor, 1, 1);
-
         app_.popMatrix();
     }
 
-    //Handles collision between character and enemy. This is a rough version
-    public boolean collision(Character p){
-        return false;
+    //Passive move
+    public void passiveMove(int direction, boolean isMove){
+        if(isMove){
+            xcor += (playerSpeedX * direction);
+        }
     }
 
+    //Handles collision between character and enemy. This is a rough version
+    public int collision(Character p){
+
+        boolean result;
+        if((p.x_ + p.width /4 >= xcor) && (p.x_ - p.width/4 <= xcor + width) && (p.y_  - p.height/2 >= ycor - 0.1f) && (p.y_ - p.height/2 <= ycor + 0.1f)){
+            System.out.println("Hit successful.");
+            takeHit();
+        }
+        else if((p.x_ + p.width/2 >= xcor) && (p.x_ - p.width/2 <= xcor + width) && (p.y_ - p.height/2 <= ycor) && (p.y_ - p.height/2 >= ycor - height)){
+            System.out.println("You got hit");
+            System.out.println("Px: " + p.x_ + " Py: " + p.y_ + " Sx: " + xcor + " Sy: " + ycor);
+            return -1;
+        }
+        return 0;
+    }
+
+    //Damages the enemy
+    public void takeHit(){
+        if(health > 1){
+            health--;
+        }
+        else if(health == 1){
+            health--;
+            die();
+        }
+        else
+            die();
+    }
+
+    //Kills the enemy
+    public void die(){
+        xcor = -201;
+        ycor = -201;
+    }
     //Updates the enemies co-ordinates based on its movement pattern. Different for every enemy class.
     public abstract void moveCycle();
 

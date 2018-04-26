@@ -35,7 +35,8 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		
 		enemies = new Enemy[20];
 
-		enemies[0] = new Spud(10,-1.5f);
+		enemies[0] = new Spud(10,-5.0f);
+		//enemies[1] = new Spudzilla(-10,2.50f);
 
 		setupGraphicClasses_(); // passes a reference of this app window to all graphical classes as a static variable
 	}
@@ -62,16 +63,26 @@ public class MyWorld extends PApplet implements ApplicationConstants
 
 //			platform.draw();
 			player1_.draw();
+			//TESTING ENEMIES - Jack
 			enemies[0].draw();
+			//enemies[1].draw();
+            point(0,0);
+            point(enemies[0].getXcoor(),enemies[0].getYcoor());
 		}
 
 		if(animate_) {
 			player1_.animate();
 			myGame.move((int)dir1_, move_);
+			enemies[0].passiveMove((int)dir1_, move_);
+            point(enemies[0].getXcoor(),enemies[0].getYcoor());
+			//enemies[1].passiveMove((int)dir1_, move_);
+            myGame.isInside(player1_);
+            enemies[0].collision(player1_);
 
 
 
-			if(myGame.isInside(player1_));
+			//if(myGame.isInside(player1_));
+
 				//System.out.println("true");
 		}
 	}

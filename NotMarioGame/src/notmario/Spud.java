@@ -5,17 +5,17 @@ If he hits a wall he turns around.
  */
 package notmario;
 import processing.core.PApplet;
-
 import java.awt.Image;
+
 public class Spud extends Enemy {
 
     private Image spudIcon; //Spud's sprite
-    private int xspeed; //Spud's current speed/direction horizontally.
-    private boolean isMoving; //Is true if spud is moving, false if spud is dead or not moving.
+    private float xspeed; //Spud's current speed/direction horizontally.
 
     //Standard initialization of a new spud.
     public Spud(float x, float y){
-        super.init(x, y, 1, 4,4, spudIcon);
+        super.init(x, y, 1, 5,5, spudIcon);
+        xspeed = 1.0f;
     }
 
     //For a null spud.
@@ -25,7 +25,7 @@ public class Spud extends Enemy {
 
     //Spud's unique move-cycle
     public void moveCycle(){
-        isMoving = true;
+        setMove(true);
         setVelXL(xspeed);
     }
 
