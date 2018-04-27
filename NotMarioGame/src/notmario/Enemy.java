@@ -32,7 +32,7 @@ public abstract class Enemy implements ApplicationConstants {
      */
     private float xcor, ycor, size, velXLocal, velXWorld, width, height, velYLocal, velYWorld,playerSpeedX;
     public float angle; //temp
-    private boolean isLeft, airborne, isMoving; //Checks if the enemy is facing left. Airbone checks if instance is airborne, isMoving is true if it is moving.
+    public boolean isLeft, airborne, isMoving; //Checks if the enemy is facing left. Airbone checks if instance is airborne, isMoving is true if it is moving.
     private Image sprite; //The sprite of the enemy stored as an image.
     private int damage;
     /*
@@ -54,6 +54,7 @@ public abstract class Enemy implements ApplicationConstants {
         damage = d;
         isLeft = true;
         playerSpeedX = 0.1f;
+        airborne = false;
 
     }
 
@@ -66,6 +67,7 @@ public abstract class Enemy implements ApplicationConstants {
         width = 0;
         height  = 0;
         isLeft = true;
+        airborne = false;
         playerSpeedX = 0.1f;
         die();
     }
@@ -118,6 +120,9 @@ public abstract class Enemy implements ApplicationConstants {
     public void setYcor(float a){ycor = a;}
     public void setMove(boolean a){isMoving = a;}
 
+    //Method to set speed
+    public void setSpeed(float a){xcor += a;}
+
     //Methods to set/change health remaining
     public void setHealth(int a){health = a;}
 
@@ -158,8 +163,6 @@ public abstract class Enemy implements ApplicationConstants {
 
     //Handles collision between character and enemy. This is a rough version
     public int collision(Character p){
-
-        boolean result;
         if((p.x_ + p.width /4 >= xcor) && (p.x_ - p.width/4 <= xcor + width) && (p.y_  - p.height/2 >= ycor + height - 0.1f) && (p.y_ - p.height/2 <= ycor + height + 0.1f)){
             //System.out.println("Hit successful.");
             takeHit();
@@ -178,12 +181,10 @@ public abstract class Enemy implements ApplicationConstants {
         if(health > 1){
             health--;
         }
-        else if(health == 1){
-            health--;
+        else {
+            health = 0;
             die();
         }
-        else
-            die();
     }
 
     //Kills the enemy
@@ -191,9 +192,10 @@ public abstract class Enemy implements ApplicationConstants {
         xcor = -201;
         ycor = -201;
     }
+
     //Updates the enemies co-ordinates based on its movement pattern. Different for every enemy class.
-    public abstract void moveCycle();
+    public abstract void moveCycle(LevelHandler h);
 
     //Switches between animation stances
-    public abstract void animate();
+   // public void animate();
 }

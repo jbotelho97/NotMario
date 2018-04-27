@@ -15,7 +15,8 @@ public class Spud extends Enemy {
     //Standard initialization of a new spud.
     public Spud(float x, float y){
         super.init(x, y, 1, 5,5, 25, spudIcon);
-        xspeed = 1.0f;
+        xspeed = -.060f;
+        //xspeed = -10;
     }
 
     //For a null spud.
@@ -24,10 +25,18 @@ public class Spud extends Enemy {
     }
 
     //Spud's unique move-cycle
-    public void moveCycle(){
-        setMove(true);
-        setVelXL(xspeed);
+    public void moveCycle(LevelHandler h){
+        if(isLeft){
+            setSpeed(xspeed);
+            airborne = h.enemyInside(this);
+        }
+        else {
+            setSpeed(-1 * xspeed);
+            airborne = h.enemyInside(this);
+        }
+        if(airborne){
+            fall();
+        }
     }
 
-    public void animate(){}
 }

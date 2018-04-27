@@ -61,6 +61,18 @@ public class LevelHandler {
 		}
 		return result;
 	}
+
+	public boolean enemyInside(Enemy e) {
+		for(platformIndex = 0; platformIndex <= levelCollection[currentLevel].length; platformIndex++) {
+			if(levelCollection[currentLevel][platformIndex] == null)
+				break;
+			levelCollection[currentLevel][platformIndex].enemyInside(e);
+			if (levelCollection[currentLevel][platformIndex].enemyInside(e) == false){
+				return false;
+			}
+		}
+		return true;
+	}
 	
 	/**
 	 * this method changes the current level by moving down one row in the array levelCollection

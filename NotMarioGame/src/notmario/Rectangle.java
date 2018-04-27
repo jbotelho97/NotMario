@@ -76,11 +76,7 @@ public class Rectangle {
 
 	}
 
-	/** Tells whether the character is inside the platform
-	 * 
-	 * @param Character 
-	 * @return true if (x, y) is inside this object
-	 */
+ 	//Tells whether player char is in rectangle
 	public boolean isInside(Character player)
 	{		
 		boolean result;
@@ -88,7 +84,7 @@ public class Rectangle {
 			player.land();
 			result = true;
 		}
-		else if((player.x_+player.width >= x_) && (player.x_ + player.width <= x_ + w_) && (player.y_ >= y_) && (player.y_ - player.height/2 <= y_ + h_)) {
+		else if((player.x_ +player.width >= x_) && (player.x_ + player.width <= x_ + w_) && (player.y_ >= y_) && (player.y_ - player.height/2 <= y_ + h_)) {
 			player.land();
 			result = true;
 		}
@@ -99,17 +95,15 @@ public class Rectangle {
 
 	//Method for enemy collision. This is just temporary until I find a better place to put it. -Jack
 	public boolean enemyInside(Enemy e){
-		boolean result;
-		if((e.getXcoor() >= x_) && (e.getXcoor() <= x_ + w_) && (e.getYcoor() >= y_) && (e.getYcoor() - e.getHeight()/2<= y_ + h_)) {
+		if((e.getXcoor() >= x_) && (e.getXcoor() <= x_ + w_) && (e.getYcoor() >= y_)) {
 			e.land();
-			result = true;
+			return false;
 		}
-		else if((e.getXcoor()+ e.getWidth() >= x_) && (e.getXcoor() + e.getWidth() <= x_ + w_) && (e.getYcoor() >= y_) && (e.getYcoor() - e.getHeight()/2 <= y_ + h_)) {
+		else if((e.getXcoor()+ e.getWidth() >= x_) && (e.getXcoor() + e.getWidth() <= x_ + w_) && (e.getYcoor() >= y_)) {
 			e.land();
-			result = true;
+			return false;
 		}
 		else
-			result = false;
-		return result;
+			return true;
 	}
 }

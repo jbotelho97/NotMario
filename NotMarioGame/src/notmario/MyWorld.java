@@ -17,6 +17,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 
 
     private int currentLevel = 0;
+    private int enemyCount = 0; //Temporary Counter for number of enemies in the level
 	private boolean animate_ = true;
 	private boolean move_, aButton, dButton;
 	private float dir1_;
@@ -77,16 +78,17 @@ public class MyWorld extends PApplet implements ApplicationConstants
             drawHealth(player1_.health); //Temporary Health Bar -Jack
 			//enemies[1].draw();
             point(0,0);
-            point(10,0);
+           // point(10,-5);
 		}
 
 		if(animate_) {
 			player1_.animate();
 			myGame.move((int)dir1_, move_);
 			enemies[0].passiveMove((int)dir1_, move_);
-            point(enemies[0].getXcoor(),enemies[0].getYcoor());
 			//enemies[1].passiveMove((int)dir1_, move_);
             myGame.isInside(player1_);
+			enemies[0].moveCycle(myGame);
+            point(enemies[0].getXcoor(), enemies[0].getYcoor());
             int x = enemies[0].collision(player1_);
             switch(x){
                 case 1: //Player hits an enemy on the head

@@ -21,7 +21,7 @@ public class Spudzilla extends Enemy {
         super.initNull();
     }
 
-    public void moveCycle(){}
-    public void animate(){}
+    public void moveCycle(LevelHandler h){}
+
 
 }
