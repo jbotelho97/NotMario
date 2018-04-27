@@ -26,17 +26,16 @@ public class Spud extends Enemy {
 
     //Spud's unique move-cycle
     public void moveCycle(LevelHandler h){
-        if(isLeft){
-            setSpeed(xspeed);
-            airborne = h.enemyInside(this);
-        }
-        else {
-            setSpeed(-1 * xspeed);
-            airborne = h.enemyInside(this);
-        }
+        setSpeed(xspeed);
+        airborne = h.enemyInside(this);
         if(airborne){
             fall();
         }
+    }
+
+    //Turns Spud around when he hits the edge of a wall
+    public void turnAround(){
+        xspeed *= -1;
     }
 
 }

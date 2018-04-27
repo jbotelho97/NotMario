@@ -196,6 +196,10 @@ public abstract class Enemy implements ApplicationConstants {
     //Updates the enemies co-ordinates based on its movement pattern. Different for every enemy class.
     public abstract void moveCycle(LevelHandler h);
 
+    //Collision for reaching the edge of a platform
+    public abstract void turnAround();
+
+
     //Switches between animation stances
    // public void animate();
 }

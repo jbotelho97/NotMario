@@ -106,4 +106,18 @@ public class Rectangle {
 		else
 			return true;
 	}
+
+	//Method for determining if enemy is touching edge
+	public boolean enemyEdge(Enemy e){
+		float farX = e.getXcoor() + e.getWidth();
+		if((e.getXcoor() >= x_ + w_ - 0.05f) &&(e.getXcoor() <= x_ + w_ +0.05f) &&(e.getYcoor() < y_ + h_)){
+			return true;
+		}
+		else if((farX >= x_ -0.05f) && (farX <= x_ + 0.05f) && (e.getYcoor() < y_ + h_)){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 }

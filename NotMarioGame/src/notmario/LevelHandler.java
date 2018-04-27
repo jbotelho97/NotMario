@@ -63,15 +63,21 @@ public class LevelHandler {
 	}
 
 	public boolean enemyInside(Enemy e) {
-		for(platformIndex = 0; platformIndex <= levelCollection[currentLevel].length; platformIndex++) {
+		boolean result = true;
+	    for(platformIndex = 0; platformIndex <= levelCollection[currentLevel].length; platformIndex++) {
 			if(levelCollection[currentLevel][platformIndex] == null)
 				break;
-			levelCollection[currentLevel][platformIndex].enemyInside(e);
-			if (levelCollection[currentLevel][platformIndex].enemyInside(e) == false){
-				return false;
+			//levelCollection[currentLevel][platformIndex].enemyInside(e);
+			if ((levelCollection[currentLevel][platformIndex].enemyInside(e) == false) && (levelCollection[currentLevel][platformIndex].enemyEdge(e) == false) && (result)){
+				result = false;
+			}
+			else if(levelCollection[currentLevel][platformIndex].enemyEdge(e) == true){
+                levelCollection[currentLevel][platformIndex].enemyEdge(e);
+			    e.turnAround();
+				result = false;
 			}
 		}
-		return true;
+		return result;
 	}
 	
 	/**
@@ -86,6 +92,7 @@ public class LevelHandler {
 		
 		levelCollection[0][0] = new Rectangle(0, -30, 25, 25, 255, 0, 0);
 		levelCollection[0][1] = new Rectangle(-25, -30, 25, 25, 255, 0, 0);
+		levelCollection[0][2] = new Rectangle(-50,-20,25,25,255,0,0);
 	}
 	
 	public void createLevel1() {

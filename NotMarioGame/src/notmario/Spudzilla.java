@@ -23,5 +23,7 @@ public class Spudzilla extends Enemy {
 
     public void moveCycle(LevelHandler h){}
 
+    public void turnAround(){}
+
 
 }
