@@ -1,6 +1,13 @@
 package notmario;
 
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
+
 import processing.core.PApplet;
 
 public class MyWorld extends PApplet implements ApplicationConstants 
@@ -38,6 +45,46 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		setupGraphicClasses_(); // passes a reference of this app window to all graphical classes as a static variable
 	}
 
+	// GET IMAGE COMMENT LATER
+		public static BufferedImage[] getImage(int xStart, int yStart, int rows, int cols, int count) {
+			
+			BufferedImage Img = null;
+			try {
+				
+			Img = ImageIO.read(new File("character_sheet.png"));
+			
+			}
+			
+			catch(IOException ex)
+			{
+				
+				JOptionPane.showMessageDialog(null, "<html>Error<br>Missing images</html>" ,
+					       "Error",JOptionPane.ERROR_MESSAGE);
+				
+				System.exit(1);
+				
+			}
+			
+			// The above line throws an checked IOException which must be caught.
+			
+			BufferedImage[] sprites = new BufferedImage[count];
+
+			for (int i = 0; i < count; i++)
+			{
+		
+				sprites[count] = Img.getSubimage(
+		            i * xStart,
+		            yStart,
+		            cols,
+		            rows
+			        );
+			}
+			
+			
+			return sprites;
+			
+		}
+	
 	public void draw() {
 		frame_++;
 		
