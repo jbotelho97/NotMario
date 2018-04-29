@@ -108,11 +108,9 @@ public class Rectangle {
 	{		
 		boolean result;
 		if((player.x_ >= x_) && (player.x_ <= x_ + w_) && (player.y_ >= y_) && (player.y_ - player.height/2<= y_ + h_)) {
-			player.land();
 			result = true;
 		}
 		else if((player.x_+player.width >= x_) && (player.x_ + player.width <= x_ + w_) && (player.y_ >= y_) && (player.y_ - player.height/2 <= y_ + h_)) {
-			player.land();
 			result = true;
 		}
 		else
