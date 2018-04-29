@@ -17,10 +17,6 @@ public class KillBox extends Rectangle {
 		super.draw();
 	}
 	
-	public boolean isInside(Character player) {
-		return true;
-	}
-	
 	/**
 	 * Passes a reference of the window to the rectangle to use when drawing
 	 * @param theApp

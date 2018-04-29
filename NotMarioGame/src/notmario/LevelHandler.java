@@ -52,18 +52,16 @@ public class LevelHandler {
 	/**
 	 * This method tests if the character has landed on any platforms.
 	 */
-	public boolean isInside(Character player) {
+	public int isInside(Character player) {
+		int result = 0;
 		for(platformIndex = 0; platformIndex < levelCollection[currentLevel].length; platformIndex++) {
 			if(levelCollection[currentLevel][platformIndex] == null) {
 				break;
 			}
 
-			if (levelCollection[currentLevel][platformIndex].isInside(player)) {
-				System.out.println(platformIndex);
-				return true;
-			}
+			result |= levelCollection[currentLevel][platformIndex].isInside(player);
 		}
-		return false;
+		return result;
 	}
 	
 	/**
@@ -82,7 +80,7 @@ public class LevelHandler {
 		levelCollection[0][3] = new Rectangle(50, -30, 25, 25, 255, 0, 0);
 		levelCollection[0][4] = new Rectangle(75, -30, 25, 25, 255, 0, 0);
 		levelCollection[0][5] = new Rectangle(100, -30, 25, 25, 255, 0, 0);
-		//levelCollection[0][6] = new Rectangle(75, -65, 25, 100, 255, 0, 0);
+		levelCollection[0][6] = new Rectangle(75, -65, 25, 80, 255, 0, 0);
 		
 	}
 	

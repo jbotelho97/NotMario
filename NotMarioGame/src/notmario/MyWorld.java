@@ -63,19 +63,27 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		}
 
 		if(animate_) {
-			player1_.animate();
 			myGame.move((int)dir1_, move_);
 
-
-
-			if(myGame.isInside(player1_)) {
-				System.out.println("inside");
+			int collision = myGame.isInside(player1_);
+			System.out.println(collision);
+			boolean bottom = (collision & 8) > 0;
+			boolean top = (collision & 4) > 0;
+			boolean left = (collision & 2) > 0;
+			boolean right = (collision & 1) > 0;
+			if (bottom) {
+				System.out.println("Hit Bottom");
 				player1_.land();
 			}
-			else {
-				System.out.println("outside");
-				player1_.fall();
+			if (left && dir1_ > 0) {
+				System.out.println("Hit Left");
+				move_ = false;
 			}
+			if (right  && dir1_ < 0) {
+				System.out.println("Hit Right");
+				move_ = false;
+			}
+			player1_.animate();
 		}
 	}
 

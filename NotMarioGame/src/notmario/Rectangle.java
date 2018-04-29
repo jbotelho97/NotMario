@@ -102,26 +102,50 @@ public class Rectangle {
 
 	/** Tells whether the character is inside the platform
 	 * 
+	 * @param x Coordinate of the player 
+	 * @param y Coordinate of the player 
+	 * @return true if (x, y) is inside this object
+	 */
+	public boolean isPointInside(float x, float y)
+	{		
+		return (x > x_) && (x < x_ + w_) && (y > y_) && (y < y_ + h_);
+	}
+
+	/** Tells whether the character is inside the platform
+	 * 
 	 * @param Character 
 	 * @return true if (x, y) is inside this object
 	 */
-	public boolean isInside(Character player)
+	public int isInside(Character player)
 	{		
-		float leftX = player.x_-player.width/2;
-		float rightX = player.x_+player.width/2;
-		float bottomY = player.y_-player.height/2;
+		float leftX = player.x_-player.width/2 + playerSpeedX_;
+		float rightX = player.x_+player.width/2 + playerSpeedX_;
+		float bottomY = player.y_-player.height/2 + player.vy_;
+		float topY = player.y_+player.height/2 + player.vy_;
 		
-		// Check bottom left corner of player character
-		if((leftX >= x_) && (leftX <= x_ + w_) && (bottomY >= y_) && (bottomY <= y_ + h_)) {
-			//System.out.println(leftX + " " + rightX + " " + bottomY + " " + x_ + " " + y_ + " " + h_ + " " + w_);
-			return true;
-		}
-		// Check bottom right corner of player character
-		if ((rightX >= x_) && (rightX <= x_ + w_) && (bottomY >= y_) && (bottomY <= y_ + h_)) {
-			//System.out.println(leftX + " " + rightX + " " + bottomY + " " + x_ + " " + y_ + " " + h_ + " " + w_);
-			return true;
+		// result's 4 bits will represent player's (bottom, top, left, right) collisions
+		int result = 0;
+		
+		// Check collision with character bottom
+		if(isPointInside(leftX, bottomY+player.vy_) || isPointInside(rightX, bottomY+player.vy_)) {
+			result |= 8;
 		}
 
-		return false;
+		// Check collision with character top
+		if(isPointInside(leftX, topY) || isPointInside(rightX, topY)) {
+			result |= 4;
+		}
+
+		// Check collision with character left
+		if(isPointInside(leftX+playerSpeedX_, bottomY) || isPointInside(leftX+playerSpeedX_, topY)) {
+			result |= 2;
+		}
+
+		// Check collision with character right
+		if(isPointInside(rightX+playerSpeedX_, bottomY) || isPointInside(rightX+playerSpeedX_, topY)) {
+			result |= 1;
+		}
+
+		return result;
 	}
 }
