@@ -74,6 +74,12 @@ public class LevelHandler {
 		
 		levelCollection[0][0] = new Rectangle(0, -30, 25, 25, 255, 0, 0);
 		levelCollection[0][1] = new Rectangle(-25, -30, 25, 25, 255, 0, 0);
+		levelCollection[0][2] = new Rectangle(25, -30, 25, 25, 255, 0, 0);
+		levelCollection[0][3] = new Rectangle(50, -30, 25, 25, 255, 0, 0);
+		levelCollection[0][4] = new Rectangle(75, -30, 25, 25, 255, 0, 0);
+		levelCollection[0][5] = new Rectangle(100, -30, 25, 25, 255, 0, 0);
+		levelCollection[0][6] = new KillBox(-25, -55, 125, 25, 0, 255, 0);
+		levelCollection[0][7] = new GoalBox(100, -5, 25, 25, 0, 0, 255);
 	}
 	
 	public void createLevel1() {

@@ -68,8 +68,10 @@ public class MyWorld extends PApplet implements ApplicationConstants
 
 
 
-			if(myGame.isInside(player1_))
+			if(myGame.isInside(player1_)) {
+				player1_.land();
 				System.out.println("true");
+			}
 		}
 	}
 

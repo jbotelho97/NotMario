@@ -1,11 +1,14 @@
 package notmario;
 
+import java.awt.Image;
+
 import processing.core.PApplet;
 
 public class Rectangle {
 //  Here we store a reference to the app. in a static (aka "class") variable.
 	private static PApplet app_; 
 	private static int appSetCounter_ = 0;
+	private Image sprite_;
 
 	private float x_, y_, playerSpeedX_, w_, h_, r, b, g;
 	
@@ -25,6 +28,26 @@ public class Rectangle {
 		b = blue;
 		g = green;
 		playerSpeedX_ = 0.1f;
+	}
+	
+	/**
+	 * Builds the rectangle by setting its status variables
+	 * @param x x coordinate
+	 * @param y y coordinate
+	 * @param w width of rectangle
+	 * @param h height of rectangle
+	 * @param sprite image that may be attached to rectangle
+	 */
+	public Rectangle(float x, float y, float w, float h, float red, float green, float blue, Image sprite) {
+		x_ = x;
+		y_ = y;
+		w_ = w;
+		h_ = h;
+		r = red;
+		b = blue;
+		g = green;
+		playerSpeedX_ = 0.1f;
+		sprite_ = sprite;
 	}
 	
 	/**
