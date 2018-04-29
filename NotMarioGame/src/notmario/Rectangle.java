@@ -128,7 +128,8 @@ public class Rectangle {
 		
 		// Check collision with character bottom
 		if(isPointInside(leftX, bottomY+player.vy_) || isPointInside(rightX, bottomY+player.vy_)) {
-			result |= 8;
+			if(bottomY + 0.001 > y_)
+				result |= 8;
 		}
 
 		// Check collision with character top
