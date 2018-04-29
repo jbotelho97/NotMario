@@ -106,17 +106,21 @@ public class Rectangle {
 	 */
 	public boolean isInside(Character player)
 	{		
-		boolean result;
-		if((player.x_ >= x_) && (player.x_ <= x_ + w_) && (player.y_ >= y_) && (player.y_ - player.height/2<= y_ + h_)) {
-			player.land();
-			result = true;
+		float leftX = player.x_-player.width/2;
+		float rightX = player.x_+player.width/2;
+		float bottomY = player.y_-player.height/2;
+		
+		// Check bottom left corner of player character
+		if((leftX >= x_) && (leftX <= x_ + w_) && (bottomY >= y_) && (bottomY <= y_ + h_)) {
+			//System.out.println(leftX + " " + rightX + " " + bottomY + " " + x_ + " " + y_ + " " + h_ + " " + w_);
+			return true;
 		}
-		else if((player.x_+player.width >= x_) && (player.x_ + player.width <= x_ + w_) && (player.y_ >= y_) && (player.y_ - player.height/2 <= y_ + h_)) {
-			player.land();
-			result = true;
+		// Check bottom right corner of player character
+		if ((rightX >= x_) && (rightX <= x_ + w_) && (bottomY >= y_) && (bottomY <= y_ + h_)) {
+			//System.out.println(leftX + " " + rightX + " " + bottomY + " " + x_ + " " + y_ + " " + h_ + " " + w_);
+			return true;
 		}
-		else
-			result = false;
-		return result;
+
+		return false;
 	}
 }
