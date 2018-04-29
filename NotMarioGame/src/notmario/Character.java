@@ -104,6 +104,10 @@ public class Character implements ApplicationConstants
 			}
 		}
 		
+		public void fall() {
+			airborne = true;
+		}
+		
 		/**
 		 * Sets the y velocity to zero
 		 */
