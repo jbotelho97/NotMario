@@ -13,6 +13,7 @@ public class LevelHandler {
 	
 	public LevelHandler() {
 		
+		levelCollection = new Rectangle[4][20];
 		currentLevel = 0;
 		platformIndex = 0;
 		createMenu();     //create all levels and save them in levelCollection
@@ -28,6 +29,8 @@ public class LevelHandler {
 	public void draw() {
 		
 		for(platformIndex = 0; platformIndex <= levelCollection[currentLevel].length; platformIndex++) {
+			if(levelCollection[currentLevel][platformIndex] == null)
+				break;
 			levelCollection[currentLevel][platformIndex].draw();
 		}
 	}
@@ -36,11 +39,27 @@ public class LevelHandler {
 	 * this method moves each rectangle in the current row
 	 * @param direction
 	 */
-	public void move(int direction) {
-		
-		for(platformIndex = 0; platformIndex <= levelCollection[currentLevel].length; platformIndex++) {
-			levelCollection[currentLevel][platformIndex].move(direction);
+	public void move(int direction, boolean move) {
+		if(move) {
+			for(platformIndex = 0; platformIndex <= levelCollection[currentLevel].length; platformIndex++) {
+				if(levelCollection[currentLevel][platformIndex] == null)
+					break;
+				levelCollection[currentLevel][platformIndex].move(direction);
+			}
 		}
+	}
+	
+	/**
+	 * This method tests if the character has landed on any platforms.
+	 */
+	public boolean isInside(Character player) {
+		boolean result = false;
+		for(platformIndex = 0; platformIndex <= levelCollection[currentLevel].length; platformIndex++) {
+			if(levelCollection[currentLevel][platformIndex] == null)
+				break;
+			result = levelCollection[currentLevel][platformIndex].isInside(player);
+		}
+		return result;
 	}
 	
 	/**
@@ -53,6 +72,8 @@ public class LevelHandler {
 	
 	public void createMenu() {
 		
+		levelCollection[0][0] = new Rectangle(0, -30, 25, 25, 255, 0, 0);
+		levelCollection[0][1] = new Rectangle(-25, -30, 25, 25, 255, 0, 0);
 	}
 	
 	public void createLevel1() {
