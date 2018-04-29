@@ -58,6 +58,7 @@ public class Rectangle {
 		app_.strokeWeight(.1f);
 		app_.fill(r, g, b);
 		app_.rect(x_, y_, w_, h_);
+		app_.ellipse(x_, y_, 1, 1);
 	}
 	
 	public float getX() {

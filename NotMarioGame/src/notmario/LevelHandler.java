@@ -82,6 +82,8 @@ public class LevelHandler {
 		levelCollection[0][3] = new Rectangle(50, -30, 25, 25, 255, 0, 0);
 		levelCollection[0][4] = new Rectangle(75, -30, 25, 25, 255, 0, 0);
 		levelCollection[0][5] = new Rectangle(100, -30, 25, 25, 255, 0, 0);
+		levelCollection[0][6] = new Rectangle(75, -65, 25, 100, 255, 0, 0);
+		
 	}
 	
 	public void createLevel1() {
