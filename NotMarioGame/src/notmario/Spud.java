@@ -31,6 +31,9 @@ public class Spud extends Enemy {
         if(airborne){
             fall();
         }
+        else{
+            land();
+        }
     }
 
     //Turns Spud around when he hits the edge of a wall
