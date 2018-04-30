@@ -65,6 +65,24 @@ public class LevelHandler {
 		}
 		return false;
 	}
+
+	public boolean enemyInside(Enemy e) {
+		boolean result = true;
+	    for(platformIndex = 0; platformIndex <= levelCollection[currentLevel].length; platformIndex++) {
+			if(levelCollection[currentLevel][platformIndex] == null)
+				break;
+			//levelCollection[currentLevel][platformIndex].enemyInside(e);
+			if ((levelCollection[currentLevel][platformIndex].enemyInside(e) == false) && (levelCollection[currentLevel][platformIndex].enemyEdge(e) == false) && (result)){
+				result = false;
+			}
+			else if(levelCollection[currentLevel][platformIndex].enemyEdge(e) == true){
+                levelCollection[currentLevel][platformIndex].enemyEdge(e);
+			    e.turnAround();
+				result = false;
+			}
+		}
+		return result;
+	}
 	
 	/**
 	 * this method changes the current level by moving down one row in the array levelCollection
@@ -83,7 +101,6 @@ public class LevelHandler {
 		levelCollection[0][4] = new Rectangle(75, -30, 25, 25, 255, 0, 0);
 		levelCollection[0][5] = new Rectangle(100, -30, 25, 25, 255, 0, 0);
 		//levelCollection[0][6] = new Rectangle(75, -65, 25, 100, 255, 0, 0);
-		
 	}
 	
 	public void createLevel1() {

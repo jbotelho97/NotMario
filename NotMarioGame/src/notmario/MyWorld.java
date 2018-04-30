@@ -9,6 +9,9 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
 import processing.core.PApplet;
+import processing.core.PFont;
+
+import java.awt.font.*;
 
 public class MyWorld extends PApplet implements ApplicationConstants 
 {
@@ -17,8 +20,11 @@ public class MyWorld extends PApplet implements ApplicationConstants
 	Character player1_;
 	LevelHandler myGame;
 	Enemy[] enemies;
-	
-	private int currentLevel = 0;
+    PFont f;
+
+
+    private int currentLevel = 0;
+    private int enemyCount = 0; //Temporary Counter for number of enemies in the level
 	private boolean animate_ = true;
 	private boolean move_, aButton, dButton;
 	private float dir1_;
@@ -41,6 +47,11 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		player1_ = new Character(0, 0, 1, 255, 0, 0);
 		
 		enemies = new Enemy[20];
+
+		enemies[0] = new Spud(10,-5.0f);//Test Spud
+		//enemies[1] = new Spudzilla(-10,2.50f);
+
+        f = createFont("Arial",16,false); // Arial, 16 point, anti-aliasing off for right now
 
 		setupGraphicClasses_(); // passes a reference of this app window to all graphical classes as a static variable
 	}
@@ -100,18 +111,24 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			translate(WORLD_ORIGIN_X, WORLD_ORIGIN_Y); 
 			scale(WORLD_TO_PIXEL, -WORLD_TO_PIXEL);
 			stroke(0);
-			
+
+
+
 			myGame.draw();
 
 //			platform.draw();
 			player1_.draw();
+			//TESTING ENEMIES - Jack
+			enemies[0].draw();
+            drawHealth(player1_.health); //Temporary Health Bar -Jack
+			//enemies[1].draw();
+            point(0,0);
+           // point(10,-5);
 		}
 
 		if(animate_) {
 			player1_.animate();
 			myGame.move((int)dir1_, move_);
-
-
 
 			if(myGame.isInside(player1_)) {
 				System.out.println("inside");
@@ -121,8 +138,35 @@ public class MyWorld extends PApplet implements ApplicationConstants
 				System.out.println("outside");
 				player1_.fall();
 			}
+			/*enemies[0].passiveMove((int)dir1_, move_);
+			//enemies[1].passiveMove((int)dir1_, move_);
+            myGame.isInside(player1_);
+			enemies[0].moveCycle(myGame);
+            point(enemies[0].getXcoor(), enemies[0].getYcoor());
+            int x = enemies[0].collision(player1_);
+            switch(x){
+                case 1: //Player hits an enemy on the head
+                    player1_.jump();
+                    break;
+                case 0: //Player hits nothing
+                    break;
+                case -1: //Player collides with an enemy.
+                    player1_.takeHit(enemies[0]);
+                    myGame.move(75, true);
+                    enemies[0].passiveMove(75, true);
+            }*/
 		}
 	}
+
+	public void drawHealth(int h){
+	    textFont(f,2);
+	    fill(0);
+	    scale(1,-1);
+	    textAlign(LEFT);
+	    String s = "Player Health : " + h;
+	    text(s, -50, 35);
+
+    }
 
 	public void cleanEnemies() {
 		int i = 0;
@@ -211,22 +255,22 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		if (Rectangle.setup(this) != 1)
 		{
 			println("A graphic classe\'s setup() method was called illegally before this class");
-			System.exit(-1);;
+			System.exit(-1);
 		}
 		if (Character.setup(this) != 1)
 		{
 			println("A graphic classe\'s setup() method was called illegally before this class");
-			System.exit(-1);;
+			System.exit(-1);
 		}
 		if (LevelHandler.setup(this) != 1)
 		{
 			println("A graphic classe\'s setup() method was called illegally before this class");
-			System.exit(-1);;
+			System.exit(-1);
 		}
 		if (Enemy.setup(this) != 1)
 		{
 			println("A graphic classe\'s setup() method was called illegally before this class");
-			System.exit(-1);;
+			System.exit(-1);
 		}
 	}
 
