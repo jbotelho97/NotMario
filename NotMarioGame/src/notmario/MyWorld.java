@@ -24,10 +24,11 @@ public class MyWorld extends PApplet implements ApplicationConstants
 
 
     private int currentLevel = 0;
-    private int enemyCount = 0; //Temporary Counter for number of enemies in the level
 	private boolean animate_ = true;
 	private boolean move_, aButton, dButton;
 	private float dir1_;
+    public int enemyCount;
+
 
 	public void settings() {
 		size(WIN_WIDTH, WIN_HEIGHT);
@@ -48,8 +49,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		
 		enemies = new Enemy[20];
 
-		enemies[0] = new Spud(10,-5.0f);//Test Spud
-		//enemies[1] = new Spudzilla(-10,2.50f);
+        generateEnemies(myGame);
 
         f = createFont("Arial",16,false); // Arial, 16 point, anti-aliasing off for right now
 
@@ -95,10 +95,18 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			return sprites;
 			
 		}
-	
+
+	public void generateEnemies(LevelHandler h){
+        //If you want a test enemy, un comment next two lines.
+        /*enemies[0] = new ArmoredSpud(10,-5.0f);//Test Spud
+        enemyCount++;*/
+	    /*switch(h.currentLevel){
+
+        }*/
+    }
+
 	public void draw() {
 		frame_++;
-		
 		//  Draw all objects
 		if (frame_ % 5 == 0) 
 		{
@@ -119,7 +127,6 @@ public class MyWorld extends PApplet implements ApplicationConstants
 //			platform.draw();
 			player1_.draw();
 			//TESTING ENEMIES - Jack
-			enemies[0].draw();
             drawHealth(player1_.health); //Temporary Health Bar -Jack
 			//enemies[1].draw();
             point(0,0);
@@ -134,9 +141,10 @@ public class MyWorld extends PApplet implements ApplicationConstants
 				player1_.land();
 			}
 			else {
-				System.out.println("outside");
-				player1_.fall();
-			}
+                System.out.println("outside");
+                player1_.fall();
+            }
+
 			int edge = myGame.onEdge(player1_);
 			if ((edge == 1 || edge == 3) && dir1_ > 1) {
 				System.out.println(":1");
@@ -146,24 +154,27 @@ public class MyWorld extends PApplet implements ApplicationConstants
 				dir1_ = 0;
 			}
 			myGame.move((int)dir1_, move_);
-			/*enemies[0].passiveMove((int)dir1_, move_);
-			//enemies[1].passiveMove((int)dir1_, move_);
-            myGame.isInside(player1_);
-			enemies[0].moveCycle(myGame);
-            point(enemies[0].getXcoor(), enemies[0].getYcoor());
-            int x = enemies[0].collision(player1_);
-            switch(x){
-                case 1: //Player hits an enemy on the head
-                    player1_.jump();
-                    break;
-                case 0: //Player hits nothing
-                    break;
-                case -1: //Player collides with an enemy.
-                    player1_.takeHit(enemies[0]);
-                    myGame.move(75, true);
-                    enemies[0].passiveMove(75, true);
-            }*/
-		}
+			
+			for(int i = 0; i < enemyCount; i++) {
+			    if(enemies[i].getHealth() >= 0) {
+                    enemies[i].passiveMove((int) dir1_, move_);//Moving w/ the screen
+                    enemies[i].moveCycle(myGame); //Unique Movement Cycle
+                    int x = enemies[i].collision(player1_); //Checks if player collides with enemy.
+                    switch (x) {
+                        case 1: //Player hits an enemy on the head
+                            player1_.jump();
+                            break;
+                        case 0: //Player hits nothing
+                            break;
+                        case -1: //Player collides with an enemy.
+                            player1_.takeHit(enemies[0]);
+                            myGame.move(75, true);
+                            enemies[0].passiveMove(75, true);
+                            break;
+                    }
+                }
+		    }
+        }
 	}
 
 	public void drawHealth(int h){
