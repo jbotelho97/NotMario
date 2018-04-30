@@ -1,6 +1,13 @@
 package notmario;
 
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
+
 import processing.core.PApplet;
 import processing.core.PFont;
 
@@ -49,11 +56,49 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		setupGraphicClasses_(); // passes a reference of this app window to all graphical classes as a static variable
 	}
 
+	// GET IMAGE COMMENT LATER
+		public static BufferedImage[] getImage(int xStart, int yStart, int rows, int cols, int count) {
+			
+			BufferedImage Img = null;
+			try {
+				
+			Img = ImageIO.read(new File("character_sheet.png"));
+			
+			}
+			
+			catch(IOException ex)
+			{
+				
+				JOptionPane.showMessageDialog(null, "<html>Error<br>Missing images</html>" ,
+					       "Error",JOptionPane.ERROR_MESSAGE);
+				
+				System.exit(1);
+				
+			}
+			
+			// The above line throws an checked IOException which must be caught.
+			
+			BufferedImage[] sprites = new BufferedImage[count];
+
+			for (int i = 0; i < count; i++)
+			{
+		
+				sprites[count] = Img.getSubimage(
+		            i * xStart,
+		            yStart,
+		            cols,
+		            rows
+			        );
+			}
+			
+			
+			return sprites;
+			
+		}
+	
 	public void draw() {
 		frame_++;
 		
-		cleanEnemies();
-
 		//  Draw all objects
 		if (frame_ % 5 == 0) 
 		{
@@ -84,7 +129,16 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		if(animate_) {
 			player1_.animate();
 			myGame.move((int)dir1_, move_);
-			enemies[0].passiveMove((int)dir1_, move_);
+
+			if(myGame.isInside(player1_)) {
+				System.out.println("inside");
+				player1_.land();
+			}
+			else {
+				System.out.println("outside");
+				player1_.fall();
+			}
+			/*enemies[0].passiveMove((int)dir1_, move_);
 			//enemies[1].passiveMove((int)dir1_, move_);
             myGame.isInside(player1_);
 			enemies[0].moveCycle(myGame);
@@ -100,13 +154,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
                     player1_.takeHit(enemies[0]);
                     myGame.move(75, true);
                     enemies[0].passiveMove(75, true);
-            }
-
-
-
-			//if(myGame.isInside(player1_));
-
-				//System.out.println("true");
+            }*/
 		}
 	}
 

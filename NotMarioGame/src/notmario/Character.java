@@ -72,11 +72,11 @@ public class Character implements ApplicationConstants
 			app_.stroke(0);
 			app_.fill(r_, g_, b_);
 			
-			app_.rect(x_, y_, width, height);
+			app_.rect(0, 0, width, height);
 			
 			app_.fill(0);
-			app_.ellipse(x_, y_, 1, 1);
-			app_.ellipse(x_ + width, y_, 1, 1);
+			app_.ellipse(0, 0, 1, 1);
+			app_.ellipse(0 + width, 0, 1, 1);
 			
 			app_.popMatrix();
 		}
@@ -99,11 +99,15 @@ public class Character implements ApplicationConstants
 		 */
 		public void jump() {
 			if(airborne == false) {
-				vy_ = 0.1f;
+				vy_ = 0.15f;
 				airborne = true;
 			}
 		}
 
+		
+		public void fall() {
+			airborne = true;
+		}
 		
 		/**
 		 * Sets the y velocity to zero

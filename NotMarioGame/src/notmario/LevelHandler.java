@@ -1,5 +1,5 @@
 package notmario;
-
+// test3
 import processing.core.PApplet;
 
 public class LevelHandler {
@@ -53,13 +53,17 @@ public class LevelHandler {
 	 * This method tests if the character has landed on any platforms.
 	 */
 	public boolean isInside(Character player) {
-		boolean result = false;
-		for(platformIndex = 0; platformIndex <= levelCollection[currentLevel].length; platformIndex++) {
-			if(levelCollection[currentLevel][platformIndex] == null)
+		for(platformIndex = 0; platformIndex < levelCollection[currentLevel].length; platformIndex++) {
+			if(levelCollection[currentLevel][platformIndex] == null) {
 				break;
-			result = levelCollection[currentLevel][platformIndex].isInside(player);
+			}
+
+			if (levelCollection[currentLevel][platformIndex].isInside(player)) {
+				System.out.println(platformIndex);
+				return true;
+			}
 		}
-		return result;
+		return false;
 	}
 
 	public boolean enemyInside(Enemy e) {
@@ -92,7 +96,11 @@ public class LevelHandler {
 		
 		levelCollection[0][0] = new Rectangle(0, -30, 25, 25, 255, 0, 0);
 		levelCollection[0][1] = new Rectangle(-25, -30, 25, 25, 255, 0, 0);
-		levelCollection[0][2] = new Rectangle(-50,-20,25,25,255,0,0);
+		levelCollection[0][2] = new Rectangle(25, -30, 25, 25, 255, 0, 0);
+		levelCollection[0][3] = new Rectangle(50, -30, 25, 25, 255, 0, 0);
+		levelCollection[0][4] = new Rectangle(75, -30, 25, 25, 255, 0, 0);
+		levelCollection[0][5] = new Rectangle(100, -30, 25, 25, 255, 0, 0);
+		//levelCollection[0][6] = new Rectangle(75, -65, 25, 100, 255, 0, 0);
 	}
 	
 	public void createLevel1() {

@@ -1,11 +1,14 @@
 package notmario;
 
+import java.awt.Image;
+
 import processing.core.PApplet;
 
 public class Rectangle {
 //  Here we store a reference to the app. in a static (aka "class") variable.
 	private static PApplet app_; 
 	private static int appSetCounter_ = 0;
+	private Image sprite_;
 
 	private float x_, y_, playerSpeedX_, w_, h_, r, b, g;
 	
@@ -28,6 +31,26 @@ public class Rectangle {
 	}
 	
 	/**
+	 * Builds the rectangle by setting its status variables
+	 * @param x x coordinate
+	 * @param y y coordinate
+	 * @param w width of rectangle
+	 * @param h height of rectangle
+	 * @param sprite image that may be attached to rectangle
+	 */
+	public Rectangle(float x, float y, float w, float h, float red, float green, float blue, Image sprite) {
+		x_ = x;
+		y_ = y;
+		w_ = w;
+		h_ = h;
+		r = red;
+		b = blue;
+		g = green;
+		playerSpeedX_ = 0.1f;
+		sprite_ = sprite;
+	}
+	
+	/**
 	 * draws the rectangle to the window
 	 */
 	public void draw() 
@@ -35,6 +58,7 @@ public class Rectangle {
 		app_.strokeWeight(.1f);
 		app_.fill(r, g, b);
 		app_.rect(x_, y_, w_, h_);
+		app_.ellipse(x_, y_, 1, 1);
 	}
 	
 	public float getX() {
@@ -79,18 +103,22 @@ public class Rectangle {
  	//Tells whether player char is in rectangle
 	public boolean isInside(Character player)
 	{		
-		boolean result;
-		if((player.x_ >= x_) && (player.x_ <= x_ + w_) && (player.y_ >= y_) && (player.y_ - player.height/2<= y_ + h_)) {
-			player.land();
-			result = true;
+		float leftX = player.x_-player.width/2;
+		float rightX = player.x_+player.width/2;
+		float bottomY = player.y_-player.height/2;
+		
+		// Check bottom left corner of player character
+		if((leftX >= x_) && (leftX <= x_ + w_) && (bottomY >= y_) && (bottomY <= y_ + h_)) {
+			//System.out.println(leftX + " " + rightX + " " + bottomY + " " + x_ + " " + y_ + " " + h_ + " " + w_);
+			return true;
 		}
-		else if((player.x_ +player.width >= x_) && (player.x_ + player.width <= x_ + w_) && (player.y_ >= y_) && (player.y_ - player.height/2 <= y_ + h_)) {
-			player.land();
-			result = true;
+		// Check bottom right corner of player character
+		if ((rightX >= x_) && (rightX <= x_ + w_) && (bottomY >= y_) && (bottomY <= y_ + h_)) {
+			//System.out.println(leftX + " " + rightX + " " + bottomY + " " + x_ + " " + y_ + " " + h_ + " " + w_);
+			return true;
 		}
-		else
-			result = false;
-		return result;
+
+		return false;
 	}
 
 	//Method for enemy collision. This is just temporary until I find a better place to put it. -Jack
