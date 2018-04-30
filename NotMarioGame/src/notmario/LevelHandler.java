@@ -66,6 +66,21 @@ public class LevelHandler {
 		return false;
 	}
 
+	public int onEdge(Character player) {
+		int j;
+		for(platformIndex = 0; platformIndex < levelCollection[currentLevel].length; platformIndex++) {
+			if(levelCollection[currentLevel][platformIndex] == null) {
+				break;
+			}
+			j = levelCollection[currentLevel][platformIndex].playerEdge(player);
+			if (j > 0) {
+				return j;
+			}
+		}
+		return 0;
+	}
+
+	
 	public boolean enemyInside(Enemy e) {
 		boolean result = true;
 	    for(platformIndex = 0; platformIndex <= levelCollection[currentLevel].length; platformIndex++) {
@@ -100,7 +115,7 @@ public class LevelHandler {
 		levelCollection[0][3] = new Rectangle(50, -30, 25, 25, 255, 0, 0);
 		levelCollection[0][4] = new Rectangle(75, -30, 25, 25, 255, 0, 0);
 		levelCollection[0][5] = new Rectangle(100, -30, 25, 25, 255, 0, 0);
-		//levelCollection[0][6] = new Rectangle(75, -65, 25, 100, 255, 0, 0);
+		levelCollection[0][6] = new Rectangle(75, -65, 25, 80, 255, 0, 0);
 	}
 	
 	public void createLevel1() {

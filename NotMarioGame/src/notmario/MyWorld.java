@@ -128,7 +128,6 @@ public class MyWorld extends PApplet implements ApplicationConstants
 
 		if(animate_) {
 			player1_.animate();
-			myGame.move((int)dir1_, move_);
 
 			if(myGame.isInside(player1_)) {
 				System.out.println("inside");
@@ -138,6 +137,15 @@ public class MyWorld extends PApplet implements ApplicationConstants
 				System.out.println("outside");
 				player1_.fall();
 			}
+			int edge = myGame.onEdge(player1_);
+			if ((edge == 1 || edge == 3) && dir1_ > 1) {
+				System.out.println(":1");
+				dir1_ = 0;
+			} else if ((edge == 2 || edge == 3) && dir1_ < 1) {
+				System.out.println(":2");
+				dir1_ = 0;
+			}
+			myGame.move((int)dir1_, move_);
 			/*enemies[0].passiveMove((int)dir1_, move_);
 			//enemies[1].passiveMove((int)dir1_, move_);
             myGame.isInside(player1_);
