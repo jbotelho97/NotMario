@@ -100,15 +100,6 @@ public class Rectangle {
 
 	}
 
-	public int pointOnEdge(float x, float y) {
-		if ((x >= x_ + w_ - 0.05f) && (x <= x_ + w_ + 0.05f) && (y < y_ + h_)) {
-			return 1;
-		} else if ((x >= x_ - 0.05f) &&(x <= x_ + 0.05f) && (y < y_ + h_)) {
-			return 2;
-		}
-		return 0;
-	}
-
  	//Tells whether player char is in rectangle
 	public boolean isInside(Character player)
 	{		
@@ -130,23 +121,6 @@ public class Rectangle {
 		return false;
 	}
 
- 	//Tells whether player char is in rectangle
-	public int playerEdge(Character player)
-	{		
-		float leftX = player.x_-player.width/2;
-		float rightX = player.x_+player.width/2;
-		float bottomY = player.y_-player.height/2;
-		float topY = player.y_+player.height/2;
-		
-		// Check bottom left corner of player character
-		int edge = pointOnEdge(leftX, bottomY);
-		edge = edge | pointOnEdge(leftX, topY);
-		edge = edge | pointOnEdge(rightX, bottomY);
-		edge = edge | pointOnEdge(rightX, topY);
-
-		return edge;
-	}
-
 	//Method for enemy collision. This is just temporary until I find a better place to put it. -Jack
 	public boolean enemyInside(Enemy e){
 		if((e.getXcoor() >= x_) && (e.getXcoor() <= x_ + w_) && (e.getYcoor() >= y_)) {
@@ -164,6 +138,14 @@ public class Rectangle {
 	//Method for determining if enemy is touching edge
 	public boolean enemyEdge(Enemy e){
 		float farX = e.getXcoor() + e.getWidth();
-		return pointOnEdge(e.getXcoor(), e.getYcoor()) || pointOnEdge(farX, e.getYcoor()) > 0;
+		if((e.getXcoor() >= x_ + w_ - 0.05f) &&(e.getXcoor() <= x_ + w_ +0.05f) &&(e.getYcoor() < y_ + h_)){
+			return true;
+		}
+		else if((farX >= x_ -0.05f) && (farX <= x_ + 0.05f) && (e.getYcoor() < y_ + h_)){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 }
