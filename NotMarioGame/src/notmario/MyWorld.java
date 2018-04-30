@@ -127,7 +127,6 @@ public class MyWorld extends PApplet implements ApplicationConstants
 //			platform.draw();
 			player1_.draw();
 			//TESTING ENEMIES - Jack
-			enemies[0].draw();
             drawHealth(player1_.health); //Temporary Health Bar -Jack
 			//enemies[1].draw();
             point(0,0);
@@ -136,7 +135,6 @@ public class MyWorld extends PApplet implements ApplicationConstants
 
 		if(animate_) {
 			player1_.animate();
-			myGame.move((int)dir1_, move_);
 
 			if(myGame.isInside(player1_)) {
 				System.out.println("inside");
@@ -146,6 +144,17 @@ public class MyWorld extends PApplet implements ApplicationConstants
                 System.out.println("outside");
                 player1_.fall();
             }
+
+			int edge = myGame.onEdge(player1_);
+			if ((edge == 1 || edge == 3) && dir1_ > 1) {
+				System.out.println(":1");
+				dir1_ = 0;
+			} else if ((edge == 2 || edge == 3) && dir1_ < 1) {
+				System.out.println(":2");
+				dir1_ = 0;
+			}
+			myGame.move((int)dir1_, move_);
+			
 			for(int i = 0; i < enemyCount; i++) {
 			    if(enemies[i].getHealth() >= 0) {
                     enemies[i].passiveMove((int) dir1_, move_);//Moving w/ the screen
