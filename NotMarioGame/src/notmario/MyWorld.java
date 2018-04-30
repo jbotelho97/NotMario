@@ -88,8 +88,6 @@ public class MyWorld extends PApplet implements ApplicationConstants
 	public void draw() {
 		frame_++;
 		
-		cleanEnemies();
-
 		//  Draw all objects
 		if (frame_ % 5 == 0) 
 		{
