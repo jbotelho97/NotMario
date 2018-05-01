@@ -75,4 +75,6 @@ local.properties
 .worksheet
 
 # Eclipse Stuff
-.classpath
+*.classpath
+NotMarioGame/.classpath
+.idea/*
