@@ -121,6 +121,17 @@ public class Character implements ApplicationConstants
 			}
 		}
 		
+		public void passiveMoveProjectiles(int direction, boolean isMove) {
+			if(isMove) {
+				for(Fire fire: fireBalls) {
+					fire.passiveMove(direction);
+				}
+				for(Frost frost: frostBalls) {
+					frost.passiveMove(direction);
+				}
+			}
+		}
+		
 		/**
 		 * Used to toggle reference box and attack box of player
 		 */
