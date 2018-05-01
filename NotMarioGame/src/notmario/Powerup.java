@@ -38,7 +38,7 @@ public interface Powerup
 	        app_.popMatrix();
 	    }*/
 	    public void spawnPowerup();
-	    public void shoot(float dir);/* {
+	    public void draw(float dir);/* {
 	   	
 	    }*/
 }

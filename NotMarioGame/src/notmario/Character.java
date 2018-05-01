@@ -148,7 +148,7 @@ public class Character implements ApplicationConstants
 	}
 	public void shoot(float dir) {
 		Fire power = new Fire(x_, y_, 0); 
-		power.shoot(dir);
+		power.draw(dir);
 	}
 	}
 
