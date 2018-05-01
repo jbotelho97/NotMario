@@ -30,18 +30,18 @@ public abstract class Enemy implements ApplicationConstants {
     velYWorld -> cancels out screen movement
     width -> width of sprite
     height -> height of sprite
-    playerSpeedX -> temp -Jack
+    playerSpeedX -> Scalar of the speed of player.
      */
     private float xcor, ycor, size, velXLocal, velXWorld, width, height, velYLocal, velYWorld,playerSpeedX;
-    public float angle; //temp
+    public float angle; //detrmines angle of sprite
     public boolean isLeft, airborne, isMoving; //Checks if the enemy is facing left. Airbone checks if instance is airborne, isMoving is true if it is moving.
     private Image sprite; //The sprite of the enemy stored as an image.
-    private int damage;
+    private int damage; //The amount of damage the enemy deals to the player
     /*
     Necessary for initialization of Character and detects MyWorld
      */
-    private static int appSetCounter_ = 0;
-    private static PApplet app_;
+    private static int appSetCounter_ = 0; //Needed for instance of PApplet
+    private static PApplet app_; //Instance of PApplet
 
     //Initialized the enemy at a specific xcor, ycor and with the corresponding sprite.
     public void init(float x_, float y_, int hits, float w, float h, int d, Image img) {
@@ -57,9 +57,9 @@ public abstract class Enemy implements ApplicationConstants {
         isLeft = true;
         playerSpeedX = 0.1f;
         airborne = false;
-
     }
 
+    //Initializes a null enemy.
     public void initNull(){
         xcor = 0;
         ycor = 0;
@@ -117,6 +117,11 @@ public abstract class Enemy implements ApplicationConstants {
     public void setVelYL(float a){velYLocal = a;}
     public void setVelYG(float a){velYWorld = a;}
 
+    //Methods to determine sprite direction
+    public void setDir(boolean a){
+        isLeft = a;
+    }
+
     //Methods to set or change xcor and ycor
     public void setXcor(float a){xcor = a;}
     public void setYcor(float a){ycor = a;}
@@ -163,17 +168,16 @@ public abstract class Enemy implements ApplicationConstants {
         }
     }
 
-    //Handles collision between character and enemy. This is a rough version
     public int collision(Character p){
-        if((p.x_ + p.width /4 >= xcor) && (p.x_ - p.width/4 <= xcor + width) && (p.y_  - p.height/2 >= ycor + height - 0.1f) && (p.y_ - p.height/2 <= ycor + height + 0.1f)){
+        if((p.x_ + p.width/2 >= xcor) && (p.x_ - p.width/2 <= xcor + width) && (p.y_ - p.height/2 <= ycor) && (p.y_ - p.height/2 >= ycor - height)){
+            //System.out.println("You got hit");
+            // System.out.println("Px: " + p.x_ + " Py: " + p.y_ + " Sx: " + xcor + " Sy: " + ycor);
+            return -1;
+        }
+        else if((p.x_ + p.width /4 >= xcor) && (p.x_ - p.width/4 <= xcor + width) && (p.y_  - p.height/2 >= ycor + height - 0.1f) && (p.y_ - p.height/2 <= ycor + height + 0.1f)){
             //System.out.println("Hit successful.");
             takeHit();
             return 1;
-        }
-        else if((p.x_ + p.width/2 >= xcor) && (p.x_ - p.width/2 <= xcor + width) && (p.y_ - p.height/2 <= ycor) && (p.y_ - p.height/2 >= ycor - height)){
-            //System.out.println("You got hit");
-           // System.out.println("Px: " + p.x_ + " Py: " + p.y_ + " Sx: " + xcor + " Sy: " + ycor);
-            return -1;
         }
         return 0;
     }
