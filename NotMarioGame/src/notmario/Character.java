@@ -101,6 +101,9 @@ public class Character implements ApplicationConstants
 			for(Fire fire: fireBalls) {
 				fire.move();
 			}
+			for(Frost frost: frostBalls) {
+				frost.move();
+			}
 		}
 		
 		/**
@@ -191,11 +194,11 @@ public class Character implements ApplicationConstants
 	}
 	public void setActivePowerUp(int number) {
 		activePowerUp = number;
-		//if(activePowerUp == 2) {
+		if(activePowerUp == 2) {
 			System.out.println("activated");
 			setHealth(100);
 		
-		//}
+		}
 	}
 	public void setHealth(int h) {
 		health = h;

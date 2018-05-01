@@ -77,6 +77,9 @@ public class Frost extends PApplet implements Powerup, ApplicationConstants {
 	  }
 	 public void move() {
 		 if(active) {
+			 if (direction ==0) {
+				 xcor+= 0.1 *1;
+			 }
 			 xcor += 0.1 * -direction;
 		 }
 	 }

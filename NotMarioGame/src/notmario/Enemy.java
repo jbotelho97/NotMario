@@ -186,19 +186,13 @@ public abstract class Enemy implements ApplicationConstants {
         }
         return 0;
     }
-    //public int collision2(Powerup p){
-       /* if((p.x + p.width /4 >= xcor) && (p.x - p.width/4 <= xcor + width) && (p.y  - p.height/2 >= ycor + height - 0.1f) && (p.y - p.height/2 <= ycor + height + 0.1f)){
-           
-            takeHit();
-            return 1;
-        }
-        else if((p.x + p.width/2 >= xcor) && (p.x - p.width/2 <= xcor + width) && (p.y - p.height/2 <= ycor) && (p.y - p.height/2 >= ycor - height)){
-
-            return -1;
-        }
-        return 0;
+   /* public int powerUpCollision(Fire f, Frost g) {
+    	if(f != null) {
+    	float fX = f.getXcoor();
+    	if(fX >= xcor)
+    	}
+    	return 0;
     }*/
-
     //Damages the enemy
     public void takeHit(Character p){
         if(health > 1){
@@ -208,11 +202,11 @@ public abstract class Enemy implements ApplicationConstants {
             health = 0;
             Random rand = new Random();
             int chance = rand.nextInt(100);
-            if(chance >= 0 && chance <= 10) { 
-            	chance = rand.nextInt(3);
+            //if(chance >= 0 && chance <= 30) { 
+            	chance = 1;
             	p.setActivePowerUp(chance);
-            }
-        
+          //  }
+       
             
             die();
         }
@@ -224,9 +218,7 @@ public abstract class Enemy implements ApplicationConstants {
     public void die(){
        
         
-      //fire.checkActive();
-        //  Frost frost = new Frost(xcor, ycor, chance);
-         // Health health = new Health(xcor, ycor, chance);
+      
         
     	xcor = -201;
         ycor = -201;
