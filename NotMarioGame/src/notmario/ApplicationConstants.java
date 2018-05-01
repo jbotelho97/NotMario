@@ -30,7 +30,7 @@ public interface ApplicationConstants {
 	//====================================================
 	//  WORLD GRAVITY
 	//====================================================
-	float gravity = -0.0005f;
+	float gravity = -0.0007f;
 	
 	
 	

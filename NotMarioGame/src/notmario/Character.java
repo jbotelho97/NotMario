@@ -8,7 +8,7 @@ public class Character implements ApplicationConstants
 {
 	private static int appSetCounter_ = 0;
 	private static PApplet app_; 
-	
+	private Powerup pow;
 	
 		
 		private boolean ref_ = false;
@@ -16,6 +16,7 @@ public class Character implements ApplicationConstants
 		public float x_, y_, size_, angle_, vy_, width, height;
 		//color
 		private float r_, b_, g_;
+		public int health;
 		private Image sprite;
 		
 		/**
@@ -36,7 +37,7 @@ public class Character implements ApplicationConstants
 			size_ = size;
 			width = 5;
 			height = 10;
-			
+			health = 100;
 			r_ = r;
 			b_ = b;
 			g_ = g;
@@ -49,7 +50,6 @@ public class Character implements ApplicationConstants
 		
 		/**
 		 * draws all components of character onto the window. Passed a reference to the PApplet
-		 * @param theApp
 		 */
 		public void draw() {
 			
@@ -72,11 +72,11 @@ public class Character implements ApplicationConstants
 			app_.stroke(0);
 			app_.fill(r_, g_, b_);
 			
-			app_.rect(x_, y_, width, height);
+			app_.rect(0, 0, width, height);
 			
 			app_.fill(0);
-			app_.ellipse(x_, y_, 1, 1);
-			app_.ellipse(x_ + width, y_, 1, 1);
+			app_.ellipse(0, 0, 1, 1);
+			app_.ellipse(0 + width, 0, 1, 1);
 			
 			app_.popMatrix();
 		}
@@ -99,9 +99,14 @@ public class Character implements ApplicationConstants
 		 */
 		public void jump() {
 			if(airborne == false) {
-				vy_ = 0.1f;
+				vy_ = 0.15f;
 				airborne = true;
 			}
+		}
+
+		
+		public void fall() {
+			airborne = true;
 		}
 		
 		/**
@@ -111,7 +116,16 @@ public class Character implements ApplicationConstants
 			vy_ = 0f;
 			airborne = false;
 		}
-	
+
+		//Takes a hit
+		public void takeHit(Enemy e){
+			health -= e.getDamage();
+			if (health <= 0){
+				System.out.println("You died!");
+				System.exit(0);
+			}
+		}
+
 	/**
 	 * Passes a reference of the window to the player to use when drawing
 	 * @param theApp
@@ -132,4 +146,9 @@ public class Character implements ApplicationConstants
 		return appSetCounter_;
 
 	}
-}
+	public void shoot(float dir) {
+		Fire power = new Fire(x_, y_, 0); 
+		power.shoot(dir);
+	}
+	}
+
