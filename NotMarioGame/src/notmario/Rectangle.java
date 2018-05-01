@@ -130,6 +130,14 @@ public class Rectangle {
 		}
 		return inside;
 	}
+	
+
+	public boolean isInside(float x1, float y1) {
+		
+		System.out.println(x_ + " " + y_);
+		return (x1 >= x_ && x1 <= (x_ + w_) && y1 > y_ && y1 < (y_ + h_));
+		
+	}
 
 	//Method for enemy collision. This is just temporary until I find a better place to put it. -Jack
 	public boolean enemyInside(Enemy e){

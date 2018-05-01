@@ -65,6 +65,20 @@ public class LevelHandler {
 		}
 		return false;
 	}
+	
+	public boolean isInside(float x, float y) {
+		for(platformIndex = 0; platformIndex < levelCollection[currentLevel].length; platformIndex++) {
+			if(levelCollection[currentLevel][platformIndex] == null) {
+				break;
+			}
+
+			if (levelCollection[currentLevel][platformIndex].isInside(x, y)) {
+				System.out.println(platformIndex);
+				return true;
+			}
+		}
+		return false;
+	}
 
 	/**
 	 * This method tests if the character has landed on any platforms.
@@ -101,6 +115,10 @@ public class LevelHandler {
 		return result;
 	}
 	
+	public float returnIndex() {
+		return platformIndex;
+	}
+	
 	/**
 	 * this method changes the current level by moving down one row in the array levelCollection
 	 * @param count
@@ -111,17 +129,19 @@ public class LevelHandler {
 	
 	public void createMenu() {
 		
-		levelCollection[0][0] = new Rectangle(0, -30, 25, 25, 255, 0, 0);
-		levelCollection[0][1] = new Rectangle(-25, -30, 25, 25, 255, 0, 0);
-		levelCollection[0][2] = new Rectangle(25, -30, 25, 25, 255, 0, 0);
-		levelCollection[0][3] = new Rectangle(50, -30, 25, 25, 255, 0, 0);
-		levelCollection[0][4] = new Rectangle(75, -30, 25, 25, 255, 0, 0);
-		levelCollection[0][5] = new Rectangle(100, -30, 25, 25, 255, 0, 0);
-		levelCollection[0][6] = new Rectangle(75, -65, 25, 70, 255, 0, 0);
+		levelCollection[0][0] = new Rectangle(10, -20, 20, 10, 0, 255, 255);
+		levelCollection[0][1] = new Rectangle(-30, -20, 20, 10, 255, 0, 255);
 	}
 	
 	public void createLevel1() {
 		
+		levelCollection[1][0] = new Rectangle(0, -30, 25, 25, 255, 0, 0);
+		levelCollection[1][1] = new Rectangle(-25, -30, 25, 25, 255, 0, 0);
+		levelCollection[1][2] = new Rectangle(25, -30, 25, 25, 255, 0, 0);
+		levelCollection[1][3] = new Rectangle(50, -30, 25, 25, 255, 0, 0);
+		levelCollection[1][4] = new Rectangle(75, -30, 25, 25, 255, 0, 0);
+		levelCollection[1][5] = new Rectangle(100, -30, 25, 25, 255, 0, 0);
+		levelCollection[1][6] = new Rectangle(75, -65, 25, 70, 255, 0, 0);
 	}
 	
 	public void createLevel2() {
