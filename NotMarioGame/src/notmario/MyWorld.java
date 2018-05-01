@@ -113,7 +113,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			stroke(0);
 
 
-
+			
 			myGame.draw();
 
 //			platform.draw();
@@ -131,11 +131,11 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			myGame.move((int)dir1_, move_);
 
 			if(myGame.isInside(player1_)) {
-				System.out.println("inside");
+			//	System.out.println("inside");
 				player1_.land();
 			}
 			else {
-				System.out.println("outside");
+			//	System.out.println("outside");
 				player1_.fall();
 			}
 			/*enemies[0].passiveMove((int)dir1_, move_);
@@ -270,6 +270,16 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			System.exit(-1);
 		}
 		if (Enemy.setup(this) != 1)
+		{
+			println("A graphic classe\'s setup() method was called illegally before this class");
+			System.exit(-1);
+		}
+		if (Fire.setup(this) != 1)
+		{
+			println("A graphic classe\'s setup() method was called illegally before this class");
+			System.exit(-1);
+		}
+		if (Frost.setup(this) != 1)
 		{
 			println("A graphic classe\'s setup() method was called illegally before this class");
 			System.exit(-1);

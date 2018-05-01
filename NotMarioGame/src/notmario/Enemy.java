@@ -152,7 +152,7 @@ public abstract class Enemy implements ApplicationConstants {
         app_.fill(0, 0, 255);
 
         app_.rect(xcor, ycor, width, height);
-
+        
         app_.popMatrix();
     }
 
@@ -207,7 +207,8 @@ public abstract class Enemy implements ApplicationConstants {
         int chance = rand.nextInt(100);
         if(chance >= 0 && chance <= 10) {
         chance = rand.nextInt(3);
-        Fire fire = new Fire(xcor, ycor, chance);
+        
+        //fire.checkActive();
       //  Frost frost = new Frost(xcor, ycor, chance);
        // Health health = new Health(xcor, ycor, chance);
         
