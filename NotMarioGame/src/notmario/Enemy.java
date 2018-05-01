@@ -168,15 +168,19 @@ public abstract class Enemy implements ApplicationConstants {
         }
     }
 
-    public int collision(Character p){
-        if((p.x_ + p.width/2 >= xcor) && (p.x_ - p.width/2 <= xcor + width) && (p.y_ - p.height/2 <= ycor) && (p.y_ - p.height/2 >= ycor - height)){
+    public int collision(Character p) {
+		float pLeftX = p.x_ - p.width/2;
+		float pRightX = p.x_ + p.width/2;
+    		
+        if((pRightX >= xcor) && (pLeftX <= xcor + width) && (p.y_ - p.height/2 <= ycor) && (p.y_ - p.height/2 >= ycor - height)){
             //System.out.println("You got hit");
             // System.out.println("Px: " + p.x_ + " Py: " + p.y_ + " Sx: " + xcor + " Sy: " + ycor);
             return -1;
         }
-        else if((p.x_ + p.width /4 >= xcor) && (p.x_ - p.width/4 <= xcor + width) && (p.y_  - p.height/2 >= ycor + height - 0.1f) && (p.y_ - p.height/2 <= ycor + height + 0.1f)){
+        else if((pRightX >= xcor) && (pLeftX <= xcor + width) && (p.y_ - p.height/2 >= ycor + height - 0.1f) && (p.y_ - p.height/2 <= ycor + height + 0.2f)){
             //System.out.println("Hit successful.");
             takeHit();
+            p.vy_ = 0.1f;
             return 1;
         }
         return 0;
