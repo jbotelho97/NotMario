@@ -135,15 +135,17 @@ public class MyWorld extends PApplet implements ApplicationConstants
 
 		if(animate_) {
 			player1_.animate();
-			myGame.move((int)dir1_, move_);
 
-			if(myGame.isInside(player1_)) {
+			if(myGame.isInside(player1_, (int)dir1_)) {
 				System.out.println("inside");
 				player1_.land();
 			}
 			else {
                 System.out.println("outside");
                 player1_.fall();
+            }
+			if(!myGame.isEdge(player1_, (int)dir1_)) {
+				myGame.move((int)dir1_, move_);
             }
 			for(int i = 0; i < enemyCount; i++) {
 			    if(enemies[i].getHealth() >= 0) {
