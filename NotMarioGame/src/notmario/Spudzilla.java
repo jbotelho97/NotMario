@@ -10,10 +10,13 @@ import java.awt.Image;
 public class Spudzilla extends Enemy {
 
     private Image spudIcon; //Spudzilla's sprite
-    private int xspeed; //Spudzilla's current speed/direction horizontally.
+    private float xspeed; //Spudzilla's current speed/direction horizontally.
+    public boolean jumping;
 
     public Spudzilla(float x, float y){
-        super.init(x, y, 2, 10,20, 75, spudIcon);
+        super.init(x, y, 2, 7,9, 50, spudIcon);
+        xspeed = -0.06f;
+        isLeft = true;
     }
 
     //For a null spud.
@@ -21,9 +24,45 @@ public class Spudzilla extends Enemy {
         super.initNull();
     }
 
-    public void moveCycle(LevelHandler h){}
+    //Spudzilla will jump
+    public void jump(){
+        if(jumping && getYcoor() <= 20){
+            float y = getYcoor();
+            y += 0.15f;
+            setYcor(y);
+        }
+        else{
+            jumping = false;
+            airborne = true;
+            fall();
+        }
+    }
 
-    public void turnAround(){}
+    //Checks jump height
+    private boolean jumpable(float y){
+        if(y >= 20){
+
+        }
+        return true;
+    }
+
+    public void moveCycle(LevelHandler h){
+        setSpeed(xspeed);
+        airborne = h.enemyInside(this);
+        if(jumping){
+            jump();
+        }
+        else if(airborne){
+            fall();
+        }
+        else{
+            land();
+            jumping = true;
+        }
+    }
+
+    @Override
+    public void turnAround(){xspeed *= -1;}
 
 
 }
