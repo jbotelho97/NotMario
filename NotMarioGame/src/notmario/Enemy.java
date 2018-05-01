@@ -214,6 +214,7 @@ public abstract class Enemy implements ApplicationConstants {
         }
     	xcor = -201;
         ycor = -201;
+        //RNG Roll here
     }
 
     //Updates the enemies co-ordinates based on its movement pattern. Different for every enemy class.
