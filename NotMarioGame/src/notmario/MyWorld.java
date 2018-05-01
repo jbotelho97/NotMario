@@ -124,7 +124,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 	            drawHealth(player1_.health); //Temporary Health Bar -Jack
 	            System.out.println(player1_.getHealth());
 				//enemies[1].draw();
-	            point(0,0);
+	            //point(0,0);
 	           // point(10,-5);
 			}
 			else
@@ -228,11 +228,13 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			break;
 			//player 1 jump command
 		case 'w':
-			player1_.jump();
+			if(player1_ != null)
+				player1_.jump();
 //			move_ = true;
 			break;
 		case 'f':
-			player1_.shoot(dir1_);
+			if(player1_ != null)
+				player1_.shoot(dir1_);
 		}
 	}
 
