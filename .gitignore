@@ -74,11 +74,4 @@ local.properties
 .scala_dependencies
 .worksheet
 
-<<<<<<< HEAD
 
-=======
-# Eclipse Stuff
-*.classpath
-NotMarioGame/.classpath
-.idea/*
->>>>>>> branch 'master' of https://github.com/jbotelho97/NotMario
