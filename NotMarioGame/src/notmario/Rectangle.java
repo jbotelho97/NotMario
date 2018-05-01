@@ -101,12 +101,14 @@ public class Rectangle {
 	}
 
  	//Tells whether player char is in rectangle
-	public boolean isInside(Character player)
+	public boolean isInside(Character player, int dir)
 	{		
 		float leftX = player.x_-player.width/2;
 		float rightX = player.x_+player.width/2;
 		float bottomY = player.y_-player.height/2;
-		
+		if (playerEdge(player, dir)) {
+			return false;
+		}
 		// Check bottom left corner of player character
 		if((leftX >= x_) && (leftX <= x_ + w_) && (bottomY >= y_) && (bottomY <= y_ + h_)) {
 			//System.out.println(leftX + " " + rightX + " " + bottomY + " " + x_ + " " + y_ + " " + h_ + " " + w_);
@@ -147,5 +149,30 @@ public class Rectangle {
 		else{
 			return false;
 		}
+	}
+
+	//Method for determining if enemy is touching edge
+	public boolean playerEdge(Character player, int dir) {
+		float leftX = player.x_-player.width/2;
+		float rightX = player.x_+player.width/2;
+		float bottomY = player.y_-player.height/2;
+		float topY = player.y_-player.height/2;
+		if (topY > y_ + h_ - 0.1f) {
+			return false;
+		}
+		float leftWallX = x_;
+		float rightWallX = x_ + w_;
+		
+		// Going left, hitting right wall
+		//leftX - 0.05f < rightWallX < left
+		if ((dir > 0) && (rightWallX < leftX) && (leftX - 0.1f < rightWallX)) {
+			return true;
+		}
+		// Going right, hitting left wall
+		if ((dir < 0) && (rightX + 0.07f > leftWallX) && (rightX < leftWallX)) {
+			return true;
+		}
+		
+		return false;
 	}
 }
