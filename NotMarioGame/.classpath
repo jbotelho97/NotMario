@@ -1,3 +1,4 @@
+<<<<<<< Upstream, based on branch 'master' of https://github.com/jbotelho97/NotMario
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
@@ -5,3 +6,12 @@
 	<classpathentry kind="lib" path="/Users/gel/Desktop/Processing.app/Contents/Java/core.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="C:/Users/adrul/Downloads/processing-3.3.6-windows32/processing-3.3.6/core/library/core.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
+>>>>>>> 3b5b691 implemented the menu

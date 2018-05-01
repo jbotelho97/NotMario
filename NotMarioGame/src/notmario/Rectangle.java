@@ -77,6 +77,14 @@ public class Rectangle {
 		y_ = y;
 	}
 	
+	public float getWidth() {
+		return w_;
+	}
+	
+	public float getHeight() {
+		return h_;
+	}
+	
 	public void move(int direction) {
 		x_ += (playerSpeedX_*direction);
 	}
@@ -129,6 +137,13 @@ public class Rectangle {
 			inside = false;
 		}
 		return inside;
+	}
+	
+	public boolean isInside(float x1, float y1) {
+		
+		System.out.println(x_ + " " + y_);
+		return (x1 >= x_ && x1 <= (x_ + w_) && y1 > y_ && y1 < (y_ + h_));
+		
 	}
 
 	//Method for enemy collision. This is just temporary until I find a better place to put it. -Jack

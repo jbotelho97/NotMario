@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 import processing.core.PApplet;
 import processing.core.PFont;
 
-import java.awt.font.*;
 
 public class MyWorld extends PApplet implements ApplicationConstants 
 {
@@ -24,7 +23,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 
 
     private int currentLevel = 0;
-	private boolean animate_ = true;
+	private boolean animate_ = false;
 	private boolean move_, aButton, dButton;
 	private float dir1_;
     public int enemyCount;
@@ -44,15 +43,9 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		frameRate(400);
 		
 		myGame = new LevelHandler();
-		
-		player1_ = new Character(0, 0, 1, 255, 0, 0);
-		
-		enemies = new Enemy[20];
-
-        generateEnemies(myGame);
 
         f = createFont("Arial",16,false); // Arial, 16 point, anti-aliasing off for right now
-
+        
 		setupGraphicClasses_(); // passes a reference of this app window to all graphical classes as a static variable
 	}
 
@@ -128,6 +121,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 
 
 			myGame.draw();
+<<<<<<< Upstream, based on branch 'master' of https://github.com/jbotelho97/NotMario
 //			platform.draw();
 			player1_.draw();
 			//TESTING ENEMIES - Jack
@@ -136,6 +130,23 @@ public class MyWorld extends PApplet implements ApplicationConstants
       }
 
         drawHealth(player1_.health); //Temporary Health Bar -Jack
+=======
+
+
+			if(currentLevel != 0) {
+//				platform.draw();
+				player1_.draw();
+				//TESTING ENEMIES - Jack
+				//enemies[0].draw();
+	            drawHealth(player1_.health); //Temporary Health Bar -Jack
+				//enemies[1].draw();
+	            point(0,0);
+	           // point(10,-5);
+			}
+			else
+				drawMenu();
+				
+>>>>>>> 3b5b691 implemented the menu
 		}
 
 		if(animate_) {
@@ -183,6 +194,19 @@ public class MyWorld extends PApplet implements ApplicationConstants
 	    text(s, -50, 35);
 
     }
+	
+	public void drawMenu() {
+		textFont(f,5);
+		fill(0);
+		scale(1,-1);
+		textAlign(CENTER);
+		String s = "Potato Farmer XTREME";
+		String s1 = "Play";
+		String s2 = "Quit";
+		text(s, 0, -30);
+		text(s1 , 20, 17);
+		text(s2, -21, 17);
+	}
 
 	public void cleanEnemies() {
 		int i = 0;
@@ -216,7 +240,8 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			break;
 			//player 1 jump command
 		case 'w':
-			player1_.jump();
+			if(currentLevel !=0)
+				player1_.jump();
 //			move_ = true;
 			break;
 		}
@@ -256,10 +281,28 @@ public class MyWorld extends PApplet implements ApplicationConstants
 
 	}
 	
+	public void mousePressed() {
+		if(currentLevel == 0) {
+			System.out.println(((mouseX-WORLD_ORIGIN_X)*PIXEL_TO_WORLD) + " " + ((mouseY-WORLD_ORIGIN_Y)*-PIXEL_TO_WORLD));
+			if(myGame.isInside(((mouseX-WORLD_ORIGIN_X)*PIXEL_TO_WORLD), ((mouseY-WORLD_ORIGIN_Y)*-PIXEL_TO_WORLD))) {
+				if(myGame.returnIndex() == 0)
+					levelWin();
+				else
+					System.exit(0);
+			}
+		}
+	}
+	
 	public void levelWin() {
 		animate_ = false;
 		currentLevel+=1;
 		myGame.setLevel(currentLevel);
+		
+		player1_ = new Character(0, 0, 1, 255, 0, 0);
+		
+		enemies = new Enemy[20];
+
+        generateEnemies(myGame);
 		animate_ = true;
 	}
 
