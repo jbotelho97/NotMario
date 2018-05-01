@@ -3,6 +3,5 @@
 	<classpathentry exported="true" kind="lib" path="C:/Users/joebu/Desktop/processing-3.3.6/core/library/core.jar"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Users/alexa/Desktop/processing-3.3.6/core/library/core.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
