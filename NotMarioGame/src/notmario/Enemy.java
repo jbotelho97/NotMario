@@ -9,6 +9,8 @@ package notmario;
 import processing.core.PApplet;
 
 import java.awt.Image;
+import java.util.Random;
+
 /*
 Delete if not used!
 import java.awt.Graphics;
@@ -35,6 +37,7 @@ public abstract class Enemy implements ApplicationConstants {
     public boolean isLeft, airborne, isMoving; //Checks if the enemy is facing left. Airbone checks if instance is airborne, isMoving is true if it is moving.
     private Image sprite; //The sprite of the enemy stored as an image.
     private int damage; //The amount of damage the enemy deals to the player
+    private int random;
     /*
     Necessary for initialization of Character and detects MyWorld
      */
@@ -166,34 +169,66 @@ public abstract class Enemy implements ApplicationConstants {
         }
     }
 
-    public int collision(Character p){
-        if((p.x_ + p.width/2 >= xcor) && (p.x_ - p.width/2 <= xcor + width) && (p.y_ - p.height/2 <= ycor) && (p.y_ - p.height/2 >= ycor - height)){
+    public int collision(Character p) {
+		float pLeftX = p.x_ - p.width/2;
+		float pRightX = p.x_ + p.width/2;
+    		
+        if((pRightX >= xcor) && (pLeftX <= xcor + width) && (p.y_ - p.height/2 <= ycor) && (p.y_ - p.height/2 >= ycor - height)){
             //System.out.println("You got hit");
             // System.out.println("Px: " + p.x_ + " Py: " + p.y_ + " Sx: " + xcor + " Sy: " + ycor);
             return -1;
         }
-        else if((p.x_ + p.width /4 >= xcor) && (p.x_ - p.width/4 <= xcor + width) && (p.y_  - p.height/2 >= ycor + height - 0.1f) && (p.y_ - p.height/2 <= ycor + height + 0.1f)){
+        else if((pRightX >= xcor) && (pLeftX <= xcor + width) && (p.y_ - p.height/2 >= ycor + height - 0.1f) && (p.y_ - p.height/2 <= ycor + height + 0.2f)){
             //System.out.println("Hit successful.");
-            takeHit();
+            takeHit(p);
+            p.vy_ = 0.1f;
             return 1;
         }
         return 0;
     }
+    //public int collision2(Powerup p){
+       /* if((p.x + p.width /4 >= xcor) && (p.x - p.width/4 <= xcor + width) && (p.y  - p.height/2 >= ycor + height - 0.1f) && (p.y - p.height/2 <= ycor + height + 0.1f)){
+           
+            takeHit();
+            return 1;
+        }
+        else if((p.x + p.width/2 >= xcor) && (p.x - p.width/2 <= xcor + width) && (p.y - p.height/2 <= ycor) && (p.y - p.height/2 >= ycor - height)){
+
+            return -1;
+        }
+        return 0;
+    }*/
 
     //Damages the enemy
-    public void takeHit(){
+    public void takeHit(Character p){
         if(health > 1){
             health--;
         }
         else {
             health = 0;
+            Random rand = new Random();
+            int chance = rand.nextInt(100);
+            if(chance >= 0 && chance <= 10) { 
+            	chance = rand.nextInt(3);
+            	p.setActivePowerUp(chance);
+            }
+        
+            
             die();
         }
+        
     }
+    
 
     //Kills the enemy
     public void die(){
-        xcor = -201;
+       
+        
+      //fire.checkActive();
+        //  Frost frost = new Frost(xcor, ycor, chance);
+         // Health health = new Health(xcor, ycor, chance);
+        
+    	xcor = -201;
         ycor = -201;
         //RNG Roll here
     }
