@@ -3,6 +3,8 @@ package notmario;
 import java.awt.Image;
 
 import processing.core.PApplet;
+import processing.core.PImage;
+
 import java.util.ArrayList;
 
 public class Character implements ApplicationConstants 
@@ -22,7 +24,8 @@ public class Character implements ApplicationConstants
 		private float r_, b_, g_;
 		public int health;
 		
-		private Image sprite;
+		private PImage[] sprites;
+		private int spriteIndex;
 		
 		/**
 		 * Main constructor of a character. It is given a location, size and color while being
@@ -35,20 +38,24 @@ public class Character implements ApplicationConstants
 		 * @param g
 		 * @param b
 		 */
-		public Character(float x, float y, float size, float r, float g, float b) {
+		public Character(float x, float y, float size, float r, float g, float b, PImage[] images) {
 			//location and size
 			x_ = x;
 			y_ = y;
 			size_ = size;
-			width = 5;
-			height = 10;
+			width = 40/WORLD_TO_PIXEL;
+			height = 74/WORLD_TO_PIXEL;
 			health = 100;
 			r_ = r;
 			b_ = b;
 			g_ = g;
 			fireBalls = new ArrayList();
 			frostBalls = new ArrayList();
-			//movement values in x and y direction
+			
+			sprites = images;
+			spriteIndex = 0;
+			
+			//movement values in y direction
 			vy_ = 0.0f;
 			
 			
@@ -85,11 +92,19 @@ public class Character implements ApplicationConstants
 			app_.stroke(0);
 			app_.fill(r_, g_, b_);
 			
-			app_.rect(0, 0, width, height);
+			//Collision rectangle for Player
+			//app_.rect(0, 0, width, height);
 			
 			app_.fill(0);
-			app_.ellipse(0, 0, 1, 1);
-			app_.ellipse(0 + width, 0, 1, 1);
+			
+			//Ground collision for Player
+			//app_.ellipse(0, 0, 1, 1);
+			//app_.ellipse(0 + width, 0, 1, 1);
+			
+			app_.pushMatrix();
+			app_.scale(PIXEL_TO_WORLD, -PIXEL_TO_WORLD);
+			app_.image(sprites[spriteIndex], 0, -height/PIXEL_TO_WORLD);
+			app_.popMatrix();
 			
 			app_.popMatrix();
 		}
@@ -116,12 +131,14 @@ public class Character implements ApplicationConstants
 		public void jump() {
 			if(airborne == false) {
 				vy_ = 0.15f;
+				spriteIndex = 3;
 				airborne = true;
 			}
 		}
 
 		
 		public void fall() {
+			spriteIndex = 3;
 			airborne = true;
 		}
 		
@@ -131,6 +148,9 @@ public class Character implements ApplicationConstants
 		public void land() {
 			vy_ = 0f;
 			airborne = false;
+			if(spriteIndex == 3) {
+				spriteIndex = 0;
+			}
 		}
 
 		//Takes a hit
@@ -141,6 +161,14 @@ public class Character implements ApplicationConstants
 				System.out.println("You died!");
 				System.exit(0);
 			}
+		}
+		
+		public boolean isAirborne() {
+			return airborne;
+		}
+		
+		public void setImageIndex(int i) {
+			spriteIndex = i;
 		}
 
 	/**

@@ -4,12 +4,13 @@ package notmario;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
-import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
+import org.apache.commons.lang3.ArrayUtils;
 
 import processing.core.PApplet;
 import processing.core.PFont;
+import processing.core.PImage;
 
 
 
@@ -28,6 +29,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 	private boolean move_, aButton, dButton;
 	private float dir1_;
     public int enemyCount;
+    private PImage[] ourSprites;
 
 
 	public void settings() {
@@ -43,6 +45,25 @@ public class MyWorld extends PApplet implements ApplicationConstants
 
 		frameRate(400);
 		
+		//Cuts from sprite sheet all sprite needed for objects
+				ourSprites = getImage(0,   0, 300, 300, 2);
+				ourSprites = ArrayUtils.addAll(ourSprites, getImage(300, 300,  40,  40, 2));
+				ourSprites = ArrayUtils.addAll(ourSprites, getImage(  0, 300,  40,  74, 5));
+				ourSprites = ArrayUtils.addAll(ourSprites, getImage(200, 300,  43,  78, 1));
+				ourSprites = ArrayUtils.addAll(ourSprites, getImage(  0, 380,  13,  14, 3));
+				ourSprites = ArrayUtils.addAll(ourSprites, getImage( 40, 380,  12,  11, 1));
+				ourSprites = ArrayUtils.addAll(ourSprites, getImage( 60, 380,  17,  15, 1));
+				ourSprites = ArrayUtils.addAll(ourSprites, getImage(  0, 400,  15,  15, 1));
+				ourSprites = ArrayUtils.addAll(ourSprites, getImage(  0, 415,  15,  36, 1));
+				ourSprites = ArrayUtils.addAll(ourSprites, getImage(  0, 460,  11,  11, 1));
+				ourSprites = ArrayUtils.addAll(ourSprites, getImage(  0, 500,  12,  17, 1));
+				ourSprites = ArrayUtils.addAll(ourSprites, getImage(  0, 500,  26,  28, 1));
+				ourSprites = ArrayUtils.addAll(ourSprites, getImage(  0, 550,  24,  16, 1));
+				ourSprites = ArrayUtils.addAll(ourSprites, getImage( 25, 550,  32,  21, 1));
+				ourSprites = ArrayUtils.addAll(ourSprites, getImage( 60, 550,  48,  49, 1));
+				ourSprites = ArrayUtils.addAll(ourSprites, getImage( 60, 480,  41,  65, 1));
+				ourSprites = ArrayUtils.addAll(ourSprites, getImage(110, 425, 184, 172, 1));
+		
 		myGame = new LevelHandler();
 
         f = createFont("Arial",16,false); // Arial, 16 point, anti-aliasing off for right now
@@ -51,37 +72,28 @@ public class MyWorld extends PApplet implements ApplicationConstants
 	}
 
 	// GET IMAGE COMMENT LATER
-		public static BufferedImage[] getImage(int xStart, int yStart, int rows, int cols, int count) {
+		public PImage[] getImage(int xStart, int yStart, int width, int height, int count) {
 			
-			BufferedImage Img = null;
-			try {
+			PImage Img;
 				
-			Img = ImageIO.read(new File("character_sheet.png"));
+			Img = loadImage("cs.png");
 			
-			}
-			
-			catch(IOException ex)
-			{
-				
-				JOptionPane.showMessageDialog(null, "<html>Error<br>Missing images</html>" ,
-					       "Error",JOptionPane.ERROR_MESSAGE);
-				
+			if(Img == null) {
 				System.exit(1);
-				
 			}
 			
 			// The above line throws an checked IOException which must be caught.
 			
-			BufferedImage[] sprites = new BufferedImage[count];
+			PImage[] sprites = new PImage[count];
 
 			for (int i = 0; i < count; i++)
 			{
 		
-				sprites[count] = Img.getSubimage(
-		            i * xStart,
+				sprites[i] = Img.get(
+		            xStart + (i * width),
 		            yStart,
-		            cols,
-		            rows
+		            width,
+		            height
 			        );
 			}
 			
@@ -236,6 +248,14 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			if(player1_ != null)
 				player1_.shoot(dir1_);
 		}
+		
+		if(aButton||dButton) {
+			if(!player1_.isAirborne()) {
+				//Will be changed for image loop movement
+				player1_.setImageIndex(1);
+				player1_.setImageIndex(2);
+			}
+		}
 	}
 
 	public void keyReleased() {
@@ -252,6 +272,11 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			if(aButton)
 				dir1_ = 1;
 			break;
+			
+		case 'w':
+			if(player1_ != null)
+				player1_.setImageIndex(0);
+			break;
 			//toggle the player's reference and attack boxes
 		case 't':
 //			player1_.toggleRef();
@@ -266,6 +291,9 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			move_ = true;
 		else {
 			dir1_ = 0;
+			if(!player1_.isAirborne()) {
+				player1_.setImageIndex(0);
+			}
 			move_ = false;
 		}
 
@@ -289,7 +317,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		currentLevel+=1;
 		myGame.setLevel(currentLevel);
 		
-		player1_ = new Character(0, 0, 1, 255, 0, 0);
+		player1_ = new Character(0, 0, 1, 255, 0, 0, Arrays.copyOfRange(ourSprites, 4, 8));
 		
 		enemies = new Enemy[20];
 
