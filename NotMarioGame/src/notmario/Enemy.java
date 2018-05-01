@@ -55,7 +55,6 @@ public abstract class Enemy implements ApplicationConstants {
         isLeft = true;
         playerSpeedX = 0.1f;
         airborne = false;
-
     }
 
     public void initNull(){
@@ -114,6 +113,11 @@ public abstract class Enemy implements ApplicationConstants {
     public void setVelXG(float a){velXWorld = a;}
     public void setVelYL(float a){velYLocal = a;}
     public void setVelYG(float a){velYWorld = a;}
+
+    //Methods to determine sprite direction
+    public void setDir(boolean a){
+        isLeft = a;
+    }
 
     //Methods to set or change xcor and ycor
     public void setXcor(float a){xcor = a;}

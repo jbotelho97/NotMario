@@ -11,11 +11,12 @@ public class Spudzilla extends Enemy {
 
     private Image spudIcon; //Spudzilla's sprite
     private float xspeed; //Spudzilla's current speed/direction horizontally.
-    FlyingPotato billy;
+    public boolean jumping;
 
     public Spudzilla(float x, float y){
-        super.init(x, y, 2, 10,20, 75, spudIcon);
-        xspeed = 0.06f;
+        super.init(x, y, 2, 7,9, 50, spudIcon);
+        xspeed = -0.06f;
+        isLeft = true;
     }
 
     //For a null spud.
@@ -23,27 +24,45 @@ public class Spudzilla extends Enemy {
         super.initNull();
     }
 
-    public FlyingPotato spawn(){
-        FlyingPotato bobby = new FlyingPotato(getXcoor(), getYcoor() + getWidth() * 0.75f);
-        return bobby;
+    //Spudzilla will jump
+    public void jump(){
+        if(jumping && getYcoor() <= 20){
+            float y = getYcoor();
+            y += 0.15f;
+            setYcor(y);
+        }
+        else{
+            jumping = false;
+            airborne = true;
+            fall();
+        }
+    }
+
+    //Checks jump height
+    private boolean jumpable(float y){
+        if(y >= 20){
+
+        }
+        return true;
     }
 
     public void moveCycle(LevelHandler h){
-        if(getXcoor() <= 30 && getXcoor() >= 0){
-            setSpeed(xspeed);
+        setSpeed(xspeed);
+        airborne = h.enemyInside(this);
+        if(jumping){
+            jump();
         }
-        else if(getXcoor() >= -30 && getXcoor() <= 0){
-            setSpeed(-1 * xspeed);
-        }
-        if(billy != null && billy.alive == true){
-            billy.moveCycle(h);
+        else if(airborne){
+            fall();
         }
         else{
-            billy = spawn();
+            land();
+            jumping = true;
         }
     }
 
-    public void turnAround(){}
+    @Override
+    public void turnAround(){xspeed *= -1;}
 
 
 }

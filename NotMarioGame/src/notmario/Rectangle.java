@@ -123,11 +123,11 @@ public class Rectangle {
 
 	//Method for enemy collision. This is just temporary until I find a better place to put it. -Jack
 	public boolean enemyInside(Enemy e){
-		if((e.getXcoor() >= x_) && (e.getXcoor() <= x_ + w_) && (e.getYcoor() >= y_)) {
+		if((e.getXcoor() >= x_) && (e.getXcoor() <= x_ + w_) && (e.getYcoor() >= y_  + h_ - 0.05f) && (e.getYcoor() <= y_ + h_ + 0.05f)) {
 			e.land();
 			return false;
 		}
-		else if((e.getXcoor()+ e.getWidth() >= x_) && (e.getXcoor() + e.getWidth() <= x_ + w_) && (e.getYcoor() >= y_)) {
+		else if((e.getXcoor()+ e.getWidth() >= x_) && (e.getXcoor() + e.getWidth() <= x_ + w_) && (e.getYcoor() >= y_ + h_ - 0.05f) && (e.getYcoor() <= y_ + h_ + 0.05f)) {
 			e.land();
 			return false;
 		}
