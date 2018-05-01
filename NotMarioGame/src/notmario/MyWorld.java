@@ -127,7 +127,6 @@ public class MyWorld extends PApplet implements ApplicationConstants
 //			platform.draw();
 			player1_.draw();
 			//TESTING ENEMIES - Jack
-			enemies[0].draw();
             drawHealth(player1_.health); //Temporary Health Bar -Jack
 			//enemies[1].draw();
             point(0,0);
