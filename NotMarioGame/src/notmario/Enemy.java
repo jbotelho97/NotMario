@@ -9,7 +9,7 @@ package notmario;
 import processing.core.PApplet;
 
 import java.awt.Image;
-import java.util.Random
+import java.util.Random;
 
 /*
 Delete if not used!
