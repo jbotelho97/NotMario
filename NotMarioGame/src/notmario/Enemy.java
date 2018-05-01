@@ -9,6 +9,8 @@ package notmario;
 import processing.core.PApplet;
 
 import java.awt.Image;
+import java.util.Random;
+
 /*
 Delete if not used!
 import java.awt.Graphics;
@@ -55,6 +57,7 @@ public abstract class Enemy implements ApplicationConstants {
         isLeft = true;
         playerSpeedX = 0.1f;
         airborne = false;
+
     }
 
     public void initNull(){
@@ -114,11 +117,6 @@ public abstract class Enemy implements ApplicationConstants {
     public void setVelYL(float a){velYLocal = a;}
     public void setVelYG(float a){velYWorld = a;}
 
-    //Methods to determine sprite direction
-    public void setDir(boolean a){
-        isLeft = a;
-    }
-
     //Methods to set or change xcor and ycor
     public void setXcor(float a){xcor = a;}
     public void setYcor(float a){ycor = a;}
@@ -166,7 +164,7 @@ public abstract class Enemy implements ApplicationConstants {
     }
 
     //Handles collision between character and enemy. This is a rough version
-    /*public int collision(Character p){
+    public int collision(Character p){
         if((p.x_ + p.width /4 >= xcor) && (p.x_ - p.width/4 <= xcor + width) && (p.y_  - p.height/2 >= ycor + height - 0.1f) && (p.y_ - p.height/2 <= ycor + height + 0.1f)){
             //System.out.println("Hit successful.");
             takeHit();
@@ -178,18 +176,17 @@ public abstract class Enemy implements ApplicationConstants {
             return -1;
         }
         return 0;
-    }*/
-
-    public int collision(Character p){
-        if((p.x_ + p.width/2 >= xcor) && (p.x_ - p.width/2 <= xcor + width) && (p.y_ - p.height/2 <= ycor) && (p.y_ - p.height/2 >= ycor - height)){
-            //System.out.println("You got hit");
-            // System.out.println("Px: " + p.x_ + " Py: " + p.y_ + " Sx: " + xcor + " Sy: " + ycor);
-            return -1;
-        }
-        else if((p.x_ + p.width /4 >= xcor) && (p.x_ - p.width/4 <= xcor + width) && (p.y_  - p.height/2 >= ycor + height - 0.1f) && (p.y_ - p.height/2 <= ycor + height + 0.1f)){
-            //System.out.println("Hit successful.");
+    }
+    
+    public int collision2(Powerup p){
+        if((p.x + p.width /4 >= xcor) && (p.x - p.width/4 <= xcor + width) && (p.y  - p.height/2 >= ycor + height - 0.1f) && (p.y - p.height/2 <= ycor + height + 0.1f)){
+           
             takeHit();
             return 1;
+        }
+        else if((p.x + p.width/2 >= xcor) && (p.x - p.width/2 <= xcor + width) && (p.y - p.height/2 <= ycor) && (p.y - p.height/2 >= ycor - height)){
+
+            return -1;
         }
         return 0;
     }
@@ -207,7 +204,16 @@ public abstract class Enemy implements ApplicationConstants {
 
     //Kills the enemy
     public void die(){
-        xcor = -201;
+        Random rand = new Random();
+        int chance = rand.nextInt(100);
+        if(chance >= 0 && chance <= 10) {
+        chance = rand.nextInt(3);
+        Fire fire = new Fire(xcor, ycor, chance);
+        Frost frost = new Frost(xcor, ycor, chance);
+        Health health = new Health(xcor, ycor, chance);
+        
+        }
+    	xcor = -201;
         ycor = -201;
         //RNG Roll here
     }

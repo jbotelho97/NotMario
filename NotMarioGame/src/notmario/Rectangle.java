@@ -77,14 +77,6 @@ public class Rectangle {
 		y_ = y;
 	}
 	
-	public float getWidth() {
-		return w_;
-	}
-	
-	public float getHeight() {
-		return h_;
-	}
-	
 	public void move(int direction) {
 		x_ += (playerSpeedX_*direction);
 	}
@@ -108,51 +100,60 @@ public class Rectangle {
 
 	}
 
+	public int pointOnEdge(float x, float y) {
+		if ((x >= x_ + w_ - 0.05f) && (x <= x_ + w_ + 0.05f) && (y < y_ + h_)) {
+			return 1;
+		} else if ((x >= x_ - 0.05f) &&(x <= x_ + 0.05f) && (y < y_ + h_)) {
+			return 2;
+		}
+		return 0;
+	}
+
  	//Tells whether player char is in rectangle
-	public boolean isInside(Character player, int dir)
+	public boolean isInside(Character player)
 	{		
 		float leftX = player.x_-player.width/2;
 		float rightX = player.x_+player.width/2;
 		float bottomY = player.y_-player.height/2;
-		boolean inside = false;
+		
 		// Check bottom left corner of player character
 		if((leftX >= x_) && (leftX <= x_ + w_) && (bottomY >= y_) && (bottomY <= y_ + h_)) {
 			//System.out.println(leftX + " " + rightX + " " + bottomY + " " + x_ + " " + y_ + " " + h_ + " " + w_);
-			inside = true;
+			return true;
 		}
 		// Check bottom right corner of player character
 		if ((rightX >= x_) && (rightX <= x_ + w_) && (bottomY >= y_) && (bottomY <= y_ + h_)) {
 			//System.out.println(leftX + " " + rightX + " " + bottomY + " " + x_ + " " + y_ + " " + h_ + " " + w_);
-			inside = true;
+			return true;
 		}
-		
-		if (inside) {
-			// Fell inside floor somehow.
-			if (bottomY < y_ + h_) {
-				player.y_ = y_ + h_ + player.height/2;
-				player.vy_ = 0;
-			}
-		}
-		if (playerEdge(player, dir)) {
-			inside = false;
-		}
-		return inside;
+
+		return false;
 	}
-	
-	public boolean isInside(float x1, float y1) {
+
+ 	//Tells whether player char is in rectangle
+	public int playerEdge(Character player)
+	{		
+		float leftX = player.x_-player.width/2;
+		float rightX = player.x_+player.width/2;
+		float bottomY = player.y_-player.height/2;
+		float topY = player.y_+player.height/2;
 		
-		System.out.println(x_ + " " + y_);
-		return (x1 >= x_ && x1 <= (x_ + w_) && y1 > y_ && y1 < (y_ + h_));
-		
+		// Check bottom left corner of player character
+		int edge = pointOnEdge(leftX, bottomY);
+		edge = edge | pointOnEdge(leftX, topY);
+		edge = edge | pointOnEdge(rightX, bottomY);
+		edge = edge | pointOnEdge(rightX, topY);
+
+		return edge;
 	}
 
 	//Method for enemy collision. This is just temporary until I find a better place to put it. -Jack
 	public boolean enemyInside(Enemy e){
-		if((e.getXcoor() >= x_) && (e.getXcoor() <= x_ + w_) && (e.getYcoor() >= y_  + h_ - 0.05f) && (e.getYcoor() <= y_ + h_ + 0.05f)) {
+		if((e.getXcoor() >= x_) && (e.getXcoor() <= x_ + w_) && (e.getYcoor() >= y_)) {
 			e.land();
 			return false;
 		}
-		else if((e.getXcoor()+ e.getWidth() >= x_) && (e.getXcoor() + e.getWidth() <= x_ + w_) && (e.getYcoor() >= y_ + h_ - 0.05f) && (e.getYcoor() <= y_ + h_ + 0.05f)) {
+		else if((e.getXcoor()+ e.getWidth() >= x_) && (e.getXcoor() + e.getWidth() <= x_ + w_) && (e.getYcoor() >= y_)) {
 			e.land();
 			return false;
 		}
@@ -163,39 +164,6 @@ public class Rectangle {
 	//Method for determining if enemy is touching edge
 	public boolean enemyEdge(Enemy e){
 		float farX = e.getXcoor() + e.getWidth();
-		if((e.getXcoor() >= x_ + w_ - 0.05f) &&(e.getXcoor() <= x_ + w_ +0.05f) &&(e.getYcoor() < y_ + h_)){
-			return true;
-		}
-		else if((farX >= x_ -0.05f) && (farX <= x_ + 0.05f) && (e.getYcoor() < y_ + h_)){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-
-	//Method for determining if enemy is touching edge
-	public boolean playerEdge(Character player, int dir) {
-		float leftX = player.x_-player.width/2;
-		float rightX = player.x_+player.width/2;
-		float bottomY = player.y_-player.height/2;
-		float topY = player.y_-player.height/2;
-		if (topY > y_ + h_ - 0.1f) {
-			return false;
-		}
-		float leftWallX = x_;
-		float rightWallX = x_ + w_;
-		
-		// Going left, hitting right wall
-		//leftX - 0.05f < rightWallX < left
-		if ((dir > 0) && (rightWallX < leftX) && (leftX - 0.1f < rightWallX)) {
-			return true;
-		}
-		// Going right, hitting left wall
-		if ((dir < 0) && (rightX + 0.07f > leftWallX) && (rightX < leftWallX)) {
-			return true;
-		}
-		
-		return false;
+		return (pointOnEdge(e.getXcoor(), e.getYcoor()) < 0 || pointOnEdge(farX, e.getYcoor()) > 0);
 	}
 }
