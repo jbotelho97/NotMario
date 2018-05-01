@@ -180,7 +180,7 @@ public abstract class Enemy implements ApplicationConstants {
         }
         else if((pRightX >= xcor) && (pLeftX <= xcor + width) && (p.y_ - p.height/2 >= ycor + height - 0.1f) && (p.y_ - p.height/2 <= ycor + height + 0.2f)){
             //System.out.println("Hit successful.");
-            takeHit();
+            takeHit(p);
             p.vy_ = 0.1f;
             return 1;
         }
@@ -200,26 +200,34 @@ public abstract class Enemy implements ApplicationConstants {
     }*/
 
     //Damages the enemy
-    public void takeHit(){
+    public void takeHit(Character p){
         if(health > 1){
             health--;
         }
         else {
             health = 0;
+            Random rand = new Random();
+            int chance = rand.nextInt(100);
+            if(chance >= 0 && chance <= 10) { 
+            	chance = rand.nextInt(3);
+            	p.setActivePowerUp(chance);
+            }
+        
+            
             die();
         }
+        
     }
+    
 
     //Kills the enemy
     public void die(){
-        Random rand = new Random();
-        int chance = rand.nextInt(100);
-        if(chance >= 0 && chance <= 10) {
-        chance = rand.nextInt(3);
+       
+        
       //fire.checkActive();
         //  Frost frost = new Frost(xcor, ycor, chance);
          // Health health = new Health(xcor, ycor, chance);
-        }
+        
     	xcor = -201;
         ycor = -201;
         //RNG Roll here

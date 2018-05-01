@@ -59,7 +59,7 @@ public class LevelHandler {
 			}
 
 			if (levelCollection[currentLevel][platformIndex].isInside(player, dir)) {
-				System.out.println(platformIndex);
+			//	System.out.println(platformIndex);
 				return true;
 			}
 		}

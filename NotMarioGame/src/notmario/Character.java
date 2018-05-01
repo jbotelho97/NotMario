@@ -11,6 +11,9 @@ public class Character implements ApplicationConstants
 	private static PApplet app_; 
 	private Powerup pow;
 	private ArrayList <Fire> fireBalls;
+	private ArrayList <Frost> frostBalls;
+	
+	private int activePowerUp =4;
 		
 		private boolean ref_ = false;
 		private boolean airborne = false;
@@ -18,6 +21,7 @@ public class Character implements ApplicationConstants
 		//color
 		private float r_, b_, g_;
 		public int health;
+		
 		private Image sprite;
 		
 		/**
@@ -43,6 +47,7 @@ public class Character implements ApplicationConstants
 			b_ = b;
 			g_ = g;
 			fireBalls = new ArrayList();
+			frostBalls = new ArrayList();
 			//movement values in x and y direction
 			vy_ = 0.0f;
 			
@@ -56,6 +61,10 @@ public class Character implements ApplicationConstants
 			for(Fire fire: fireBalls) {
 				if(fire != null)
 				fire.draw();
+			}
+			for(Frost frost: frostBalls) {
+				if(frost != null)
+				frost.draw();
 			}
 			// we use this object's instance variable to access the application's instance methods and variables
 			app_.pushMatrix();
@@ -127,6 +136,7 @@ public class Character implements ApplicationConstants
 		//Takes a hit
 		public void takeHit(Enemy e){
 			health -= e.getDamage();
+			activePowerUp = 4;
 			if (health <= 0){
 				System.out.println("You died!");
 				System.exit(0);
@@ -155,7 +165,7 @@ public class Character implements ApplicationConstants
 	}
 	public void shoot(float dir) {
 		System.out.println("activated");
-		 
+		 if(activePowerUp == 0) {
 		 if(airborne) {
 			 System.out.println("airborne");
 		   Fire temp = new Fire(x_+ (width/2 * -dir),y_- (vy_+gravity), 0, dir);
@@ -164,6 +174,36 @@ public class Character implements ApplicationConstants
 			 Fire temp = new Fire(x_+ (width/2*-dir),y_, 0, dir); 
 			 fireBalls.add(temp);
 		 }
+		 }else if(activePowerUp == 1) {
+			 if(airborne) {
+				 System.out.println("airborne");
+			   Frost temp = new Frost(x_+ (width/2 * -dir),y_- (vy_+gravity), 0, dir);
+			   frostBalls.add(temp);
+			 }else {
+				 Frost temp = new Frost(x_+ (width/2*-dir),y_, 0, dir); 
+				 frostBalls.add(temp);
+			 }
+		 }
+		else {
+			 return;
+		 }
+		 
+	}
+	public void setActivePowerUp(int number) {
+		activePowerUp = number;
+		//if(activePowerUp == 2) {
+			System.out.println("activated");
+			setHealth(100);
+		
+		//}
+	}
+	public void setHealth(int h) {
+		health = h;
+		activePowerUp = 4;
+		System.out.println(health);
+	}
+	public int getHealth() {
+		return health;
 	}
 	}
 

@@ -92,7 +92,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 
 	public void generateEnemies(LevelHandler h){
         //If you want a test enemy, un comment next two lines.
-        //enemies[0] = new ArmoredSpud(25,-5.0f);//Test Spud
+        enemies[0] = new ArmoredSpud(25,-5.0f);//Test Spud
         enemyCount++;
 	    /*switch(h.currentLevel){
 
@@ -120,8 +120,9 @@ public class MyWorld extends PApplet implements ApplicationConstants
 //				platform.draw();
 				player1_.draw();
 				//TESTING ENEMIES - Jack
-				//enemies[0].draw();
+				enemies[0].draw();
 	            drawHealth(player1_.health); //Temporary Health Bar -Jack
+	            System.out.println(player1_.getHealth());
 				//enemies[1].draw();
 	            point(0,0);
 	           // point(10,-5);
@@ -135,11 +136,11 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			player1_.animate();
 
 			if(myGame.isInside(player1_, (int)dir1_)) {
-				System.out.println("inside");
+			//	System.out.println("inside");
 				player1_.land();
 			}
 			else {
-                System.out.println("outside");
+              //  System.out.println("outside");
                 player1_.fall();
             }
 			boolean onEdge = myGame.isEdge(player1_, (int)dir1_);
