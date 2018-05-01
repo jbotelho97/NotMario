@@ -37,6 +37,7 @@ public abstract class Enemy implements ApplicationConstants {
     public boolean isLeft, airborne, isMoving; //Checks if the enemy is facing left. Airbone checks if instance is airborne, isMoving is true if it is moving.
     private Image sprite; //The sprite of the enemy stored as an image.
     private int damage;
+    private int random;
     /*
     Necessary for initialization of Character and detects MyWorld
      */
