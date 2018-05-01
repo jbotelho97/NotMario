@@ -31,10 +31,10 @@ public abstract class Enemy implements ApplicationConstants {
     playerSpeedX -> temp -Jack
      */
     private float xcor, ycor, size, velXLocal, velXWorld, width, height, velYLocal, velYWorld,playerSpeedX;
-    public float angle; //temp
+    public float angle; //detrmines angle of sprite
     public boolean isLeft, airborne, isMoving; //Checks if the enemy is facing left. Airbone checks if instance is airborne, isMoving is true if it is moving.
     private Image sprite; //The sprite of the enemy stored as an image.
-    private int damage;
+    private int damage; //The amount of damage the enemy deals to the player
     /*
     Necessary for initialization of Character and detects MyWorld
      */
@@ -57,6 +57,7 @@ public abstract class Enemy implements ApplicationConstants {
         airborne = false;
     }
 
+    //Initializes a null enemy.
     public void initNull(){
         xcor = 0;
         ycor = 0;
@@ -164,21 +165,6 @@ public abstract class Enemy implements ApplicationConstants {
             xcor += (playerSpeedX * direction);
         }
     }
-
-    //Handles collision between character and enemy. This is a rough version
-    /*public int collision(Character p){
-        if((p.x_ + p.width /4 >= xcor) && (p.x_ - p.width/4 <= xcor + width) && (p.y_  - p.height/2 >= ycor + height - 0.1f) && (p.y_ - p.height/2 <= ycor + height + 0.1f)){
-            //System.out.println("Hit successful.");
-            takeHit();
-            return 1;
-        }
-        else if((p.x_ + p.width/2 >= xcor) && (p.x_ - p.width/2 <= xcor + width) && (p.y_ - p.height/2 <= ycor) && (p.y_ - p.height/2 >= ycor - height)){
-            //System.out.println("You got hit");
-           // System.out.println("Px: " + p.x_ + " Py: " + p.y_ + " Sx: " + xcor + " Sy: " + ycor);
-            return -1;
-        }
-        return 0;
-    }*/
 
     public int collision(Character p){
         if((p.x_ + p.width/2 >= xcor) && (p.x_ - p.width/2 <= xcor + width) && (p.y_ - p.height/2 <= ycor) && (p.y_ - p.height/2 >= ycor - height)){

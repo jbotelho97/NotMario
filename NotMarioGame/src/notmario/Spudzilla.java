@@ -4,7 +4,6 @@ Spudzilla is a bigger enemy that takes two hits to kill.
 He is more intelligent and throws projectiles and tries to keep distance from a player.
  */
 package notmario;
-import processing.core.PApplet;
 import java.awt.Image;
 
 public class Spudzilla extends Enemy {
@@ -36,14 +35,6 @@ public class Spudzilla extends Enemy {
             airborne = true;
             fall();
         }
-    }
-
-    //Checks jump height
-    private boolean jumpable(float y){
-        if(y >= 20){
-
-        }
-        return true;
     }
 
     public void moveCycle(LevelHandler h){
