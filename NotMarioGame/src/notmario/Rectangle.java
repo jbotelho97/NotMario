@@ -106,21 +106,29 @@ public class Rectangle {
 		float leftX = player.x_-player.width/2;
 		float rightX = player.x_+player.width/2;
 		float bottomY = player.y_-player.height/2;
-		if (playerEdge(player, dir)) {
-			return false;
-		}
+		boolean inside = false;
 		// Check bottom left corner of player character
 		if((leftX >= x_) && (leftX <= x_ + w_) && (bottomY >= y_) && (bottomY <= y_ + h_)) {
 			//System.out.println(leftX + " " + rightX + " " + bottomY + " " + x_ + " " + y_ + " " + h_ + " " + w_);
-			return true;
+			inside = true;
 		}
 		// Check bottom right corner of player character
 		if ((rightX >= x_) && (rightX <= x_ + w_) && (bottomY >= y_) && (bottomY <= y_ + h_)) {
 			//System.out.println(leftX + " " + rightX + " " + bottomY + " " + x_ + " " + y_ + " " + h_ + " " + w_);
-			return true;
+			inside = true;
 		}
-
-		return false;
+		
+		if (inside) {
+			// Fell inside floor somehow.
+			if (bottomY < y_ + h_) {
+				player.y_ = y_ + h_ + player.height/2;
+				player.vy_ = 0;
+			}
+		}
+		if (playerEdge(player, dir)) {
+			inside = false;
+		}
+		return inside;
 	}
 
 	//Method for enemy collision. This is just temporary until I find a better place to put it. -Jack
