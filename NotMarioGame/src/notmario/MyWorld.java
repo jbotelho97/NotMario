@@ -98,17 +98,12 @@ public class MyWorld extends PApplet implements ApplicationConstants
 
 	public void generateEnemies(LevelHandler h){
         //If you want a test enemy, un comment next two lines.
-        enemies[0] = new Spudzilla(25,-5.0f);//Test Spud
+        enemies[0] = new ArmoredSpud(25,-5.0f);//Test Spud
         enemyCount++;
 	    /*switch(h.currentLevel){
 
         }*/
     }
-
-    public void newEnemy(Enemy e){
-		enemies[enemyCount] = e;
-		enemyCount++;
-	}
 
 	public void draw() {
 		frame_++;
@@ -124,8 +119,6 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			translate(WORLD_ORIGIN_X, WORLD_ORIGIN_Y); 
 			scale(WORLD_TO_PIXEL, -WORLD_TO_PIXEL);
 			stroke(0);
-
-
 
 			myGame.draw();
 //			platform.draw();

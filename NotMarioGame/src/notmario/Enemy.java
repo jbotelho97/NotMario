@@ -28,7 +28,7 @@ public abstract class Enemy implements ApplicationConstants {
     velYWorld -> cancels out screen movement
     width -> width of sprite
     height -> height of sprite
-    playerSpeedX -> temp -Jack
+    playerSpeedX -> Scalar of the speed of player.
      */
     private float xcor, ycor, size, velXLocal, velXWorld, width, height, velYLocal, velYWorld,playerSpeedX;
     public float angle; //detrmines angle of sprite
@@ -38,8 +38,8 @@ public abstract class Enemy implements ApplicationConstants {
     /*
     Necessary for initialization of Character and detects MyWorld
      */
-    private static int appSetCounter_ = 0;
-    private static PApplet app_;
+    private static int appSetCounter_ = 0; //Needed for instance of PApplet
+    private static PApplet app_; //Instance of PApplet
 
     //Initialized the enemy at a specific xcor, ycor and with the corresponding sprite.
     public void init(float x_, float y_, int hits, float w, float h, int d, Image img) {

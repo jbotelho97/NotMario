@@ -11,10 +11,12 @@ public class ArmoredSpud extends Enemy {
         xspeed = -0.075f;
     }
 
+    //Initializes a null spud
     public ArmoredSpud(){
         super.initNull();
     }
 
+    //Overrided the MoveCycle. Spud walks left untill he hits
     @Override
     public void moveCycle(LevelHandler h) {
         setSpeed(xspeed);

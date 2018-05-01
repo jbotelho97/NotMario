@@ -1,7 +1,7 @@
 /*
 Author : Jack Botelho
 Spudzilla is a bigger enemy that takes two hits to kill.
-He is more intelligent and throws projectiles and tries to keep distance from a player.
+He is a jumping enemy who endlessly jumps until he dies or kills the player.
  */
 package notmario;
 import java.awt.Image;
@@ -10,10 +10,10 @@ public class Spudzilla extends Enemy {
 
     private Image spudIcon; //Spudzilla's sprite
     private float xspeed; //Spudzilla's current speed/direction horizontally.
-    public boolean jumping;
+    public boolean jumping; //Is true when Spudzilla is jumping.
 
-    public Spudzilla(float x, float y){
-        super.init(x, y, 2, 7,9, 50, spudIcon);
+    public Spudzilla(float x, float y){ //Standard Spudzilla initialization
+        super.init(x, y, 2, 6,8, 50, spudIcon);
         xspeed = -0.06f;
         isLeft = true;
     }
@@ -25,18 +25,20 @@ public class Spudzilla extends Enemy {
 
     //Spudzilla will jump
     public void jump(){
-        if(jumping && getYcoor() <= 20){
+        if(jumping && getYcoor() <= 20){//If he hasn't reached the maximum height of his jump
             float y = getYcoor();
             y += 0.15f;
             setYcor(y);
         }
-        else{
+        else{//This lets him fall back down.
             jumping = false;
             airborne = true;
             fall();
         }
     }
 
+
+    //Override of the moveCycle. Spudzilla jumps and moves to the left until he dies or is killed.
     public void moveCycle(LevelHandler h){
         setSpeed(xspeed);
         airborne = h.enemyInside(this);
@@ -52,6 +54,7 @@ public class Spudzilla extends Enemy {
         }
     }
 
+    //Turns Spudzilla around
     @Override
     public void turnAround(){xspeed *= -1;}
 
