@@ -142,12 +142,15 @@ public class MyWorld extends PApplet implements ApplicationConstants
                 System.out.println("outside");
                 player1_.fall();
             }
-			if(!myGame.isEdge(player1_, (int)dir1_)) {
+			boolean onEdge = myGame.isEdge(player1_, (int)dir1_);
+			if(!onEdge) {
 				myGame.move((int)dir1_, move_);
             }
 			for(int i = 0; i < enemyCount; i++) {
 			    if(enemies[i].getHealth() >= 0) {
-                    enemies[i].passiveMove((int) dir1_, move_);//Moving w/ the screen
+                    if (!onEdge) {
+                    		enemies[i].passiveMove((int) dir1_, move_);//Moving w/ the screen
+                    }
                     enemies[i].moveCycle(myGame); //Unique Movement Cycle
                     int x = enemies[i].collision(player1_); //Checks if player collides with enemy.
                     switch (x) {
