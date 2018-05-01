@@ -8,7 +8,7 @@ public class ArmoredSpud extends Enemy {
 
     public ArmoredSpud(float x, float y){
         super.init(x, y, 2,5, 5,35, aSpudIcon);
-        xspeed = -0.075f;
+        xspeed = -0.06f;
     }
 
     //Initializes a null spud

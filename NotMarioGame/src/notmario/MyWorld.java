@@ -158,6 +158,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			boolean onEdge = myGame.isEdge(player1_, (int)dir1_);
 			if(!onEdge) {
 				myGame.move((int)dir1_, move_);
+				player1_.passiveMoveProjectiles((int)dir1_, move_);
             }
 			for(int i = 0; i < enemyCount; i++) {
 			    if(enemies[i] != null) {
@@ -225,6 +226,10 @@ public class MyWorld extends PApplet implements ApplicationConstants
 	}
 	
 	public void keyPressed() {
+		if (player1_ == null) {
+			return;
+		}
+
 		switch(key) {
 		//move left
 		case 'a':
@@ -240,13 +245,11 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			break;
 			//player 1 jump command
 		case 'w':
-			if(player1_ != null)
-				player1_.jump();
+			player1_.jump();
 //			move_ = true;
 			break;
 		case 'f':
-			if(player1_ != null)
-				player1_.shoot(dir1_);
+			player1_.shoot(dir1_);
 		}
 		
 		if(aButton||dButton) {
@@ -259,6 +262,9 @@ public class MyWorld extends PApplet implements ApplicationConstants
 	}
 
 	public void keyReleased() {
+		if (player1_ == null) {
+			return;
+		}
 
 		switch(key) {
 		//Causes all keys to stop movement (except jump)
@@ -274,8 +280,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			break;
 			
 		case 'w':
-			if(player1_ != null)
-				player1_.setImageIndex(0);
+			player1_.setImageIndex(0);
 			break;
 			//toggle the player's reference and attack boxes
 		case 't':

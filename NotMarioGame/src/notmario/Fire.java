@@ -78,12 +78,16 @@ public class Fire extends PApplet implements Powerup, ApplicationConstants {
 	 public void move() {
 		 if(active) {
 			 if (direction ==0) {
-				 xcor+= 0.1 *1;
+				 xcor+= 0.15 *1;
 			 }
-			 xcor += 0.1 * -direction;
+			 xcor += 0.15 * -direction;
 		 }
 	 }
 	
+	
+	 public void passiveMove(int dir) {
+		 xcor += 0.1 * dir;
+	 }
 	
 	 
 	 public void spawnPowerup() {}
