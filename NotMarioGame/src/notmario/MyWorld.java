@@ -27,7 +27,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
     private int currentLevel = 0;
 	private boolean animate_ = false;
 	private boolean move_, aButton, dButton;
-	private float dir1_;
+	private float dir1_, lastdir_;
     public int enemyCount;
     private PImage[] ourSprites;
 
@@ -234,12 +234,14 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		//move left
 		case 'a':
 			dir1_ = 1f;
+			lastdir_ = 1f;
 			move_ = true;
 			aButton = true;
 			break;
 			//move right
 		case 'd':
 			dir1_ = -1f;
+			lastdir_ = -1f;
 			move_ = true;
 			dButton = true;
 			break;
@@ -249,7 +251,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 //			move_ = true;
 			break;
 		case 'f':
-			player1_.shoot(dir1_);
+			player1_.shoot(lastdir_);
 		}
 		
 		if(aButton||dButton) {
@@ -270,13 +272,17 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		//Causes all keys to stop movement (except jump)
 		case 'a':
 			aButton = false;
-			if(dButton)
+			if(dButton) {
 				dir1_ = -1;
+				lastdir_ = -1;
+			}
 			break;
 		case 'd':
 			dButton = false;
-			if(aButton)
+			if(aButton) {
 				dir1_ = 1;
+				lastdir_ = -1;
+			}
 			break;
 			
 		case 'w':
