@@ -177,8 +177,8 @@ public abstract class Enemy implements ApplicationConstants {
         }
         return 0;
     }
-    public int collision2(Powerup p){
-        if((p.x + p.width /4 >= xcor) && (p.x - p.width/4 <= xcor + width) && (p.y  - p.height/2 >= ycor + height - 0.1f) && (p.y - p.height/2 <= ycor + height + 0.1f)){
+    //public int collision2(Powerup p){
+       /* if((p.x + p.width /4 >= xcor) && (p.x - p.width/4 <= xcor + width) && (p.y  - p.height/2 >= ycor + height - 0.1f) && (p.y - p.height/2 <= ycor + height + 0.1f)){
            
             takeHit();
             return 1;
@@ -188,7 +188,7 @@ public abstract class Enemy implements ApplicationConstants {
             return -1;
         }
         return 0;
-    }
+    }*/
 
     //Damages the enemy
     public void takeHit(){
@@ -208,8 +208,8 @@ public abstract class Enemy implements ApplicationConstants {
         if(chance >= 0 && chance <= 10) {
         chance = rand.nextInt(3);
         Fire fire = new Fire(xcor, ycor, chance);
-        Frost frost = new Frost(xcor, ycor, chance);
-        Health health = new Health(xcor, ycor, chance);
+      //  Frost frost = new Frost(xcor, ycor, chance);
+       // Health health = new Health(xcor, ycor, chance);
         
         }
     	xcor = -201;

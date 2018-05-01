@@ -188,13 +188,13 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		switch(key) {
 		//move left
 		case 'a':
-			dir1_ = 1;
+			dir1_ = 1f;
 			move_ = true;
 			aButton = true;
 			break;
 			//move right
 		case 'd':
-			dir1_ = -1;
+			dir1_ = -1f;
 			move_ = true;
 			dButton = true;
 			break;
@@ -203,6 +203,8 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			player1_.jump();
 //			move_ = true;
 			break;
+		case 'f':
+			player1_.shoot(dir1_);
 		}
 	}
 

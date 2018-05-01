@@ -27,7 +27,7 @@ public interface Powerup
 	    public Image getSprite();/*{
 	        return sprite;
 	    }*/
-	    public void draw();/*{
+	    /*{
 	        app_.pushMatrix();
 
 	        app_.stroke(0);
@@ -38,7 +38,7 @@ public interface Powerup
 	        app_.popMatrix();
 	    }*/
 	    public void spawnPowerup();
-	    public void shoot();/* {
+	    public void shoot(float dir);/* {
 	   	
 	    }*/
 }

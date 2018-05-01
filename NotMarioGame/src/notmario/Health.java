@@ -1,4 +1,4 @@
-package notmario;
+/*package notmario;
 import processing.core.PApplet;
 
 import java.awt.Image;
@@ -26,4 +26,4 @@ public class Health implements Powerup {
 		}
 	
 	}
-}
+} */
