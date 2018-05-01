@@ -8,7 +8,7 @@ public class Character implements ApplicationConstants
 {
 	private static int appSetCounter_ = 0;
 	private static PApplet app_; 
-	
+	private Powerup pow;
 	
 		
 		private boolean ref_ = false;
@@ -146,4 +146,9 @@ public class Character implements ApplicationConstants
 		return appSetCounter_;
 
 	}
-}
+	public void shoot(float dir) {
+		Fire power = new Fire(x_, y_, 0); 
+		power.draw(dir);
+	}
+	}
+

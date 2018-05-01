@@ -9,6 +9,8 @@ package notmario;
 import processing.core.PApplet;
 
 import java.awt.Image;
+import java.util.Random;
+
 /*
 Delete if not used!
 import java.awt.Graphics;
@@ -175,6 +177,18 @@ public abstract class Enemy implements ApplicationConstants {
         }
         return 0;
     }
+    //public int collision2(Powerup p){
+       /* if((p.x + p.width /4 >= xcor) && (p.x - p.width/4 <= xcor + width) && (p.y  - p.height/2 >= ycor + height - 0.1f) && (p.y - p.height/2 <= ycor + height + 0.1f)){
+           
+            takeHit();
+            return 1;
+        }
+        else if((p.x + p.width/2 >= xcor) && (p.x - p.width/2 <= xcor + width) && (p.y - p.height/2 <= ycor) && (p.y - p.height/2 >= ycor - height)){
+
+            return -1;
+        }
+        return 0;
+    }*/
 
     //Damages the enemy
     public void takeHit(){
@@ -189,7 +203,16 @@ public abstract class Enemy implements ApplicationConstants {
 
     //Kills the enemy
     public void die(){
-        xcor = -201;
+        Random rand = new Random();
+        int chance = rand.nextInt(100);
+        if(chance >= 0 && chance <= 10) {
+        chance = rand.nextInt(3);
+        Fire fire = new Fire(xcor, ycor, chance);
+      //  Frost frost = new Frost(xcor, ycor, chance);
+       // Health health = new Health(xcor, ycor, chance);
+        
+        }
+    	xcor = -201;
         ycor = -201;
         //RNG Roll here
     }
