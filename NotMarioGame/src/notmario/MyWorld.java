@@ -319,6 +319,16 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			println("A graphic classe\'s setup() method was called illegally before this class");
 			System.exit(-1);
 		}
+		if (Fire.setup(this) != 1)
+		{
+			println("A graphic classe\'s setup() method was called illegally before this class");
+			System.exit(-1);
+		}
+		if (Frost.setup(this) != 1)
+		{
+			println("A graphic classe\'s setup() method was called illegally before this class");
+			System.exit(-1);
+		}
 	}
 
 	public static void main(String[] args) {

@@ -37,6 +37,7 @@ public abstract class Enemy implements ApplicationConstants {
     public boolean isLeft, airborne, isMoving; //Checks if the enemy is facing left. Airbone checks if instance is airborne, isMoving is true if it is moving.
     private Image sprite; //The sprite of the enemy stored as an image.
     private int damage; //The amount of damage the enemy deals to the player
+    private int random;
     /*
     Necessary for initialization of Character and detects MyWorld
      */
@@ -215,10 +216,9 @@ public abstract class Enemy implements ApplicationConstants {
         int chance = rand.nextInt(100);
         if(chance >= 0 && chance <= 10) {
         chance = rand.nextInt(3);
-        Fire fire = new Fire(xcor, ycor, chance);
-      //  Frost frost = new Frost(xcor, ycor, chance);
-       // Health health = new Health(xcor, ycor, chance);
-        
+      //fire.checkActive();
+        //  Frost frost = new Frost(xcor, ycor, chance);
+         // Health health = new Health(xcor, ycor, chance);
         }
     	xcor = -201;
         ycor = -201;
