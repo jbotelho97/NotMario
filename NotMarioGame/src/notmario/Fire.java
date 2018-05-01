@@ -8,33 +8,45 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.awt.Event;
 
-public class Fire implements Powerup, ApplicationConstants {
+public class Fire extends PApplet implements Powerup, ApplicationConstants {
 	private Image fireIcon;
 	private ArrayList <Fire> shooting;//where our bullets will be stored
 	private float xcor, ycor, size, width, height;
-    private float projectileSpeed = 0.1f;
+    private float projectileSpeed = 0.001f;
 	private int powerUpIndex;
 	private static PApplet app_;
-	private boolean active = true;
-	
-	
+	private boolean active = false;
+	private static int appSetCounter_ = 0;
+	private float direction;
 	private int damage;
 	
-	public Fire(float x, float y, int chance) {
+	public Fire(float x, float y, int chance, float dir) {
 		if (chance ==  0) {
 			this.xcor = x;
 			this.ycor = y;
 			active = true;
 			damage = 2;
-			size = 1;
-			height = 2;
-			width = 2;
+			direction = dir;
 			shooting = new ArrayList();
 		}else {
 			return;
 		}
 	}
-	
+	protected static int setup(PApplet theApp)
+	{
+
+		
+		if (appSetCounter_ == 0) 
+		{
+			app_ = theApp;
+			appSetCounter_ = 1;
+		}
+		else
+			appSetCounter_ = 2;
+
+		return appSetCounter_;
+
+	}
 	 public float getXcoor(){
      return xcor;
 	 }
@@ -50,42 +62,29 @@ public class Fire implements Powerup, ApplicationConstants {
 	 public Image getSprite(){
      return fireIcon;
 	 }
-	 public void draw(float dir){
-		if(active) {
-			 moveAll();//move all the bullets
-			  displayAll();//display all the bullets
-		}
-	}
-	 public void display()
+	
+
+	 public void draw()
 	  {
-	    app_.stroke(255, 0 , 0);
-	    app_.rect(xcor,ycor, 2, 2);
+		
+		app_.stroke(0);
+		app_.fill(255, 255,0);
+
+	    app_.ellipse(xcor, ycor, 1, 1);
+	    
+	     
+	    
 	  }
 	 public void move() {
 		 if(active) {
-			 ycor -= 0.5;
+			 if (direction ==0) {
+				 xcor+= 0.1 *1;
+			 }
+			 xcor += 0.1 * -direction;
 		 }
 	 }
-	 public void moveAll()
-	 {
-	   for(Fire temp : shooting)
-	   {
-	     temp.move();
-	   }
-	 }
-	 void displayAll()
-	 {
-	   for(Fire temp : shooting)
-	   {
-	     temp.display();
-	   }
-	 }
-	 void mousePressed()//add a new bullet if mouse is clicked
-	 {
-		 System.out.println("activated");
-	   Fire temp = new Fire(++xcor,ycor, 0);
-	   shooting.add(temp);
-	 }
+	
+	
 	 
 	 public void spawnPowerup() {}
 	

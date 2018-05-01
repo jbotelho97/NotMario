@@ -1,7 +1,7 @@
 package notmario;
 
 import java.awt.Image;
-
+import java.util.ArrayList;
 import processing.core.PApplet;
 
 public class Character implements ApplicationConstants 
@@ -18,6 +18,7 @@ public class Character implements ApplicationConstants
 		private float r_, b_, g_;
 		public int health;
 		private Image sprite;
+		private ArrayList <Fire> fireBalls;
 		
 		/**
 		 * Main constructor of a character. It is given a location, size and color while being
@@ -41,6 +42,7 @@ public class Character implements ApplicationConstants
 			r_ = r;
 			b_ = b;
 			g_ = g;
+			fireBalls = new ArrayList();
 			
 			//movement values in x and y direction
 			vy_ = 0.0f;
@@ -52,7 +54,9 @@ public class Character implements ApplicationConstants
 		 * draws all components of character onto the window. Passed a reference to the PApplet
 		 */
 		public void draw() {
-			
+			for(Fire fire: fireBalls) {
+				fire.draw();
+			}
 			// we use this object's instance variable to access the application's instance methods and variables
 			app_.pushMatrix();
 			
@@ -79,12 +83,16 @@ public class Character implements ApplicationConstants
 			app_.ellipse(0 + width, 0, 1, 1);
 			
 			app_.popMatrix();
+			
 		}
 		
 		
 		public void animate() {
 			if(airborne)
 				y_ += (vy_ += gravity);
+			for(Fire fire: fireBalls) {
+				fire.move();
+			}
 		}
 		
 		/**
@@ -125,6 +133,7 @@ public class Character implements ApplicationConstants
 				System.exit(0);
 			}
 		}
+		
 
 	/**
 	 * Passes a reference of the window to the player to use when drawing
@@ -147,8 +156,17 @@ public class Character implements ApplicationConstants
 
 	}
 	public void shoot(float dir) {
-		Fire power = new Fire(x_, y_, 0); 
-		power.draw(dir);
+		 System.out.println("activated");
+		 
+		 if(airborne) {
+			 System.out.println("airborne");
+		   Fire temp = new Fire(x_+ (width/2 * -dir),y_- (vy_+gravity), 0, dir);
+		   fireBalls.add(temp);
+		 }else {
+			 Fire temp = new Fire(x_+ (width/2*-dir),y_, 0, dir); 
+			 fireBalls.add(temp);
+		 }
+		   
 	}
 	}
 
