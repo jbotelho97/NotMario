@@ -129,8 +129,13 @@ public class LevelHandler {
 	
 	public void createMenu() {
 		
-		levelCollection[0][0] = new Rectangle(10, -20, 20, 10, 0, 255, 255);
-		levelCollection[0][1] = new Rectangle(-30, -20, 20, 10, 255, 0, 255);
+		levelCollection[0][0] = new Rectangle(10, -3, 20, 10, 0, 255, 255);
+		levelCollection[0][1] = new Rectangle(-30, -3, 20, 10, 255, 0, 255);
+		levelCollection[0][2] = new Rectangle(0-2, -25-2, 5, 5, 255, 255, 255);
+		levelCollection[0][3] = new Rectangle(-5-2, -30-2, 5, 5, 255, 255, 255);
+		levelCollection[0][4] = new Rectangle(0-2, -30-2, 5, 5, 255, 255, 255);
+		levelCollection[0][5] = new Rectangle(5-2, -30-2, 5, 5, 255, 255, 255);
+		levelCollection[0][6] = new Rectangle(15-2, -26-2, 5, 5, 255, 255, 255);
 	}
 	
 	public void createLevel1() {

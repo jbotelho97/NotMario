@@ -192,8 +192,14 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		String s1 = "Play";
 		String s2 = "Quit";
 		text(s, 0, -30);
-		text(s1 , 20, 17);
-		text(s2, -21, 17);
+		text(s1 , 20, 0);
+		text(s2, -21, 0);
+		textFont(f,2);
+		text("W", 0, 25);
+		text("A", -5, 30);
+		text("S", 0, 30);
+		text("D", 6, 30);
+		text("F", 16, 26);
 	}
 
 	public void cleanEnemies() {
