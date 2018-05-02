@@ -14,19 +14,18 @@ public class Character implements ApplicationConstants
 	private ArrayList <Frost> frostBalls; //to hold any created frost attacks
 	private int activePowerUp =4; //default setting for no powerup
 		
-		private boolean ref_ = false;
-		private boolean airborne = false;
-		public float x_, y_, size_, angle_, vy_, width, height;
+		private boolean airborne = false; //is the character airborne
+		public float x_, y_, size_, angle_, vy_, width, height; //drawing variables
 		//color
 		private float r_, b_, g_;
-		public int health;
+		public int health; //amount of damage player can take before dying
 		
-		private PImage[] sprites;
-		private int spriteIndex;
+		private PImage[] sprites; //holds all images
+		private int spriteIndex; //specific image from array
 		
 		/**
 		 * Main constructor of a character. It is given a location, size and color while being
-		 * passed the starting animation
+		 * passed the character images
 		 * @param x
 		 * @param y
 		 * @param size
@@ -34,9 +33,10 @@ public class Character implements ApplicationConstants
 		 * @param r
 		 * @param g
 		 * @param b
+		 * @param images
 		 */
 		public Character(float x, float y, float size, float r, float g, float b, PImage[] images) {
-			//sets location, size, color and images for object
+			//sets location, size, color and images for object as well as the powerup arrays
 			x_ = x;
 			y_ = y;
 			size_ = size;
@@ -59,7 +59,7 @@ public class Character implements ApplicationConstants
 		}
 		
 		/**
-		 * draws all components of character onto the window. Passed a reference to the PApplet
+		 * draws all components of character onto the window. Also draws the fire or frost attacks
 		 */
 		public void draw() {
 			for(Fire fire: fireBalls) {
@@ -70,7 +70,6 @@ public class Character implements ApplicationConstants
 				if(frost != null)
 				frost.draw();
 			}
-			// we use this object's instance variable to access the application's instance methods and variables
 			app_.pushMatrix();
 			
 			//move to correct location, size, and orientation on the window
@@ -85,22 +84,24 @@ public class Character implements ApplicationConstants
 			
 			app_.fill(0);
 			
-			
+			//draw the correct proportion for the image of the character
 			app_.pushMatrix();
-			app_.scale(PIXEL_TO_WORLD, -PIXEL_TO_WORLD);
-			app_.image(sprites[spriteIndex], 0, -height/PIXEL_TO_WORLD);
+			app_.scale(PIXEL_TO_WORLD, -PIXEL_TO_WORLD); //Character image is in pixels not world units
+			app_.image(sprites[spriteIndex], 0, -height/PIXEL_TO_WORLD);//draw image
 			app_.popMatrix();
 			
 			app_.popMatrix();
 		}
 		
-		
+		/**
+		 * this method handles all movement of the player and the fire and frost attacks. Character only involves 
+		 * vertical movement
+		 */
 		public void animate() {
 			if (airborne) {
 				y_ += (vy_ += gravity);
 			}
-			//System.out.println(y_);
-			if (y_ <= -35) {
+			if (y_ <= -35) { //if the character goes below the world he dies
 				setHealth(0);
 			}
 			for (Fire fire: fireBalls) {
@@ -114,6 +115,12 @@ public class Character implements ApplicationConstants
 			}
 		}
 		
+		/**
+		 * this method handles all of the passive movement for the attacks. As the player moves, the attacks must move
+		 * with the entire world.
+		 * @param direction
+		 * @param isMove
+		 */
 		public void passiveMoveProjectiles(int direction, boolean isMove) {
 			if(isMove) {
 				for(Fire fire: fireBalls) {
@@ -127,12 +134,6 @@ public class Character implements ApplicationConstants
 			}
 		}
 		
-		/**
-		 * Used to toggle reference box and attack box of player
-		 */
-		public void toggleRef() {
-			ref_ = !ref_;
-		}
 		
 		/**
 		 * Sets a y velocity and begins the jump animation
@@ -145,18 +146,19 @@ public class Character implements ApplicationConstants
 			}
 		}
 
-		
+		//if player leaves a platform and there is nothing below, it falls
 		public void fall() {
 			spriteIndex = 3;
 			airborne = true;
 		}
 		
+		//sets the death image
 		public void die() {
 			spriteIndex = 4;
 		}
 		
 		/**
-		 * Sets the y velocity to zero
+		 * Sets the y velocity to zero and changes the image back to neutral
 		 */
 		public void land() {
 			vy_ = 0f;
@@ -166,20 +168,23 @@ public class Character implements ApplicationConstants
 			}
 		}
 
-		//Takes a hit
+		//Takes a hit and loses current powerup
 		public void takeHit(Enemy e){
 			health -= e.getDamage();
-			activePowerUp = 4;
+			activePowerUp = 4; //default no powerups
 		}
 		
+		//return state of character
 		public boolean isAirborne() {
 			return airborne;
 		}
 		
+		//returns the current image being used
 		public int getImageIndex() {
 			return spriteIndex;
 		}
 		
+		//sets the current image being used
 		public void setImageIndex(int i) {
 			spriteIndex = i;
 		}
@@ -204,6 +209,11 @@ public class Character implements ApplicationConstants
 		return appSetCounter_;
 
 	}
+	
+	/**
+	 * This method adds a projectile to the correct arraylist if the character has a powerup
+	 * @param dir
+	 */
 	public void shoot(float dir) {
 		//System.out.println("activated");
 		 if(activePowerUp == 0) {
@@ -217,7 +227,6 @@ public class Character implements ApplicationConstants
 		 }
 		 }else if(activePowerUp == 1) {
 			 if(airborne) {
-				 //System.out.println("airborne");
 			   Frost temp = new Frost(x_+ (width/2 * -dir),y_- (vy_+gravity), 0, dir);
 			   frostBalls.add(temp);
 			 }else {
@@ -230,6 +239,11 @@ public class Character implements ApplicationConstants
 		 }
 		 
 	}
+	
+	/**
+	 * This method takes in a number given from defeating an enemy and sets a power up
+	 * @param number
+	 */
 	public void setActivePowerUp(int number) {
 		activePowerUp = number;
 		if(activePowerUp == 2) {
@@ -238,17 +252,24 @@ public class Character implements ApplicationConstants
 		
 		}
 	}
+	
+	//return current powerup
 	public int getActivePowerUp() {
 		return activePowerUp;
 	}
+	
+	//To change health when needed
 	public void setHealth(int h) {
 		health = h;
 		activePowerUp = 4;
-		//System.out.println(health);
 	}
+	
+	//return current health
 	public int getHealth() {
 		return health;
 	}
+	
+	//returns an array list of frost attacks
 	public ArrayList<Frost> getPowerUpFrost() {
 		if( activePowerUp == 1) {
 			return frostBalls;
@@ -256,6 +277,8 @@ public class Character implements ApplicationConstants
 		return null;
 		}
 	}
+	
+	//returns an array of fire attacks
 	public ArrayList<Fire> getPowerUpFire(){
 	if( activePowerUp == 0 ) {
 		return fireBalls;
