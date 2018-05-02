@@ -17,7 +17,7 @@ public class GoalBox extends Rectangle {
 		super.draw();
 	}
 
-	
+	@Override
 	public boolean isInside(Character player, int dir) {
 		float leftX = player.x_-player.width/2;
 		float rightX = player.x_+player.width/2;

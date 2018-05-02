@@ -175,7 +175,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 
 			if(myGame.isInside(player1_, (int)dir1_)) {
 			//	System.out.println("inside");
-				if(myGame.returnIndex() == 11) {
+				if(myGame.returnIndex() == 12) {
 					currentLevel = 2;
 					myGame.setLevel(currentLevel);
 					animate_ = false;
