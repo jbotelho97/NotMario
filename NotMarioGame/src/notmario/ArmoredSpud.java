@@ -1,12 +1,13 @@
 package notmario;
+import processing.core.PImage;
+
 import java.awt.Image;
 
 public class ArmoredSpud extends Enemy {
 
     private float xspeed; //speed of movement
-    private Image aSpudIcon;
 
-    public ArmoredSpud(float x, float y){
+    public ArmoredSpud(float x, float y, PImage aSpudIcon){
         super.init(x, y, 2,5, 5,35, aSpudIcon);
         xspeed = -0.06f;
     }

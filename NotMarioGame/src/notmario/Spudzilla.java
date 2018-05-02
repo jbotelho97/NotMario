@@ -4,15 +4,17 @@ Spudzilla is a bigger enemy that takes two hits to kill.
 He is a jumping enemy who endlessly jumps until he dies or kills the player.
  */
 package notmario;
+import processing.core.PImage;
+
 import java.awt.Image;
 
 public class Spudzilla extends Enemy {
 
-    private Image spudIcon; //Spudzilla's sprite
+    //Spudzilla's sprite
     private float xspeed; //Spudzilla's current speed/direction horizontally.
     public boolean jumping; //Is true when Spudzilla is jumping.
 
-    public Spudzilla(float x, float y){ //Standard Spudzilla initialization
+    public Spudzilla(float x, float y, PImage spudIcon){ //Standard Spudzilla initialization
         super.init(x, y, 2, 6,8, 50, spudIcon);
         xspeed = -0.06f;
         isLeft = true;
