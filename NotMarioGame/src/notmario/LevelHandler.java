@@ -1,6 +1,7 @@
 package notmario;
 // test3
 import processing.core.PApplet;
+import processing.core.PImage;
 
 public class LevelHandler {
 	
@@ -8,14 +9,16 @@ public class LevelHandler {
 	private static PApplet app_; 
 	
 	Rectangle[][] levelCollection;
+	PImage[] sprites;
 	
 	int currentLevel, platformIndex;
 	
-	public LevelHandler() {
+	public LevelHandler(PImage[] images) {
 		
 		levelCollection = new Rectangle[4][20];
 		currentLevel = 0;
 		platformIndex = 0;
+		sprites = images;
 		createMenu();     //create all levels and save them in levelCollection
 		createLevel1();
 		createWinMenu();
@@ -59,7 +62,7 @@ public class LevelHandler {
 			}
 
 			if (levelCollection[currentLevel][platformIndex].isInside(player, dir)) {
-			//	System.out.println(platformIndex);
+				//System.out.println(platformIndex);
 				return true;
 			}
 		}
@@ -95,6 +98,14 @@ public class LevelHandler {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * This method tests if the character has landed on any platforms.
+	 */
+	public boolean isGoal(Character player, int dir) {
+		Rectangle[] rect = levelCollection[currentLevel];
+		return rect[13].isInside(player, dir);
 	}
 
 	public boolean enemyInside(Enemy e) {
@@ -142,15 +153,23 @@ public class LevelHandler {
 		levelCollection[1][9] = new Rectangle(330, -65, 20, 85, 255, 0, 0);
 		levelCollection[1][10] = new Rectangle(350, -65, 125, 55, 255, 0, 0);
 		levelCollection[1][11] = new Rectangle(475, -65, 50, 125, 255, 0, 0);
-		levelCollection[1][12] = new GoalBox(450, -15, 25, 25, 0, 0, 255);	
+		levelCollection[1][12] = new Rectangle(450, -65, 25, 70, 255, 0, 0);
+		levelCollection[1][13] = new GoalBox(460, 0, 5, 10, 0, 0, 255, sprites[16]);
+			
 	}
 	
 	public void createWinMenu() {
-		levelCollection[2][0] = new Rectangle(-10, -20, 20, 10, 255, 0, 255);
+		levelCollection[2][0] = new Rectangle(10, -20, 20, 10, 0, 255, 255);
+		levelCollection[2][1] = new Rectangle(-30, -20, 20, 10, 255, 0, 255);
 	}
 	
 	public void createDeathMenu() {
-		levelCollection[3][0] = new Rectangle(-10, -20, 20, 10, 255, 0, 255);
+		levelCollection[3][0] = new Rectangle(10, -20, 20, 10, 0, 255, 255);
+		levelCollection[3][1] = new Rectangle(-30, -20, 20, 10, 255, 0, 255);
+	}
+	
+	public void Restart() {
+		createLevel1();
 	}
 	
 	/**

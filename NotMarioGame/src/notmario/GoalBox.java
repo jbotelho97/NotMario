@@ -1,20 +1,31 @@
 package notmario;
 
 import processing.core.PApplet;
+import processing.core.PImage;
 
-public class GoalBox extends Rectangle {
+public class GoalBox extends Rectangle implements ApplicationConstants {
 	
 //  Here we store a reference to the app. in a static (aka "class") variable.
 	private static PApplet app_; 
 	private static int appSetCounter_ = 0;
+	
+	private PImage sprite;
 
-	public GoalBox(float x, float y, float w, float h, float red, float green, float blue) {
+	public GoalBox(float x, float y, float w, float h, float red, float green, float blue, PImage img) {
 		super(x, y, w, h, red, green, blue);
+		sprite = img;
 		// TODO Auto-generated constructor stub
 	}
 	
 	public void draw() {
-		super.draw();
+		//super.draw();
+		if(sprite != null) {
+			//System.out.println("ok?");
+			app_.pushMatrix();
+			app_.scale(PIXEL_TO_WORLD, -PIXEL_TO_WORLD);
+			app_.image(sprite, getX()/PIXEL_TO_WORLD, (getY()/PIXEL_TO_WORLD)-(getHeight()/PIXEL_TO_WORLD ));
+			app_.popMatrix();
+		}
 	}
 
 	@Override

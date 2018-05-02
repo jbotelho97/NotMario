@@ -5,9 +5,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.ArrayList;
 import org.apache.commons.lang3.ArrayUtils;
 
 import processing.core.PApplet;
@@ -32,8 +29,6 @@ public class MyWorld extends PApplet implements ApplicationConstants
 	private float dir1_, lastdir_;
     public int enemyCount;
     private PImage[] ourSprites;
-    
-    private Timer timer;
 
 
 	public void settings() {
@@ -69,12 +64,12 @@ public class MyWorld extends PApplet implements ApplicationConstants
 				ourSprites = ArrayUtils.addAll(ourSprites, getImage(110, 425, 184, 172, 1));
 				//ourSprites = ArrayUtils.addAll(ourSprites, getImage(23,549,34,1,1));
 				
-		timer = new Timer();
-		myGame = new LevelHandler();
+		setupGraphicClasses_(); // passes a reference of this app window to all graphical classes as a static variable
+		myGame = new LevelHandler(ourSprites);
 
         f = createFont("Arial",16,false); // Arial, 16 point, anti-aliasing off for right now
 
-		setupGraphicClasses_(); // passes a reference of this app window to all graphical classes as a static variable
+		
 	}
 
 	// GET IMAGE COMMENT LATER
@@ -119,8 +114,8 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			enemies[0] = new Spud(25,-3f,ourSprites[20]);//Test Spud
 	        enemies[1] = new Spud(175,-5.0f,ourSprites[20]);//Test Spud
 	        enemies[2] = new ArmoredSpud(255,-10.0f,ourSprites[21]);//Test Spud
-	        enemies[3] = new ArmoredSpud(450, -10.0f, ourSprites[21]);
-	        enemies[4] = new Spudzilla(375, -10.0f, ourSprites[22]);
+	        enemies[3] = new ArmoredSpud(375, -10.0f, ourSprites[21]);
+	        enemies[4] = new Spudzilla(400, -10.0f, ourSprites[22]);
 	        enemies[5] = new ArmoredSpud(425, -10.0f, ourSprites[21]);
 	        enemyCount += 6;
         }
@@ -175,7 +170,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 
 			if(myGame.isInside(player1_, (int)dir1_)) {
 			//	System.out.println("inside");
-				if(myGame.returnIndex() == 12) {
+				if(myGame.isGoal(player1_, (int)dir1_)) {
 					currentLevel = 2;
 					myGame.setLevel(currentLevel);
 					animate_ = false;
@@ -269,9 +264,11 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		scale(1,-1);
 		textAlign(CENTER);
 		String s = "Y OU WIN!";
+		String s1 = "Play";
 		String s2 = "Quit";
 		text(s, 0, -30);
-		text(s2, 0, 17);
+		text(s1 , 20, 17);
+		text(s2, -21, 17);
 		pushMatrix();
 		scale(PIXEL_TO_WORLD*2);
 		image(ourSprites[9], -20, -50);
@@ -284,9 +281,11 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		scale(1,-1);
 		textAlign(CENTER);
 		String s = "Y ou Died!";
+		String s1 = "Play";
 		String s2 = "Quit";
 		text(s, 0, -30);
-		text(s2, 0, 17);
+		text(s1 , 20, 17);
+		text(s2, -21, 17);
 		pushMatrix();
 		scale(PIXEL_TO_WORLD*2);
 		image(ourSprites[8], -20, -50);
@@ -417,12 +416,22 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		}
 		else if(currentLevel == 2) {
 			if(myGame.isInside(((mouseX-WORLD_ORIGIN_X)*PIXEL_TO_WORLD), ((mouseY-WORLD_ORIGIN_Y)*-PIXEL_TO_WORLD))) {
+				if(myGame.returnIndex() == 0) {
+					Restart();
+				}
+				else {
 				System.exit(0);
+				}
 			}
 		}
 		else if(currentLevel == 3) {
 			if(myGame.isInside(((mouseX-WORLD_ORIGIN_X)*PIXEL_TO_WORLD), ((mouseY-WORLD_ORIGIN_Y)*-PIXEL_TO_WORLD))) {
+				if(myGame.returnIndex() == 0) {
+					Restart();
+				}
+				else {
 				System.exit(0);
+				}
 			}
 		}
 	}
@@ -431,6 +440,8 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		animate_ = false;
 		currentLevel=1;
 		myGame.setLevel(currentLevel);
+		myGame.Restart();
+		move_ = false;
 		
 		player1_ = new Character(0, 0, 1, 255, 0, 0, ArrayUtils.addAll(Arrays.copyOfRange(ourSprites, 4, 9), Arrays.copyOfRange(ourSprites,10, 15)));
 		
@@ -471,6 +482,11 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			System.exit(-1);
 		}
 		if (Frost.setup(this) != 1)
+		{
+			println("A graphic classe\'s setup() method was called illegally before this class");
+			System.exit(-1);
+		}
+		if (GoalBox.setup(this) != 1)
 		{
 			println("A graphic classe\'s setup() method was called illegally before this class");
 			System.exit(-1);
