@@ -151,14 +151,13 @@ public class Rectangle {
 	public boolean enemyInside(Enemy e){
 		if((e.getXcoor() >= x_) && (e.getXcoor() <= x_ + w_) && (e.getYcoor() >= y_  + h_ - 0.05f) && (e.getYcoor() <= y_ + h_ + 0.05f)) {
 			e.land();
-			return false;
+			return true;
 		}
 		else if((e.getXcoor()+ e.getWidth() >= x_) && (e.getXcoor() + e.getWidth() <= x_ + w_) && (e.getYcoor() >= y_ + h_ - 0.05f) && (e.getYcoor() <= y_ + h_ + 0.05f)) {
 			e.land();
-			return false;
-		}
-		else
 			return true;
+		}
+		return false;
 	}
 
 	//Method for determining if enemy is touching edge
@@ -175,7 +174,7 @@ public class Rectangle {
 		}
 	}
 
-	//Method for determining if enemy is touching edge
+	//Method for determining if player is touching edge
 	public boolean playerEdge(Character player, int dir) {
 		float leftX = player.x_-player.width/2;
 		float rightX = player.x_+player.width/2;

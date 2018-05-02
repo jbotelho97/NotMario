@@ -17,6 +17,7 @@ public class ArmoredSpud extends Enemy {
     }
 
     //Overrided the MoveCycle. Spud walks left untill he hits
+    @Override
     public void moveCycle(LevelHandler h) {
         setSpeed(xspeed);
         airborne = h.enemyInside(this);
