@@ -141,20 +141,20 @@ public class LevelHandler {
 	
 	public void createLevel1() {
 		
-		levelCollection[1][0] = new Rectangle(-25, -65, 100, 60, 255, 0, 0);
-		levelCollection[1][1] = new Rectangle(75, -65, 25, 70, 255, 0, 0);
-		levelCollection[1][2] = new Rectangle(125, -65, 40, 70, 255, 0, 0);
-		levelCollection[1][3] = new Rectangle(165, -65, 30, 55, 255, 0, 0);
-		levelCollection[1][4] = new Rectangle(195, -65, 10, 70, 255, 0, 0);
-		levelCollection[1][5] = new Rectangle(205, -65, 10, 85, 255, 0, 0);
-		levelCollection[1][6] = new Rectangle(235, -65, 50, 55, 255, 0, 0);
-		levelCollection[1][7] = new Rectangle(300, -65, 15, 65, 255, 0, 0);
-		levelCollection[1][8] = new Rectangle(315, -65, 15, 75, 255, 0, 0);
-		levelCollection[1][9] = new Rectangle(330, -65, 20, 85, 255, 0, 0);
-		levelCollection[1][10] = new Rectangle(350, -65, 125, 55, 255, 0, 0);
-		levelCollection[1][11] = new Rectangle(475, -65, 50, 125, 255, 0, 0);
-		levelCollection[1][12] = new Rectangle(450, -65, 25, 71, 255, 0, 0);
-		levelCollection[1][13] = new Rectangle(440, -65, 10, 65, 255, 0, 0);
+		levelCollection[1][0] = new Rectangle(-25, -65, 100, 60, 255, 0, 0, sprites[2], sprites[3]);
+		levelCollection[1][1] = new Rectangle(75, -65, 25, 70, 255, 0, 0, sprites[2], sprites[3]);
+		levelCollection[1][2] = new Rectangle(125, -65, 40, 70, 255, 0, 0, sprites[2], sprites[3]);
+		levelCollection[1][3] = new Rectangle(165, -65, 30, 55, 255, 0, 0, sprites[2], sprites[3]);
+		levelCollection[1][4] = new Rectangle(195, -65, 10, 70, 255, 0, 0, sprites[2], sprites[3]);
+		levelCollection[1][5] = new Rectangle(205, -65, 10, 85, 255, 0, 0, sprites[2], sprites[3]);
+		levelCollection[1][6] = new Rectangle(235, -65, 50, 55, 255, 0, 0, sprites[2], sprites[3]);
+		levelCollection[1][7] = new Rectangle(300, -65, 15, 65, 255, 0, 0, sprites[2], sprites[3]);
+		levelCollection[1][8] = new Rectangle(315, -65, 15, 75, 255, 0, 0, sprites[2], sprites[3]);
+		levelCollection[1][9] = new Rectangle(330, -65, 20, 85, 255, 0, 0, sprites[2], sprites[3]);
+		levelCollection[1][10] = new Rectangle(350, -65, 125, 55, 255, 0, 0, sprites[2], sprites[3]);
+		levelCollection[1][11] = new Rectangle(475, -65, 50, 125, 255, 0, 0, sprites[2], sprites[3]);
+		levelCollection[1][12] = new Rectangle(450, -65, 25, 71, 255, 0, 0, sprites[2], sprites[3]);
+		levelCollection[1][13] = new Rectangle(440, -65, 10, 65, 255, 0, 0, sprites[2], sprites[3]);
 		levelCollection[1][14] = new GoalBox(460, 0, 5, 10, 0, 0, 255, sprites[16]);
 			
 	}
