@@ -194,6 +194,10 @@ public class MyWorld extends PApplet implements ApplicationConstants
 	                }
 			    }
 		    }
+
+			if (player1_.getHealth() <= 0) {
+				playerDie();
+			}
         }
 	}
 
@@ -206,6 +210,11 @@ public class MyWorld extends PApplet implements ApplicationConstants
 	    text(s, -50, 35);
 
     }
+	
+	public void playerDie(){
+		player1_.die();
+		animate_ = false;
+	}
 	
 	public void drawMenu() {
 		textFont(f,5);
@@ -237,7 +246,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 	}
 	
 	public void keyPressed() {
-		if (player1_ == null) {
+		if (player1_ == null || !animate_) {
 			return;
 		}
 
@@ -275,7 +284,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 	}
 
 	public void keyReleased() {
-		if (player1_ == null) {
+		if (player1_ == null || (!animate_ && key != 'p')) {
 			return;
 		}
 
@@ -305,7 +314,8 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			break;
 			//pause the game
 		case 'p':
-			animate_ = !animate_;
+			if (player1_.getHealth() > 0)
+				animate_ = !animate_;
 			break;
 		}
 		
@@ -339,7 +349,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		currentLevel+=1;
 		myGame.setLevel(currentLevel);
 		
-		player1_ = new Character(0, 0, 1, 255, 0, 0, Arrays.copyOfRange(ourSprites, 4, 8));
+		player1_ = new Character(0, 0, 1, 255, 0, 0, Arrays.copyOfRange(ourSprites, 4, 9));
 		
 		enemies = new Enemy[20];
 

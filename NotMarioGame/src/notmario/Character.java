@@ -111,13 +111,18 @@ public class Character implements ApplicationConstants
 		
 		
 		public void animate() {
-			if(airborne)
+			if (airborne) {
 				y_ += (vy_ += gravity);
-			for(Fire fire: fireBalls) {
+			}
+			System.out.println(y_);
+			if (y_ <= -35) {
+				setHealth(0);
+			}
+			for (Fire fire: fireBalls) {
 				if(fire != null)
 				fire.move();
 			}
-			for(Frost frost: frostBalls) {
+			for (Frost frost: frostBalls) {
 				if(frost != null) 
 				frost.move();
 				
@@ -161,6 +166,10 @@ public class Character implements ApplicationConstants
 			airborne = true;
 		}
 		
+		public void die() {
+			spriteIndex = 4;
+		}
+		
 		/**
 		 * Sets the y velocity to zero
 		 */
@@ -176,10 +185,6 @@ public class Character implements ApplicationConstants
 		public void takeHit(Enemy e){
 			health -= e.getDamage();
 			activePowerUp = 4;
-			if (health <= 0){
-				System.out.println("You died!");
-				System.exit(0);
-			}
 		}
 		
 		public boolean isAirborne() {
