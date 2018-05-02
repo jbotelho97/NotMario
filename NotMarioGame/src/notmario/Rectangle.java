@@ -3,12 +3,13 @@ package notmario;
 import java.awt.Image;
 
 import processing.core.PApplet;
+import processing.core.PImage;
 
-public class Rectangle {
+public class Rectangle implements ApplicationConstants {
 //  Here we store a reference to the app. in a static (aka "class") variable.
 	private static PApplet app_; 
 	private static int appSetCounter_ = 0;
-	private Image sprite_;
+	private PImage[] sprite_ = null;
 
 	private float x_, y_, playerSpeedX_, w_, h_, r, b, g;
 	
@@ -38,7 +39,7 @@ public class Rectangle {
 	 * @param h height of rectangle
 	 * @param sprite image that may be attached to rectangle
 	 */
-	public Rectangle(float x, float y, float w, float h, float red, float green, float blue, Image sprite) {
+	public Rectangle(float x, float y, float w, float h, float red, float green, float blue, PImage grass, PImage ground) {
 		x_ = x;
 		y_ = y;
 		w_ = w;
@@ -47,7 +48,7 @@ public class Rectangle {
 		b = blue;
 		g = green;
 		playerSpeedX_ = 0.1f;
-		sprite_ = sprite;
+		sprite_ = new PImage[] {grass, ground};
 	}
 	
 	/**
@@ -55,10 +56,27 @@ public class Rectangle {
 	 */
 	public void draw() 
 	{
-		app_.strokeWeight(.1f);
-		app_.fill(r, g, b);
-		app_.rect(x_, y_, w_, h_);
-		//app_.ellipse(x_, y_, 1, 1);
+		if (sprite_ == null) {
+			app_.strokeWeight(.1f);
+			app_.fill(r, g, b);
+			app_.rect(x_, y_, w_, h_);
+			//app_.ellipse(x_, y_, 1, 1);
+		} else {
+			for (float x = x_; x <= x_ + w_ - 0.1f; x += 5) {
+				app_.pushMatrix();
+				app_.scale(PIXEL_TO_WORLD, -PIXEL_TO_WORLD);
+				app_.image(sprite_[0], x/PIXEL_TO_WORLD, -(y_+h_)/PIXEL_TO_WORLD);
+				app_.popMatrix();
+			}
+			for (float y = y_; y <= y_ + h_ - 4.99f; y += 5) {
+				for (float x = x_; x <= x_ + w_ - 0.1f; x += 5) {
+					app_.pushMatrix();
+					app_.scale(PIXEL_TO_WORLD, -PIXEL_TO_WORLD);
+					app_.image(sprite_[1], x/PIXEL_TO_WORLD, -y/PIXEL_TO_WORLD);
+					app_.popMatrix();
+				}
+			}
+		}
 	}
 	
 	public float getX() {
