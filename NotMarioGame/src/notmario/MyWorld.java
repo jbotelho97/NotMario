@@ -126,7 +126,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		//  Draw all objects
 		if (frame_ % 5 == 0) 
 		{
-			background(255);
+			background(135, 206, 250);
 
 			// define world reference frame:  
 			//    Origin at windows's center and 
