@@ -10,6 +10,7 @@ import processing.core.PApplet;
 
 import java.awt.Image;
 import java.util.Random;
+import processing.core.PImage;
 
 /*
 Delete if not used!
@@ -35,7 +36,8 @@ public abstract class Enemy implements ApplicationConstants {
     private float xcor, ycor, size, velXLocal, velXWorld, width, height, velYLocal, velYWorld,playerSpeedX;
     public float angle; //detrmines angle of sprite
     public boolean isLeft, airborne, isMoving; //Checks if the enemy is facing left. Airbone checks if instance is airborne, isMoving is true if it is moving.
-    private Image sprite; //The sprite of the enemy stored as an image.
+    private PImage sprite; //The sprite of the enemy stored as an image.
+    private int spriteIndex; //The number in the array of our current sprite
     private int damage; //The amount of damage the enemy deals to the player
     private int random;
     /*
@@ -45,7 +47,7 @@ public abstract class Enemy implements ApplicationConstants {
     private static PApplet app_; //Instance of PApplet
 
     //Initialized the enemy at a specific xcor, ycor and with the corresponding sprite.
-    public void init(float x_, float y_, int hits, float w, float h, int d, Image img) {
+    public void init(float x_, float y_, int hits, float w, float h, int d, PImage img) {
         xcor = x_;
         ycor = y_;
         size = 1;
@@ -54,6 +56,7 @@ public abstract class Enemy implements ApplicationConstants {
         width = w;
         height = h;
         sprite = img;
+        sprite.resize((int)width * 10, (int)height * 10);
         damage = d;
         isLeft = true;
         playerSpeedX = 0.1f;
@@ -106,7 +109,7 @@ public abstract class Enemy implements ApplicationConstants {
     public float getHeight(){
         return height;
     }
-    public Image getSprite(){
+    public PImage getSprite(){
         return sprite;
     }
     public boolean getMove(){return isMoving;}
@@ -121,6 +124,11 @@ public abstract class Enemy implements ApplicationConstants {
     //Methods to determine sprite direction
     public void setDir(boolean a){
         isLeft = a;
+    }
+
+    //Method to set the sprite number
+    public void setImageIndex(int i) {
+        spriteIndex = i;
     }
 
     //Methods to set or change xcor and ycor
@@ -157,7 +165,14 @@ public abstract class Enemy implements ApplicationConstants {
         app_.stroke(0);
         app_.fill(0, 0, 255);
 
-        app_.rect(xcor, ycor, width, height);
+        //app_.rect(xcor, ycor, width, height);
+
+        app_.fill(0);
+
+        app_.pushMatrix();
+        app_.scale( PIXEL_TO_WORLD, -PIXEL_TO_WORLD);
+        app_.image(sprite, xcor/PIXEL_TO_WORLD, -(ycor + height) /PIXEL_TO_WORLD);
+        app_.popMatrix();
 
         app_.popMatrix();
     }

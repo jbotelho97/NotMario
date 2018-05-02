@@ -63,7 +63,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 				ourSprites = ArrayUtils.addAll(ourSprites, getImage( 60, 550,  48,  49, 1));
 				ourSprites = ArrayUtils.addAll(ourSprites, getImage( 60, 480,  41,  65, 1));
 				ourSprites = ArrayUtils.addAll(ourSprites, getImage(110, 425, 184, 172, 1));
-		
+				//ourSprites = ArrayUtils.addAll(ourSprites, getImage(23,549,34,1,1));
 		myGame = new LevelHandler();
 
         f = createFont("Arial",16,false); // Arial, 16 point, anti-aliasing off for right now
@@ -102,9 +102,10 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			
 		}
 
+	//20 - Spud, 21- A.Spud 22 -spudzilla
 	public void generateEnemies(LevelHandler h){
         //If you want a test enemy, un comment next two lines.
-        enemies[0] = new ArmoredSpud(25,-5.0f);//Test Spud
+        enemies[0] = new Spud(25,-5.0f, ourSprites[20]);//Test Spud
         enemyCount++;
 	    /*switch(h.currentLevel){
 
