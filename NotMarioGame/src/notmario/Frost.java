@@ -13,14 +13,14 @@ public class Frost extends PApplet implements Powerup, ApplicationConstants {
 	private PImage frostIcon;
 	private ArrayList <Frost> shooting;
 	private float xcor, ycor, size, width, height;
-    private float projectileSpeed = 0.001f;
+	private float projectileSpeed = 0.001f;
 	private int powerUpIndex;
 	private static PApplet app_;
 	private boolean active = false;
 	private static int appSetCounter_ = 0;
 	private float direction;
 	private int damage;
-	
+
 	public Frost(float x, float y, int chance, float dir, PImage img) {
 		if (chance ==  0) {
 			this.xcor = x;
@@ -38,7 +38,7 @@ public class Frost extends PApplet implements Powerup, ApplicationConstants {
 	protected static int setup(PApplet theApp)
 	{
 
-		
+
 		if (appSetCounter_ == 0) 
 		{
 			app_ = theApp;
@@ -50,29 +50,29 @@ public class Frost extends PApplet implements Powerup, ApplicationConstants {
 		return appSetCounter_;
 
 	}
-	 public float getXcoor(){
-     return xcor;
-	 }
-	 public float getYcoor(){
-     return ycor;
-	 }
-	 public float getWidth(){
-     return width;
-	 }
-	 public float getHeight(){
-     return height;
-	 }
-	 public PImage getSprite(){
-     return frostIcon;
-	 }
-	
+	public float getXcoor(){
+		return xcor;
+	}
+	public float getYcoor(){
+		return ycor;
+	}
+	public float getWidth(){
+		return width;
+	}
+	public float getHeight(){
+		return height;
+	}
+	public PImage getSprite(){
+		return frostIcon;
+	}
 
-	 public void draw()
-	  {
-		
+
+	public void draw()
+	{
+
 		app_.stroke(0);
 		app_.fill(0, 0, 255);
-		
+
 
 		if(direction == 1) {
 			app_.pushMatrix();
@@ -84,25 +84,25 @@ public class Frost extends PApplet implements Powerup, ApplicationConstants {
 		{
 			app_.image(frostIcon, xcor, ycor - 2);
 		}
-	    
-	    
-	     
-	    
-	  }
-	 public void move() {
-		 if(active) {
-			 if (direction ==0) {
-				 xcor+= 0.15 *1;
-			 }
-			 xcor += 0.15 * -direction;
-		 }
-	 }
-	
-	 public void passiveMove(int dir) {
-		 xcor += 0.1 * dir;
-	 }
-		 
-	 public void spawnPowerup() {}
-	
-	
+
+
+
+
+	}
+	public void move() {
+		if(active) {
+			if (direction ==0) {
+				xcor+= 0.15 *1;
+			}
+			xcor += 0.15 * -direction;
+		}
+	}
+
+	public void passiveMove(int dir) {
+		xcor += 0.1 * dir;
+	}
+
+	public void spawnPowerup() {}
+
+
 }

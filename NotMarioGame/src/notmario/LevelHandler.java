@@ -4,17 +4,17 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class LevelHandler {
-	
+
 	private static int appSetCounter_ = 0;
 	private static PApplet app_; 
-	
+
 	Rectangle[][] levelCollection;
 	PImage[] sprites;
-	
+
 	int currentLevel, platformIndex;
-	
+
 	public LevelHandler(PImage[] images) {
-		
+
 		levelCollection = new Rectangle[4][20];
 		currentLevel = 0;
 		platformIndex = 0;
@@ -23,21 +23,21 @@ public class LevelHandler {
 		createLevel1();
 		createWinMenu();
 		createDeathMenu();
-		
+
 	}
-	
+
 	/**
 	 * This method draws each rectangle in the current row
 	 */
 	public void draw() {
-		
+
 		for(platformIndex = 0; platformIndex <= levelCollection[currentLevel].length; platformIndex++) {
 			if(levelCollection[currentLevel][platformIndex] == null)
 				break;
 			levelCollection[currentLevel][platformIndex].draw();
 		}
 	}
-	
+
 	/**
 	 * this method moves each rectangle in the current row
 	 * @param direction
@@ -51,7 +51,7 @@ public class LevelHandler {
 			}
 		}
 	}
-	
+
 	/**
 	 * This method tests if the character has landed on any platforms.
 	 */
@@ -68,7 +68,7 @@ public class LevelHandler {
 		}
 		return false;
 	}
-	
+
 	public boolean isInside(float x, float y) {
 		for(platformIndex = 0; platformIndex < levelCollection[currentLevel].length; platformIndex++) {
 			if(levelCollection[currentLevel][platformIndex] == null) {
@@ -111,7 +111,7 @@ public class LevelHandler {
 	public boolean enemyInside(Enemy e) {
 		boolean inside = false;
 		boolean edge = false;
-	    for(platformIndex = 0; platformIndex <= levelCollection[currentLevel].length; platformIndex++) {
+		for(platformIndex = 0; platformIndex <= levelCollection[currentLevel].length; platformIndex++) {
 			if(levelCollection[currentLevel][platformIndex] == null)
 				break;
 			inside |= levelCollection[currentLevel][platformIndex].enemyInside(e);
@@ -120,11 +120,11 @@ public class LevelHandler {
 		if (edge) { e.turnAround(); }
 		return !inside;
 	}
-	
+
 	public float returnIndex() {
 		return platformIndex;
 	}
-	
+
 	/**
 	 * this method changes the current level by moving down one row in the array levelCollection
 	 * @param count
@@ -132,15 +132,15 @@ public class LevelHandler {
 	public void setLevel(int count) {
 		currentLevel = count;
 	}
-	
+
 	public void createMenu() {
-		
+
 		levelCollection[0][0] = new Rectangle(10, -20, 20, 10, 0, 255, 255);
 		levelCollection[0][1] = new Rectangle(-30, -20, 20, 10, 255, 0, 255);
 	}
-	
+
 	public void createLevel1() {
-		
+
 		levelCollection[1][0] = new Rectangle(-25, -65, 100, 60, 255, 0, 0, sprites[2], sprites[3]);
 		levelCollection[1][1] = new Rectangle(75, -65, 25, 70, 255, 0, 0, sprites[2], sprites[3]);
 		levelCollection[1][2] = new Rectangle(125, -65, 40, 70, 255, 0, 0, sprites[2], sprites[3]);
@@ -156,23 +156,23 @@ public class LevelHandler {
 		levelCollection[1][12] = new Rectangle(450, -65, 25, 70, 255, 0, 0, sprites[2], sprites[3]);
 		levelCollection[1][13] = new Rectangle(440, -65, 10, 65, 255, 0, 0, sprites[2], sprites[3]);
 		levelCollection[1][14] = new GoalBox(460, 1, 5, 10, 0, 0, 255, sprites[16]);
-			
+
 	}
-	
+
 	public void createWinMenu() {
 		levelCollection[2][0] = new Rectangle(10, -20, 20, 10, 0, 255, 255);
 		levelCollection[2][1] = new Rectangle(-30, -20, 20, 10, 255, 0, 255);
 	}
-	
+
 	public void createDeathMenu() {
 		levelCollection[3][0] = new Rectangle(10, -20, 20, 10, 0, 255, 255);
 		levelCollection[3][1] = new Rectangle(-30, -20, 20, 10, 255, 0, 255);
 	}
-	
+
 	public void Restart() {
 		createLevel1();
 	}
-	
+
 	/**
 	 * Passes a reference of the window to the player to use when drawing
 	 * @param theApp
@@ -181,7 +181,7 @@ public class LevelHandler {
 	protected static int setup(PApplet theApp)
 	{
 
-		
+
 		if (appSetCounter_ == 0) 
 		{
 			app_ = theApp;

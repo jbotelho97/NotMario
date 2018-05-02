@@ -20,15 +20,15 @@ public class MyWorld extends PApplet implements ApplicationConstants
 	Character player1_;
 	LevelHandler myGame;
 	Enemy[] enemies;
-    PFont f;
+	PFont f;
 
 
-    private int currentLevel = 0;
+	private int currentLevel = 0;
 	private boolean animate_ = false;
 	private boolean move_, aButton, dButton;
 	private float dir1_, lastdir_;
-    public int enemyCount;
-    private PImage[] ourSprites;
+	public int enemyCount;
+	private PImage[] ourSprites;
 
 
 	public void settings() {
@@ -43,84 +43,84 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		}
 
 		frameRate(400);
-		
+
 		//Cuts from sprite sheet all sprite needed for objects
-				ourSprites = getImage(0,   0, 300, 300, 2);
-				ourSprites = ArrayUtils.addAll(ourSprites, getImage(300, 300,  40,  40, 2));
-				ourSprites = ArrayUtils.addAll(ourSprites, getImage(  0, 300,  40,  74, 5));
-				ourSprites = ArrayUtils.addAll(ourSprites, getImage(200, 300,  43,  78, 1));
-				ourSprites = ArrayUtils.addAll(ourSprites, getImage(  0, 380,  13,  14, 3));
-				ourSprites = ArrayUtils.addAll(ourSprites, getImage( 40, 380,  12,  11, 1));
-				ourSprites = ArrayUtils.addAll(ourSprites, getImage( 60, 380,  17,  15, 1));
-				ourSprites = ArrayUtils.addAll(ourSprites, getImage(  0, 400,  15,  15, 1));
-				ourSprites = ArrayUtils.addAll(ourSprites, getImage(  0, 415,  15,  36, 1));
-				ourSprites = ArrayUtils.addAll(ourSprites, getImage(  0, 460,  11,  11, 1));
-				ourSprites = ArrayUtils.addAll(ourSprites, getImage(  0, 500,  12,  17, 1));
-				ourSprites = ArrayUtils.addAll(ourSprites, getImage(  0, 500,  26,  28, 1));
-				ourSprites = ArrayUtils.addAll(ourSprites, getImage(  0, 550,  24,  16, 1));
-				ourSprites = ArrayUtils.addAll(ourSprites, getImage( 25, 550,  32,  21, 1));
-				ourSprites = ArrayUtils.addAll(ourSprites, getImage( 60, 550,  48,  49, 1));
-				ourSprites = ArrayUtils.addAll(ourSprites, getImage( 60, 480,  41,  65, 1));
-				ourSprites = ArrayUtils.addAll(ourSprites, getImage(110, 425, 184, 172, 1));
-				//ourSprites = ArrayUtils.addAll(ourSprites, getImage(23,549,34,1,1));
-				
+		ourSprites = getImage(0,   0, 300, 300, 2);
+		ourSprites = ArrayUtils.addAll(ourSprites, getImage(300, 300,  40,  40, 2));
+		ourSprites = ArrayUtils.addAll(ourSprites, getImage(  0, 300,  40,  74, 5));
+		ourSprites = ArrayUtils.addAll(ourSprites, getImage(200, 300,  43,  78, 1));
+		ourSprites = ArrayUtils.addAll(ourSprites, getImage(  0, 380,  13,  14, 3));
+		ourSprites = ArrayUtils.addAll(ourSprites, getImage( 40, 380,  12,  11, 1));
+		ourSprites = ArrayUtils.addAll(ourSprites, getImage( 60, 380,  17,  15, 1));
+		ourSprites = ArrayUtils.addAll(ourSprites, getImage(  0, 400,  15,  15, 1));
+		ourSprites = ArrayUtils.addAll(ourSprites, getImage(  0, 415,  15,  36, 1));
+		ourSprites = ArrayUtils.addAll(ourSprites, getImage(  0, 460,  11,  11, 1));
+		ourSprites = ArrayUtils.addAll(ourSprites, getImage(  0, 500,  12,  17, 1));
+		ourSprites = ArrayUtils.addAll(ourSprites, getImage(  0, 500,  26,  28, 1));
+		ourSprites = ArrayUtils.addAll(ourSprites, getImage(  0, 550,  24,  16, 1));
+		ourSprites = ArrayUtils.addAll(ourSprites, getImage( 25, 550,  32,  21, 1));
+		ourSprites = ArrayUtils.addAll(ourSprites, getImage( 60, 550,  48,  49, 1));
+		ourSprites = ArrayUtils.addAll(ourSprites, getImage( 60, 480,  41,  65, 1));
+		ourSprites = ArrayUtils.addAll(ourSprites, getImage(110, 425, 184, 172, 1));
+		//ourSprites = ArrayUtils.addAll(ourSprites, getImage(23,549,34,1,1));
+
 		setupGraphicClasses_(); // passes a reference of this app window to all graphical classes as a static variable
 		myGame = new LevelHandler(ourSprites);
 
-        f = createFont("Arial",16,false); // Arial, 16 point, anti-aliasing off for right now
+		f = createFont("Arial",16,false); // Arial, 16 point, anti-aliasing off for right now
 
-		
+
 	}
 
 	// GET IMAGE COMMENT LATER
-		public PImage[] getImage(int xStart, int yStart, int width, int height, int count) {
-			
-			PImage Img;
-				
-			Img = loadImage("cs.png");
-			
-			if(Img == null) {
-				System.exit(1);
-			}
-			
-			// The above line throws an checked IOException which must be caught.
-			
-			PImage[] sprites = new PImage[count];
+	public PImage[] getImage(int xStart, int yStart, int width, int height, int count) {
 
-			for (int i = 0; i < count; i++)
-			{
-		
-				sprites[i] = Img.get(
-		            xStart + (i * width),
-		            yStart,
-		            width,
-		            height
-			        );
-			}
-			
-			
-			return sprites;
-			
+		PImage Img;
+
+		Img = loadImage("cs.png");
+
+		if(Img == null) {
+			System.exit(1);
 		}
+
+		// The above line throws an checked IOException which must be caught.
+
+		PImage[] sprites = new PImage[count];
+
+		for (int i = 0; i < count; i++)
+		{
+
+			sprites[i] = Img.get(
+					xStart + (i * width),
+					yStart,
+					width,
+					height
+					);
+		}
+
+
+		return sprites;
+
+	}
 
 	//20 - Spud, 21- A.Spud 22 -spudzilla
 	public void generateEnemies(LevelHandler h){
-        //If you want a test enemy, un comment next two lines.
+		//If you want a test enemy, un comment next two lines.
 
-    
-	    switch(h.currentLevel){
-	    
-	    case 1:
+
+		switch(h.currentLevel){
+
+		case 1:
 			enemies[0] = new Spud(25,-3f,ourSprites[20]);//Test Spud
 			enemies[1] = new Spud(99,10f,ourSprites[20]);//Test Spud
-	        enemies[2] = new Spud(175,-5.0f,ourSprites[20]);//Test Spud
-	        enemies[3] = new ArmoredSpud(255,-10.0f,ourSprites[21]);//Test Spud
-	        enemies[4] = new ArmoredSpud(375, -10.0f, ourSprites[21]);
-	        enemies[5] = new Spudzilla(400, -10.0f, ourSprites[22]);
-	        enemies[6] = new ArmoredSpud(425, -10.0f, ourSprites[21]);
-	        enemyCount += 7;
-        }
-    }
+			enemies[2] = new Spud(175,-5.0f,ourSprites[20]);//Test Spud
+			enemies[3] = new ArmoredSpud(255,-10.0f,ourSprites[21]);//Test Spud
+			enemies[4] = new ArmoredSpud(375, -10.0f, ourSprites[21]);
+			enemies[5] = new Spudzilla(400, -10.0f, ourSprites[22]);
+			enemies[6] = new ArmoredSpud(425, -10.0f, ourSprites[21]);
+			enemyCount += 7;
+		}
+	}
 
 	public void draw() {
 		frame_++;
@@ -138,9 +138,9 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			stroke(0);
 
 			myGame.draw();
-			
+
 			if(currentLevel == 1) {
-//				platform.draw();
+				//				platform.draw();
 				player1_.draw();
 				//TESTING ENEMIES - Jack
 				for(Enemy e : enemies) {
@@ -148,11 +148,11 @@ public class MyWorld extends PApplet implements ApplicationConstants
 						e.draw();
 					}
 				}
-	            drawHealth(player1_.health); //Temporary Health Bar -Jack
-	            //System.out.println(player1_.getHealth());
+				drawHealth(player1_.health); //Temporary Health Bar -Jack
+				//System.out.println(player1_.getHealth());
 				//enemies[1].draw();
-	            //point(0,0);
-	           // point(10,-5);
+				//point(0,0);
+				// point(10,-5);
 			}
 			else if(currentLevel == 2) {
 				drawWinMenu();
@@ -170,78 +170,78 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			player1_.animate();
 
 			if(myGame.isInside(player1_, (int)dir1_)) {
-			//	System.out.println("inside");
+				//	System.out.println("inside");
 				if(myGame.isGoal(player1_, (int)dir1_)) {
 					currentLevel = 2;
 					myGame.setLevel(currentLevel);
 					animate_ = false;
 				}
 				else {
-				player1_.land();
+					player1_.land();
 				}
 			}
 			else {
-              //  System.out.println("outside");
-                player1_.fall();
-            }
+				//  System.out.println("outside");
+				player1_.fall();
+			}
 			boolean onEdge = myGame.isEdge(player1_, (int)dir1_);
 			if(!onEdge) {
 				myGame.move((int)dir1_, move_);
 				player1_.passiveMoveProjectiles((int)dir1_, move_);
-            }
+			}
 			for(int i = 0; i < enemyCount; i++) {
-			    if(enemies[i] != null) {
-			    	if(enemies[i].getHealth() >= 0) {
-	                    if (!onEdge) {
-	                    		enemies[i].passiveMove((int) dir1_, move_);//Moving w/ the screen
-	                    }
-	                    enemies[i].moveCycle(myGame); //Unique Movement Cycle
-	                    if(player1_.getActivePowerUp() == 0 || player1_.getActivePowerUp() == 1) {
-	                    
-	                    int y = enemies[i].powerUpCollision(player1_.getPowerUpFire(), player1_.getPowerUpFrost(), enemies[i]);
-	                    }
-	                    int x = enemies[i].collision(player1_); //Checks if player collides with enemy.
-	                    switch (x) {
-	                        case 1: //Player hits an enemy on the head
-	                            player1_.jump();
-	                            break;
-	                        case 0: //Player hits nothing
-	                            break;
-	                        case -1: //Player collides with an enemy.
-	                            player1_.takeHit(enemies[i]);
-	                            myGame.move(75, true);
-	                            enemies[i].passiveMove(75, true);
-	                            
-	                            break;
-	                    }
-	                }
-			    }
-		    }
+				if(enemies[i] != null) {
+					if(enemies[i].getHealth() >= 0) {
+						if (!onEdge) {
+							enemies[i].passiveMove((int) dir1_, move_);//Moving w/ the screen
+						}
+						enemies[i].moveCycle(myGame); //Unique Movement Cycle
+						if(player1_.getActivePowerUp() == 0 || player1_.getActivePowerUp() == 1) {
+
+							int y = enemies[i].powerUpCollision(player1_.getPowerUpFire(), player1_.getPowerUpFrost(), enemies[i]);
+						}
+						int x = enemies[i].collision(player1_); //Checks if player collides with enemy.
+						switch (x) {
+						case 1: //Player hits an enemy on the head
+							player1_.jump();
+							break;
+						case 0: //Player hits nothing
+							break;
+						case -1: //Player collides with an enemy.
+							player1_.takeHit(enemies[i]);
+							myGame.move(75, true);
+							enemies[i].passiveMove(75, true);
+
+							break;
+						}
+					}
+				}
+			}
 
 			if (player1_.getHealth() <= 0) {
 				playerDie();
 			}
-        }
+		}
 	}
 
 	public void drawHealth(int h){
-	    textFont(f,2);
-	    fill(0);
-	    scale(1,-1);
-	    textAlign(LEFT);
-	    String s = "Player Health : " + h;
-	    text(s, -50, 35);
+		textFont(f,2);
+		fill(0);
+		scale(1,-1);
+		textAlign(LEFT);
+		String s = "Player Health : " + h;
+		text(s, -50, 35);
 
-    }
-	
+	}
+
 	public void playerDie(){
-		
+
 		player1_.die();
 		currentLevel = 3;
 		myGame.setLevel(3);
 		animate_ = false;
 	}
-	
+
 	public void drawMenu() {
 		textFont(f,5);
 		fill(0);
@@ -258,7 +258,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		image(ourSprites[4], -20, -50);
 		popMatrix();
 	}
-	
+
 	public void drawWinMenu() {
 		textFont(f,5);
 		fill(0);
@@ -275,7 +275,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		image(ourSprites[9], -20, -50);
 		popMatrix();
 	}
-	
+
 	public void drawDeathMenu() {
 		textFont(f,5);
 		fill(0);
@@ -308,7 +308,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		}
 		enemies = newEnemies;
 	}
-	
+
 	public void keyPressed() {
 		if (player1_ == null || !animate_) {
 			return;
@@ -332,12 +332,12 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			//player 1 jump command
 		case 'w':
 			player1_.jump();
-//			move_ = true;
+			//			move_ = true;
 			break;
 		case 'f':
 			player1_.shoot(lastdir_);
 		}
-		
+
 		if(aButton) {
 			if(!player1_.isAirborne()) {
 				player1_.setImageIndex(1);
@@ -377,13 +377,13 @@ public class MyWorld extends PApplet implements ApplicationConstants
 				}
 			}
 			break;
-			
+
 		case 'w':
 			player1_.setImageIndex(0);
 			break;
 			//toggle the player's reference and attack boxes
 		case 't':
-//			player1_.toggleRef();
+			//			player1_.toggleRef();
 			break;
 			//pause the game
 		case 'p':
@@ -391,7 +391,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 				animate_ = !animate_;
 			break;
 		}
-		
+
 		if(aButton || dButton)
 			move_ = true;
 		else {
@@ -404,7 +404,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 
 
 	}
-	
+
 	public void mousePressed() {
 		if(currentLevel == 0) {
 			//System.out.println(((mouseX-WORLD_ORIGIN_X)*PIXEL_TO_WORLD) + " " + ((mouseY-WORLD_ORIGIN_Y)*-PIXEL_TO_WORLD));
@@ -421,7 +421,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 					Restart();
 				}
 				else {
-				System.exit(0);
+					System.exit(0);
 				}
 			}
 		}
@@ -431,12 +431,12 @@ public class MyWorld extends PApplet implements ApplicationConstants
 					Restart();
 				}
 				else {
-				System.exit(0);
+					System.exit(0);
 				}
 			}
 		}
 	}
-	
+
 	public void Restart() {
 		animate_ = false;
 		currentLevel=1;
@@ -444,12 +444,12 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		myGame.Restart();
 		move_ = false;
 		enemyCount = 0;
-		
+
 		player1_ = new Character(0, 0, 1, 255, 0, 0, ArrayUtils.addAll(Arrays.copyOfRange(ourSprites, 4, 9), Arrays.copyOfRange(ourSprites,10, 15)));
-		
+
 		enemies = new Enemy[20];
 
-        generateEnemies(myGame);
+		generateEnemies(myGame);
 		animate_ = true;
 	}
 

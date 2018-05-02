@@ -6,13 +6,13 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class Rectangle implements ApplicationConstants {
-//  Here we store a reference to the app. in a static (aka "class") variable.
+	//  Here we store a reference to the app. in a static (aka "class") variable.
 	private static PApplet app_; 
 	private static int appSetCounter_ = 0;
 	private PImage[] sprite_ = null;
 
 	private float x_, y_, playerSpeedX_, w_, h_, r, b, g;
-	
+
 	/**
 	 * Builds the rectangle by setting its status variables
 	 * @param x x coordinate
@@ -30,7 +30,7 @@ public class Rectangle implements ApplicationConstants {
 		g = green;
 		playerSpeedX_ = 0.1f;
 	}
-	
+
 	/**
 	 * Builds the rectangle by setting its status variables
 	 * @param x x coordinate
@@ -50,7 +50,7 @@ public class Rectangle implements ApplicationConstants {
 		playerSpeedX_ = 0.1f;
 		sprite_ = new PImage[] {grass, ground};
 	}
-	
+
 	/**
 	 * draws the rectangle to the window
 	 */
@@ -78,31 +78,31 @@ public class Rectangle implements ApplicationConstants {
 			}
 		}
 	}
-	
+
 	public float getX() {
 		return x_;
 	}
-	
+
 	public float getY() {
 		return y_;
 	}
-	
+
 	public float getWidth() {
 		return w_;
 	}
-	
+
 	public float getHeight() {
 		return h_;
 	}
-	
+
 	public void setX(float x) {
 		x_ = x;
 	}
-	
+
 	public void setY(float y) {
 		y_ = y;
 	}
-	
+
 	public void move(int direction) {
 		x_ += (playerSpeedX_*direction);
 	}
@@ -126,7 +126,7 @@ public class Rectangle implements ApplicationConstants {
 
 	}
 
- 	//Tells whether player char is in rectangle
+	//Tells whether player char is in rectangle
 	public boolean isInside(Character player, int dir)
 	{		
 		float leftX = player.x_-player.width/2;
@@ -143,7 +143,7 @@ public class Rectangle implements ApplicationConstants {
 			//System.out.println(leftX + " " + rightX + " " + bottomY + " " + x_ + " " + y_ + " " + h_ + " " + w_);
 			inside = true;
 		}
-		
+
 		if (inside) {
 			// Fell inside floor somehow.
 			if (bottomY < y_ + h_) {
@@ -156,13 +156,13 @@ public class Rectangle implements ApplicationConstants {
 		}
 		return inside;
 	}
-	
+
 
 	public boolean isInside(float x1, float y1) {
-		
+
 		System.out.println(x_ + " " + y_);
 		return (x1 >= x_ && x1 <= (x_ + w_) && y1 > y_ && y1 < (y_ + h_));
-		
+
 	}
 
 	//Method for enemy collision. This is just temporary until I find a better place to put it. -Jack
@@ -203,7 +203,7 @@ public class Rectangle implements ApplicationConstants {
 		}
 		float leftWallX = x_;
 		float rightWallX = x_ + w_;
-		
+
 		// Going left, hitting right wall
 		//leftX - 0.05f < rightWallX < left
 		if ((dir > 0) && (rightWallX < leftX) && (leftX - 0.1f < rightWallX)) {
@@ -213,7 +213,7 @@ public class Rectangle implements ApplicationConstants {
 		if ((dir < 0) && (rightX + 0.1f > leftWallX) && (rightX < leftWallX)) {
 			return true;
 		}
-		
+
 		return false;
 	}
 }

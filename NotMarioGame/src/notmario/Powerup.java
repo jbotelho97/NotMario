@@ -9,26 +9,26 @@ import java.awt.Graphics;
 
 public interface Powerup
 {
-	
-	
-	
 
-	 public float getXcoor();/*{
+
+
+
+	public float getXcoor();/*{
 	        return xcor;
 	    }*/
-	    public float getYcoor();/*{
+	public float getYcoor();/*{
 	        return ycor;
 	    }*/
-	    public float getWidth(); /*{
+	public float getWidth(); /*{
 	        return width;
 	    }*/
-	    public float getHeight();/*{
+	public float getHeight();/*{
 	        return height;
 	    }*/
-	    public PImage getSprite();/*{
+	public PImage getSprite();/*{
 	        return sprite;
 	    }*/
-	    /*{
+	/*{
 	        app_.pushMatrix();
 
 	        app_.stroke(0);
@@ -38,9 +38,9 @@ public interface Powerup
 
 	        app_.popMatrix();
 	    }*/
-	    public void spawnPowerup();
-	    public void draw();/* {
-	   	
+	public void spawnPowerup();
+	public void draw();/* {
+
 	    }*/
 }
-	
+
