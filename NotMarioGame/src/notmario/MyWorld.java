@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-
+import java.util.ArrayList;
 import org.apache.commons.lang3.ArrayUtils;
 
 import processing.core.PApplet;
@@ -104,8 +104,12 @@ public class MyWorld extends PApplet implements ApplicationConstants
 
 	public void generateEnemies(LevelHandler h){
         //If you want a test enemy, un comment next two lines.
-        enemies[0] = new ArmoredSpud(25,-5.0f);//Test Spud
+		enemies[0] = new ArmoredSpud(25,-5.0f);//Test Spud
+        enemies[1] = new ArmoredSpud(35,-5.0f);//Test Spud
+
         enemyCount++;
+        enemyCount++;
+    
 	    /*switch(h.currentLevel){
 
         }*/
@@ -133,6 +137,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 				player1_.draw();
 				//TESTING ENEMIES - Jack
 				enemies[0].draw();
+				enemies[1].draw();
 	            drawHealth(player1_.health); //Temporary Health Bar -Jack
 	            System.out.println(player1_.getHealth());
 				//enemies[1].draw();
@@ -167,6 +172,9 @@ public class MyWorld extends PApplet implements ApplicationConstants
 	                    		enemies[i].passiveMove((int) dir1_, move_);//Moving w/ the screen
 	                    }
 	                    enemies[i].moveCycle(myGame); //Unique Movement Cycle
+	                    if(player1_.getActivePowerUp() == 0 || player1_.getActivePowerUp() == 1) {
+	                    int y = enemies[i].powerUpCollision(player1_.getPowerUpFire(), player1_.getPowerUpFrost());
+	                    }
 	                    int x = enemies[i].collision(player1_); //Checks if player collides with enemy.
 	                    switch (x) {
 	                        case 1: //Player hits an enemy on the head
@@ -175,9 +183,10 @@ public class MyWorld extends PApplet implements ApplicationConstants
 	                        case 0: //Player hits nothing
 	                            break;
 	                        case -1: //Player collides with an enemy.
-	                            player1_.takeHit(enemies[0]);
+	                            player1_.takeHit(enemies[i]);
 	                            myGame.move(75, true);
-	                            enemies[0].passiveMove(75, true);
+	                            enemies[i].passiveMove(75, true);
+	                            
 	                            break;
 	                    }
 	                }

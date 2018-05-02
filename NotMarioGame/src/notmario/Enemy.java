@@ -10,7 +10,7 @@ import processing.core.PApplet;
 
 import java.awt.Image;
 import java.util.Random;
-
+import java.util.ArrayList;
 /*
 Delete if not used!
 import java.awt.Graphics;
@@ -186,13 +186,44 @@ public abstract class Enemy implements ApplicationConstants {
         }
         return 0;
     }
-   /* public int powerUpCollision(Fire f, Frost g) {
-    	if(f != null) {
-    	float fX = f.getXcoor();
-    	if(fX >= xcor)
-    	}
-    	return 0;
-    }*/
+    public int powerUpCollision(ArrayList<Fire> f, ArrayList<Frost> g) {
+    	
+   	 if(f != null) {
+   		for(Fire fire: f) {
+   			if(fire != null) {
+   	     float fLeftX = fire.getXcoor()- fire.getWidth()/2;
+   	     float fRightX = fire.getXcoor()+ fire.getWidth()/2;
+   	     
+   		
+   	if((fRightX >= xcor) && (fLeftX <= xcor + width) && (fire.getYcoor() - fire.getHeight() >=ycor + height - 0.1f) &&(fire.getYcoor()-fire.getHeight()/2<=ycor+height+0.2f)) {
+   		System.out.println("Enemy Hit");
+   		takeHitPow(2);
+   		
+   	}
+   		}
+   		}
+   	 }
+   	 if(g!= null) {
+   	 
+   			for(int i = 0; i<g.size(); i++) {
+   		    if(g.get(i)!= null) {
+   	    	float gLeftX = g.get(i).getXcoor()- g.get(i).getWidth()/2;
+   	    	float gRightX = g.get(i).getXcoor()+ g.get(i).getWidth()/2;
+   	    	if((int)gRightX == (int)xcor || (int)gLeftX == (int)xcor) { 
+   	    
+   	    		takeHitPow(1);
+   	    		g.set(i, null);
+   	    		
+   	    		
+   	    		
+   	    	}
+   			}
+   	}
+   	 }
+   			
+   	
+   	return 0;
+   }
     //Damages the enemy
     public void takeHit(Character p){
         if(health > 1){
@@ -212,7 +243,15 @@ public abstract class Enemy implements ApplicationConstants {
         }
         
     }
-    
+    public void takeHitPow(int dam) {
+    	if(health >1) {
+    		health -= dam;
+    	}
+    	else {
+    		health = 0;
+    		die();
+    	}
+    }
 
     //Kills the enemy
     public void die(){

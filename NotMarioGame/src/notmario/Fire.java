@@ -70,7 +70,7 @@ public class Fire extends PApplet implements Powerup, ApplicationConstants {
 		app_.stroke(0);
 		app_.fill(255, 0,0);
 
-	    app_.ellipse(xcor, ycor, 1, 1);
+	    app_.ellipse(xcor, ycor-2, 1, 1);
 	    
 	     
 	    
