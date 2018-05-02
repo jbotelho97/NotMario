@@ -1,7 +1,6 @@
 package notmario;
 import processing.core.PImage;
 
-import java.awt.Image;
 
 public class ArmoredSpud extends Enemy {
 
@@ -18,7 +17,6 @@ public class ArmoredSpud extends Enemy {
     }
 
     //Overrided the MoveCycle. Spud walks left untill he hits
-    @Override
     public void moveCycle(LevelHandler h) {
         setSpeed(xspeed);
         airborne = h.enemyInside(this);
@@ -27,9 +25,12 @@ public class ArmoredSpud extends Enemy {
         }
     }
 
+    //To turn the spud around
     public void turnAround(){
         xspeed *= -1;
     }
+    
+    //to change spud's speed
     public void setXspeed() {
     	xspeed = 0;
     }

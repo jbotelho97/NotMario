@@ -2,8 +2,6 @@ package notmario;
 
 /** I use this interface to store a set of application-wide constants
  * 
- * @author jyh
- *
  */
 public interface ApplicationConstants {
 

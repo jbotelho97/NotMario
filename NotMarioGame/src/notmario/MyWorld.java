@@ -5,6 +5,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.ArrayList;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -30,6 +32,8 @@ public class MyWorld extends PApplet implements ApplicationConstants
 	private float dir1_, lastdir_;
     public int enemyCount;
     private PImage[] ourSprites;
+    
+    private Timer timer;
 
 
 	public void settings() {
@@ -64,6 +68,8 @@ public class MyWorld extends PApplet implements ApplicationConstants
 				ourSprites = ArrayUtils.addAll(ourSprites, getImage( 60, 480,  41,  65, 1));
 				ourSprites = ArrayUtils.addAll(ourSprites, getImage(110, 425, 184, 172, 1));
 				//ourSprites = ArrayUtils.addAll(ourSprites, getImage(23,549,34,1,1));
+				
+		timer = new Timer();
 		myGame = new LevelHandler();
 
         f = createFont("Arial",16,false); // Arial, 16 point, anti-aliasing off for right now
@@ -105,15 +111,19 @@ public class MyWorld extends PApplet implements ApplicationConstants
 	//20 - Spud, 21- A.Spud 22 -spudzilla
 	public void generateEnemies(LevelHandler h){
         //If you want a test enemy, un comment next two lines.
-		enemies[0] = new ArmoredSpud(25,-5.0f,ourSprites[21]);//Test Spud
-        enemies[1] = new ArmoredSpud(35,-5.0f,ourSprites[21]);//Test Spud
 
-        enemyCount++;
-        enemyCount++;
     
-	    /*switch(h.currentLevel){
-
-        }*/
+	    switch(h.currentLevel){
+	    
+	    case 1:
+			enemies[0] = new Spud(25,-5.0f,ourSprites[20]);//Test Spud
+	        enemies[1] = new Spud(175,-5.0f,ourSprites[20]);//Test Spud
+	        enemies[2] = new ArmoredSpud(255,-10.0f,ourSprites[21]);//Test Spud
+	        enemies[3] = new ArmoredSpud(450, -10.0f, ourSprites[21]);
+	        enemies[4] = new ArmoredSpud(375, -10.0f, ourSprites[21]);
+	        enemies[5] = new ArmoredSpud(425, -10.0f, ourSprites[21]);
+	        enemyCount += 6;
+        }
     }
 
 	public void draw() {
@@ -133,17 +143,27 @@ public class MyWorld extends PApplet implements ApplicationConstants
 
 			myGame.draw();
 			
-			if(currentLevel != 0) {
+			if(currentLevel == 1) {
 //				platform.draw();
 				player1_.draw();
 				//TESTING ENEMIES - Jack
-				enemies[0].draw();
-				enemies[1].draw();
+				for(Enemy e : enemies) {
+					if(e != null) {
+						e.draw();
+					}
+				}
 	            drawHealth(player1_.health); //Temporary Health Bar -Jack
-	            System.out.println(player1_.getHealth());
+	            //System.out.println(player1_.getHealth());
 				//enemies[1].draw();
 	            //point(0,0);
 	           // point(10,-5);
+			}
+			else if(currentLevel == 2) {
+				drawWinMenu();
+			}
+			else if(currentLevel == 3) {
+				System.out.println("activated" + ":" + currentLevel);
+				drawDeathMenu();
 			}
 			else
 				drawMenu();
@@ -155,7 +175,14 @@ public class MyWorld extends PApplet implements ApplicationConstants
 
 			if(myGame.isInside(player1_, (int)dir1_)) {
 			//	System.out.println("inside");
+				if(myGame.returnIndex() == 11) {
+					currentLevel = 2;
+					myGame.setLevel(currentLevel);
+					animate_ = false;
+				}
+				else {
 				player1_.land();
+				}
 			}
 			else {
               //  System.out.println("outside");
@@ -212,7 +239,10 @@ public class MyWorld extends PApplet implements ApplicationConstants
     }
 	
 	public void playerDie(){
+		
 		player1_.die();
+		currentLevel = 3;
+		myGame.setLevel(3);
 		animate_ = false;
 	}
 	
@@ -227,6 +257,40 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		text(s, 0, -30);
 		text(s1 , 20, 17);
 		text(s2, -21, 17);
+		pushMatrix();
+		scale(PIXEL_TO_WORLD*2);
+		image(ourSprites[4], -20, -50);
+		popMatrix();
+	}
+	
+	public void drawWinMenu() {
+		textFont(f,5);
+		fill(0);
+		scale(1,-1);
+		textAlign(CENTER);
+		String s = "Y OU WIN!";
+		String s2 = "Quit";
+		text(s, 0, -30);
+		text(s2, 0, 17);
+		pushMatrix();
+		scale(PIXEL_TO_WORLD*2);
+		image(ourSprites[9], -20, -50);
+		popMatrix();
+	}
+	
+	public void drawDeathMenu() {
+		textFont(f,5);
+		fill(0);
+		scale(1,-1);
+		textAlign(CENTER);
+		String s = "Y ou Died!";
+		String s2 = "Quit";
+		text(s, 0, -30);
+		text(s2, 0, 17);
+		pushMatrix();
+		scale(PIXEL_TO_WORLD*2);
+		image(ourSprites[8], -20, -50);
+		popMatrix();
 	}
 
 	public void cleanEnemies() {
@@ -274,10 +338,13 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			player1_.shoot(lastdir_);
 		}
 		
-		if(aButton||dButton) {
+		if(aButton) {
 			if(!player1_.isAirborne()) {
-				//Will be changed for image loop movement
 				player1_.setImageIndex(1);
+			}
+		}
+		if(dButton) {
+			if(!player1_.isAirborne()) {
 				player1_.setImageIndex(2);
 			}
 		}
@@ -295,6 +362,9 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			if(dButton) {
 				dir1_ = -1;
 				lastdir_ = -1;
+				if(!player1_.isAirborne()) {
+					player1_.setImageIndex(2);
+				}
 			}
 			break;
 		case 'd':
@@ -302,6 +372,9 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			if(aButton) {
 				dir1_ = 1;
 				lastdir_ = 1;
+				if(!player1_.isAirborne()) {
+					player1_.setImageIndex(1);
+				}
 			}
 			break;
 			
@@ -337,16 +410,26 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			System.out.println(((mouseX-WORLD_ORIGIN_X)*PIXEL_TO_WORLD) + " " + ((mouseY-WORLD_ORIGIN_Y)*-PIXEL_TO_WORLD));
 			if(myGame.isInside(((mouseX-WORLD_ORIGIN_X)*PIXEL_TO_WORLD), ((mouseY-WORLD_ORIGIN_Y)*-PIXEL_TO_WORLD))) {
 				if(myGame.returnIndex() == 0)
-					levelWin();
+					Restart();
 				else
 					System.exit(0);
 			}
 		}
+		else if(currentLevel == 2) {
+			if(myGame.isInside(((mouseX-WORLD_ORIGIN_X)*PIXEL_TO_WORLD), ((mouseY-WORLD_ORIGIN_Y)*-PIXEL_TO_WORLD))) {
+				System.exit(0);
+			}
+		}
+		else if(currentLevel == 3) {
+			if(myGame.isInside(((mouseX-WORLD_ORIGIN_X)*PIXEL_TO_WORLD), ((mouseY-WORLD_ORIGIN_Y)*-PIXEL_TO_WORLD))) {
+				System.exit(0);
+			}
+		}
 	}
 	
-	public void levelWin() {
+	public void Restart() {
 		animate_ = false;
-		currentLevel+=1;
+		currentLevel=1;
 		myGame.setLevel(currentLevel);
 		
 		player1_ = new Character(0, 0, 1, 255, 0, 0, Arrays.copyOfRange(ourSprites, 4, 9));

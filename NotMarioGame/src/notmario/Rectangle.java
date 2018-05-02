@@ -69,6 +69,14 @@ public class Rectangle {
 		return y_;
 	}
 	
+	public float getWidth() {
+		return w_;
+	}
+	
+	public float getHeight() {
+		return h_;
+	}
+	
 	public void setX(float x) {
 		x_ = x;
 	}
@@ -185,7 +193,7 @@ public class Rectangle {
 			return true;
 		}
 		// Going right, hitting left wall
-		if ((dir < 0) && (rightX + 0.07f > leftWallX) && (rightX < leftWallX)) {
+		if ((dir < 0) && (rightX + 0.1f > leftWallX) && (rightX < leftWallX)) {
 			return true;
 		}
 		

@@ -49,6 +49,7 @@ public class Spudzilla extends Enemy {
         }
         else if(airborne){
             fall();
+            turnAround();
         }
         else{
             land();

@@ -17,8 +17,36 @@ public class GoalBox extends Rectangle {
 		super.draw();
 	}
 
-	public boolean isInside(Character player) {
-		return true;
+	
+	public boolean isInside(Character player, int dir) {
+		float leftX = player.x_-player.width/2;
+		float rightX = player.x_+player.width/2;
+		float bottomY = player.y_-player.height/2;
+		boolean inside = false;
+		// Check bottom left corner of player character
+				if((leftX >= getX()) && (leftX <= getX() + getWidth()) && (bottomY >= getY()) && (bottomY <= getY() + getHeight())) {
+					//System.out.println(leftX + " " + rightX + " " + bottomY + " " + x_ + " " + y_ + " " + h_ + " " + w_);
+					inside = true;
+				}
+				// Check bottom right corner of player character
+				if ((rightX >= getX()) && (rightX <= getX() + getWidth()) && (bottomY >= getY()) && (bottomY <= getY() + getHeight())) {
+					//System.out.println(leftX + " " + rightX + " " + bottomY + " " + x_ + " " + y_ + " " + h_ + " " + w_);
+					inside = true;
+				}
+				return inside;
+		
+	}
+	
+	public boolean enemyInside(Enemy e){
+		return false;
+	}
+	
+	public boolean enemyEdge(Enemy e){
+		return false;
+	}
+	
+	public boolean playerEdge(Character player, int dir) {
+		return false;
 	}
 	
 	/**

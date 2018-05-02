@@ -1,6 +1,5 @@
 package notmario;
 
-import java.awt.Image;
 
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -10,12 +9,10 @@ import java.util.ArrayList;
 public class Character implements ApplicationConstants 
 {
 	private static int appSetCounter_ = 0;
-	private static PApplet app_; 
-	private Powerup pow;
-	private ArrayList <Fire> fireBalls;
-	private ArrayList <Frost> frostBalls;
-	
-	private int activePowerUp =4;
+	private static PApplet app_;//reference to the app graphical window
+	private ArrayList <Fire> fireBalls; //to hold any created fireballs
+	private ArrayList <Frost> frostBalls; //to hold any created frost attacks
+	private int activePowerUp =4; //default setting for no powerup
 		
 		private boolean ref_ = false;
 		private boolean airborne = false;
@@ -39,7 +36,7 @@ public class Character implements ApplicationConstants
 		 * @param b
 		 */
 		public Character(float x, float y, float size, float r, float g, float b, PImage[] images) {
-			//location and size
+			//sets location, size, color and images for object
 			x_ = x;
 			y_ = y;
 			size_ = size;
@@ -81,25 +78,13 @@ public class Character implements ApplicationConstants
 			app_.rotate(angle_);
 			app_.scale(size_);
 			
-//			//to see reference frames and attack boxes
-//			if(ref_) {
-//				app_.noFill();
-//				app_.stroke(255, 0, 0);
-//				app_.rect(REFERENCE_BOX_OFFSET_X, REFERENCE_BOX_OFFSET_Y, REFERENCE_BOX_W, REFERENCE_BOX_H);
-//				
-//			}
 			
 			app_.stroke(0);
 			app_.fill(r_, g_, b_);
 			
-			//Collision rectangle for Player
-			//app_.rect(0, 0, width, height);
 			
 			app_.fill(0);
 			
-			//Ground collision for Player
-			//app_.ellipse(0, 0, 1, 1);
-			//app_.ellipse(0 + width, 0, 1, 1);
 			
 			app_.pushMatrix();
 			app_.scale(PIXEL_TO_WORLD, -PIXEL_TO_WORLD);
@@ -114,7 +99,7 @@ public class Character implements ApplicationConstants
 			if (airborne) {
 				y_ += (vy_ += gravity);
 			}
-			System.out.println(y_);
+			//System.out.println(y_);
 			if (y_ <= -35) {
 				setHealth(0);
 			}
@@ -191,6 +176,10 @@ public class Character implements ApplicationConstants
 			return airborne;
 		}
 		
+		public int getImageIndex() {
+			return spriteIndex;
+		}
+		
 		public void setImageIndex(int i) {
 			spriteIndex = i;
 		}
@@ -216,10 +205,10 @@ public class Character implements ApplicationConstants
 
 	}
 	public void shoot(float dir) {
-		System.out.println("activated");
+		//System.out.println("activated");
 		 if(activePowerUp == 0) {
-		 if(airborne) {
-			 System.out.println("airborne");
+	
+			 if(airborne) {
 		   Fire temp = new Fire(x_+ (width/2 * -dir),y_- (vy_+gravity), 0, dir);
 		   fireBalls.add(temp);
 		 }else {
@@ -228,7 +217,7 @@ public class Character implements ApplicationConstants
 		 }
 		 }else if(activePowerUp == 1) {
 			 if(airborne) {
-				 System.out.println("airborne");
+				 //System.out.println("airborne");
 			   Frost temp = new Frost(x_+ (width/2 * -dir),y_- (vy_+gravity), 0, dir);
 			   frostBalls.add(temp);
 			 }else {
@@ -255,7 +244,7 @@ public class Character implements ApplicationConstants
 	public void setHealth(int h) {
 		health = h;
 		activePowerUp = 4;
-		System.out.println(health);
+		//System.out.println(health);
 	}
 	public int getHealth() {
 		return health;
