@@ -98,21 +98,16 @@ public class LevelHandler {
 	}
 
 	public boolean enemyInside(Enemy e) {
-		boolean result = true;
+		boolean inside = false;
+		boolean edge = false;
 	    for(platformIndex = 0; platformIndex <= levelCollection[currentLevel].length; platformIndex++) {
 			if(levelCollection[currentLevel][platformIndex] == null)
 				break;
-			//levelCollection[currentLevel][platformIndex].enemyInside(e);
-			if ((levelCollection[currentLevel][platformIndex].enemyInside(e) == false) && (levelCollection[currentLevel][platformIndex].enemyEdge(e) == false) && (result)){
-				result = false;
-			}
-			else if(levelCollection[currentLevel][platformIndex].enemyEdge(e) == true){
-                levelCollection[currentLevel][platformIndex].enemyEdge(e);
-			    e.turnAround();
-				result = false;
-			}
+			inside |= levelCollection[currentLevel][platformIndex].enemyInside(e);
+			edge |= levelCollection[currentLevel][platformIndex].enemyEdge(e);			
 		}
-		return result;
+		if (edge) { e.turnAround(); }
+		return !inside;
 	}
 	
 	public float returnIndex() {
