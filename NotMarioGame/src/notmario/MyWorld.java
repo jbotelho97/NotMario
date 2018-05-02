@@ -281,7 +281,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			dButton = false;
 			if(aButton) {
 				dir1_ = 1;
-				lastdir_ = -1;
+				lastdir_ = 1;
 			}
 			break;
 			
