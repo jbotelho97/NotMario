@@ -442,6 +442,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		myGame.setLevel(currentLevel);
 		myGame.Restart();
 		move_ = false;
+		enemyCount = 0;
 		
 		player1_ = new Character(0, 0, 1, 255, 0, 0, ArrayUtils.addAll(Arrays.copyOfRange(ourSprites, 4, 9), Arrays.copyOfRange(ourSprites,10, 15)));
 		
