@@ -210,9 +210,8 @@ public abstract class Enemy implements ApplicationConstants {
 			for(int i = 0; i<f.size(); i++) {
 				if(f.get(i) != null) {
 					float y = f.get(i).getYcoor();
-					float fLeftX = f.get(i).getXcoor() - f.get(i).getWidth()/2;
-					float fRightX = f.get(i).getXcoor() + f.get(i).getWidth()/2;
-					if ((int)fRightX == (int)xcor || (int)fLeftX == (int)xcor) {
+					float x = f.get(i).getXcoor();
+					if (xcor < x && x < xcor + width) {
 						if (ycor < y && y < ycor + height) {
 							f.set(i, null);
 							takeHitPow(2);
@@ -226,9 +225,8 @@ public abstract class Enemy implements ApplicationConstants {
 			for(int i = 0; i<g.size(); i++) {
 				if(g.get(i)!= null) {
 					float y = g.get(i).getYcoor();
-					float gLeftX = g.get(i).getXcoor()- g.get(i).getWidth()/2;
-					float gRightX = g.get(i).getXcoor()+ g.get(i).getWidth()/2;
-					if((int)gRightX == (int)xcor || (int)gLeftX == (int)xcor) { 
+					float x = g.get(i).getXcoor();
+					if (xcor < x && x < xcor + width) {
 						if (ycor < y && y < ycor + height) {
 							g.set(i, null);
 							e.setXspeed();
