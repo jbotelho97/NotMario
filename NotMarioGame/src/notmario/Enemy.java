@@ -209,13 +209,14 @@ public abstract class Enemy implements ApplicationConstants {
 		if(f != null) {
 			for(int i = 0; i<f.size(); i++) {
 				if(f.get(i) != null) {
+					float y = f.get(i).getYcoor();
 					float fLeftX = f.get(i).getXcoor() - f.get(i).getWidth()/2;
 					float fRightX = f.get(i).getXcoor()+ f.get(i).getWidth()/2;
 					if((int)fRightX == (int)xcor || (int)fLeftX == (int)xcor) {
-						f.set(i, null);
-						takeHitPow(2);
-					
-
+						if (y >= ycor && y <= ycor + height) {
+							f.set(i, null);
+							takeHitPow(2);
+						}
 					}
 				}
 			}
@@ -224,11 +225,14 @@ public abstract class Enemy implements ApplicationConstants {
 
 			for(int i = 0; i<g.size(); i++) {
 				if(g.get(i)!= null) {
+					float y = g.get(i).getYcoor();
 					float gLeftX = g.get(i).getXcoor()- g.get(i).getWidth()/2;
 					float gRightX = g.get(i).getXcoor()+ g.get(i).getWidth()/2;
 					if((int)gRightX == (int)xcor || (int)gLeftX == (int)xcor) { 
-						g.set(i, null);
-						e.setXspeed();
+						if (y >= ycor && y <= ycor + height) {
+							g.set(i, null);
+							e.setXspeed();
+						}
 					}
 				}
 			}
@@ -246,8 +250,8 @@ public abstract class Enemy implements ApplicationConstants {
 			health = 0;
 			Random rand = new Random();
 			int chance = rand.nextInt(100);
-			if(chance >= 0 && chance <= 70) { 
-				chance = rand.nextInt(3);
+			if(chance >= 0 && chance <= 100) { 
+				chance = 0;
 				p.setActivePowerUp(chance);
 			}
 

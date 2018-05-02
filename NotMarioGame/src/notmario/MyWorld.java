@@ -186,9 +186,13 @@ public class MyWorld extends PApplet implements ApplicationConstants
 	                            break;
 	                        case -1: //Player collides with an enemy.
 	                            player1_.takeHit(enemies[i]);
-	                            myGame.move(75, true);
-	                            enemies[i].passiveMove(75, true);
-	                            
+	                            if (player1_.x_ + player1_.width/2 - 0.05f < enemies[i].getXcoor()) {
+		                            myGame.move(75, true);
+		                            enemies[i].passiveMove(75, true);
+	                            } else {
+		                            myGame.move(-75, true);
+		                            enemies[i].passiveMove(-75, true);
+	                            }
 	                            break;
 	                    }
 	                }
