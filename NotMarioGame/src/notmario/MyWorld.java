@@ -120,7 +120,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 	        enemies[1] = new Spud(175,-5.0f,ourSprites[20]);//Test Spud
 	        enemies[2] = new ArmoredSpud(255,-10.0f,ourSprites[21]);//Test Spud
 	        enemies[3] = new ArmoredSpud(450, -10.0f, ourSprites[21]);
-	        enemies[4] = new ArmoredSpud(375, -10.0f, ourSprites[21]);
+	        enemies[4] = new Spudzilla(375, -10.0f, ourSprites[22]);
 	        enemies[5] = new ArmoredSpud(425, -10.0f, ourSprites[21]);
 	        enemyCount += 6;
         }

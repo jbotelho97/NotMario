@@ -13,6 +13,7 @@ public class Spudzilla extends Enemy {
     //Spudzilla's sprite
     private float xspeed; //Spudzilla's current speed/direction horizontally.
     public boolean jumping; //Is true when Spudzilla is jumping.
+    private boolean frozen = false;
 
     public Spudzilla(float x, float y, PImage spudIcon){ //Standard Spudzilla initialization
         super.init(x, y, 2, 6,8, 50, spudIcon);
@@ -27,15 +28,14 @@ public class Spudzilla extends Enemy {
 
     //Spudzilla will jump
     public void jump(){
-        if(jumping && getYcoor() <= 20){//If he hasn't reached the maximum height of his jump
+        if(jumping && getYcoor() <= 15){//If he hasn't reached the maximum height of his jump
             float y = getYcoor();
-            y += 0.15f;
+            y += 0.1f;
             setYcor(y);
         }
         else{//This lets him fall back down.
             jumping = false;
             airborne = true;
-            fall();
         }
     }
 
@@ -44,12 +44,11 @@ public class Spudzilla extends Enemy {
     public void moveCycle(LevelHandler h){
         setSpeed(xspeed);
         airborne = h.enemyInside(this);
-        if(jumping){
+        if(!frozen && jumping){
             jump();
         }
         else if(airborne){
             fall();
-            turnAround();
         }
         else{
             land();
@@ -61,5 +60,9 @@ public class Spudzilla extends Enemy {
     @Override
     public void turnAround(){xspeed *= -1;}
 
-
+    //to change spud's speed
+    public void setXspeed() {
+    		xspeed = 0;
+    		frozen = true;
+    }
 }

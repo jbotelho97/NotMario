@@ -225,7 +225,7 @@ public abstract class Enemy implements ApplicationConstants {
 
 			for(int i = 0; i<g.size(); i++) {
 				if(g.get(i)!= null) {
-					float y = f.get(i).getYcoor();
+					float y = g.get(i).getYcoor();
 					float gLeftX = g.get(i).getXcoor()- g.get(i).getWidth()/2;
 					float gRightX = g.get(i).getXcoor()+ g.get(i).getWidth()/2;
 					if((int)gRightX == (int)xcor || (int)gLeftX == (int)xcor) { 
