@@ -16,7 +16,7 @@ public class Spud extends Enemy {
     //Standard initialization of a new spud.
     public Spud(float x, float y, PImage spudIcon){
         super.init(x, y, 1, 5,5, 25, spudIcon);
-        xspeed = -.060f;
+        xspeed = -.040f;
         //xspeed = -10;
     }
 
@@ -40,6 +40,9 @@ public class Spud extends Enemy {
     //Turns Spud around when he hits the edge of a wall
     public void turnAround(){
         xspeed *= -1;
+    }
+    public void setXSpeed() {
+    	xspeed = 0;
     }
 
 }

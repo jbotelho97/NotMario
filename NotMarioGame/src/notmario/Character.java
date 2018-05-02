@@ -114,7 +114,26 @@ public class Character implements ApplicationConstants
 			if(airborne)
 				y_ += (vy_ += gravity);
 			for(Fire fire: fireBalls) {
+				if(fire != null)
 				fire.move();
+			}
+			for(Frost frost: frostBalls) {
+				if(frost != null) 
+				frost.move();
+				
+			}
+		}
+		
+		public void passiveMoveProjectiles(int direction, boolean isMove) {
+			if(isMove) {
+				for(Fire fire: fireBalls) {
+					if(fire != null)
+					fire.passiveMove(direction);
+				}
+				for(Frost frost: frostBalls) {
+					if(frost != null)
+					frost.passiveMove(direction);
+				}
 			}
 		}
 		
@@ -219,11 +238,14 @@ public class Character implements ApplicationConstants
 	}
 	public void setActivePowerUp(int number) {
 		activePowerUp = number;
-		//if(activePowerUp == 2) {
+		if(activePowerUp == 2) {
 			System.out.println("activated");
 			setHealth(100);
 		
-		//}
+		}
+	}
+	public int getActivePowerUp() {
+		return activePowerUp;
 	}
 	public void setHealth(int h) {
 		health = h;
@@ -233,5 +255,20 @@ public class Character implements ApplicationConstants
 	public int getHealth() {
 		return health;
 	}
+	public ArrayList<Frost> getPowerUpFrost() {
+		if( activePowerUp == 1) {
+			return frostBalls;
+		}else {
+		return null;
+		}
+	}
+	public ArrayList<Fire> getPowerUpFire(){
+	if( activePowerUp == 0 ) {
+		return fireBalls;
+	}else {
+		return null;
+	}
+	}
+	
 	}
 

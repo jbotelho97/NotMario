@@ -9,7 +9,7 @@ public class ArmoredSpud extends Enemy {
 
     public ArmoredSpud(float x, float y, PImage aSpudIcon){
         super.init(x, y, 2,5, 5,35, aSpudIcon);
-        xspeed = -0.075f;
+        xspeed = -0.06f;
     }
 
     //Initializes a null spud
@@ -29,5 +29,8 @@ public class ArmoredSpud extends Enemy {
 
     public void turnAround(){
         xspeed *= -1;
+    }
+    public void setXspeed() {
+    	xspeed = 0;
     }
 }

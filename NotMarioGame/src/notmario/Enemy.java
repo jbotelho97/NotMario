@@ -11,6 +11,7 @@ import processing.core.PApplet;
 import java.awt.Image;
 import java.util.Random;
 import processing.core.PImage;
+import java.util.ArrayList;
 
 /*
 Delete if not used!
@@ -19,8 +20,8 @@ import java.awt.Graphics;
 
 public abstract class Enemy implements ApplicationConstants {
 
-    private int health; //health or hits remaining
-    /*
+	private int health; //health or hits remaining
+	/*
     xcor -> x-coordinate
     ycor -> y-coordinate
     size -> size of enemy
@@ -158,103 +159,133 @@ public abstract class Enemy implements ApplicationConstants {
     Draws enemy sprite.
     NOTE: Right now I have a temp method that will show the same box depending on enemy type.
     Will change later -Jack
-     */
-    public void draw(){
-        app_.pushMatrix();
+	 */
+	public void draw(){
+		app_.pushMatrix();
 
-        app_.stroke(0);
-        app_.fill(0, 0, 255);
+		app_.stroke(0);
+		app_.fill(0, 0, 255);
 
-        //app_.rect(xcor, ycor, width, height);
 
-        app_.fill(0);
+    //app_.rect(xcor, ycor, width, height);
 
-        app_.pushMatrix();
-        app_.scale( PIXEL_TO_WORLD, -PIXEL_TO_WORLD);
-        app_.image(sprite, xcor/PIXEL_TO_WORLD, -(ycor + height) /PIXEL_TO_WORLD);
-        app_.popMatrix();
+    app_.fill(0);
 
-        app_.popMatrix();
-    }
+    app_.pushMatrix();
+    app_.scale( PIXEL_TO_WORLD, -PIXEL_TO_WORLD);
+    app_.image(sprite, xcor/PIXEL_TO_WORLD, -(ycor + height) /PIXEL_TO_WORLD);
+    app_.popMatrix();
 
-    //Passive move
-    public void passiveMove(int direction, boolean isMove){
-        if(isMove){
-            xcor += (playerSpeedX * direction);
-        }
-    }
 
-    public int collision(Character p) {
+		app_.popMatrix();
+	}
+
+	//Passive move
+	public void passiveMove(int direction, boolean isMove){
+		if(isMove){
+			xcor += (playerSpeedX * direction);
+		}
+	}
+
+	public int collision(Character p) {
 		float pLeftX = p.x_ - p.width/2;
 		float pRightX = p.x_ + p.width/2;
-    		
-        if((pRightX >= xcor) && (pLeftX <= xcor + width) && (p.y_ - p.height/2 <= ycor) && (p.y_ - p.height/2 >= ycor - height)){
-            //System.out.println("You got hit");
-            // System.out.println("Px: " + p.x_ + " Py: " + p.y_ + " Sx: " + xcor + " Sy: " + ycor);
-            return -1;
-        }
-        else if((pRightX >= xcor) && (pLeftX <= xcor + width) && (p.y_ - p.height/2 >= ycor + height - 0.1f) && (p.y_ - p.height/2 <= ycor + height + 0.2f)){
-            //System.out.println("Hit successful.");
-            takeHit(p);
-            p.vy_ = 0.1f;
-            return 1;
-        }
-        return 0;
-    }
-    //public int collision2(Powerup p){
-       /* if((p.x + p.width /4 >= xcor) && (p.x - p.width/4 <= xcor + width) && (p.y  - p.height/2 >= ycor + height - 0.1f) && (p.y - p.height/2 <= ycor + height + 0.1f)){
-           
-            takeHit();
-            return 1;
-        }
-        else if((p.x + p.width/2 >= xcor) && (p.x - p.width/2 <= xcor + width) && (p.y - p.height/2 <= ycor) && (p.y - p.height/2 >= ycor - height)){
 
-            return -1;
-        }
-        return 0;
-    }*/
+		if((pRightX >= xcor) && (pLeftX <= xcor + width) && (p.y_ - p.height/2 <= ycor) && (p.y_ - p.height/2 >= ycor - height)){
+			//System.out.println("You got hit");
+			// System.out.println("Px: " + p.x_ + " Py: " + p.y_ + " Sx: " + xcor + " Sy: " + ycor);
+			return -1;
+		}
+		else if((pRightX >= xcor) && (pLeftX <= xcor + width) && (p.y_ - p.height/2 >= ycor + height - 0.1f) && (p.y_ - p.height/2 <= ycor + height + 0.2f)){
+			//System.out.println("Hit successful.");
+			takeHit(p);
+			p.vy_ = 0.1f;
+			return 1;
+		}
+		return 0;
+	}
+	public int powerUpCollision(ArrayList<Fire> f, ArrayList<Frost> g, Enemy e) {
 
-    //Damages the enemy
-    public void takeHit(Character p){
-        if(health > 1){
-            health--;
-        }
-        else {
-            health = 0;
-            Random rand = new Random();
-            int chance = rand.nextInt(100);
-            if(chance >= 0 && chance <= 10) { 
-            	chance = rand.nextInt(3);
-            	p.setActivePowerUp(chance);
-            }
-        
-            
-            die();
-        }
-        
-    }
-    
+		if(f != null) {
+			for(int i = 0; i<f.size(); i++) {
+				if(f.get(i) != null) {
+					float fLeftX = f.get(i).getXcoor() - f.get(i).getWidth()/2;
+					float fRightX = f.get(i).getXcoor()+ f.get(i).getWidth()/2;
+					if((int)fRightX == (int)xcor || (int)fLeftX == (int)xcor) {
+						f.set(i, null);
+						takeHitPow(2);
+					
 
-    //Kills the enemy
-    public void die(){
-       
-        
-      //fire.checkActive();
-        //  Frost frost = new Frost(xcor, ycor, chance);
-         // Health health = new Health(xcor, ycor, chance);
-        
-    	xcor = -201;
-        ycor = -201;
-        //RNG Roll here
-    }
+					}
+				}
+			}
+		}
+		if(g!= null) {
 
-    //Updates the enemies co-ordinates based on its movement pattern. Different for every enemy class.
-    public abstract void moveCycle(LevelHandler h);
-
-    //Collision for reaching the edge of a platform
-    public abstract void turnAround();
+			for(int i = 0; i<g.size(); i++) {
+				if(g.get(i)!= null) {
+					float gLeftX = g.get(i).getXcoor()- g.get(i).getWidth()/2;
+					float gRightX = g.get(i).getXcoor()+ g.get(i).getWidth()/2;
+					if((int)gRightX == (int)xcor || (int)gLeftX == (int)xcor) { 
+						g.set(i, null);
+						e.setXspeed();
+					}
+				}
+			}
+		}
 
 
-    //Switches between animation stances
-   // public void animate();
+		return 0;
+	}
+	//Damages the enemy
+	public void takeHit(Character p){
+		if(health > 1){
+			health--;
+		}
+		else {
+			health = 0;
+			Random rand = new Random();
+			int chance = rand.nextInt(100);
+			if(chance >= 0 && chance <= 70) { 
+				chance = rand.nextInt(3);
+				p.setActivePowerUp(chance);
+			}
+
+
+			die();
+		}
+
+	}
+	public void takeHitPow(int dam) {
+		if(health >1) {
+			health -= dam;
+		}
+		else {
+			health = 0;
+			die();
+		}
+	}
+
+	//Kills the enemy
+	public void die(){
+
+
+
+
+		xcor = -201;
+		ycor = -201;
+		//RNG Roll here
+	}
+
+	//Updates the enemies co-ordinates based on its movement pattern. Different for every enemy class.
+	public abstract void moveCycle(LevelHandler h);
+
+	//Collision for reaching the edge of a platform
+	public abstract void turnAround();
+
+	public void setXspeed() {
+		velXLocal = 0;
+	}
+	//Switches between animation stances
+	// public void animate();
 }
