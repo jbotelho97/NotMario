@@ -1,5 +1,6 @@
 package notmario;
 import processing.core.PApplet;
+import processing.core.PImage;
 import processing.event.KeyEvent;
 
 import java.awt.Image;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.awt.Event;
 
 public class Frost extends PApplet implements Powerup, ApplicationConstants {
-	private Image frostIcon;
+	private PImage frostIcon;
 	private ArrayList <Frost> shooting;
 	private float xcor, ycor, size, width, height;
     private float projectileSpeed = 0.001f;
@@ -20,7 +21,7 @@ public class Frost extends PApplet implements Powerup, ApplicationConstants {
 	private float direction;
 	private int damage;
 	
-	public Frost(float x, float y, int chance, float dir) {
+	public Frost(float x, float y, int chance, float dir, PImage img) {
 		if (chance ==  0) {
 			this.xcor = x;
 			this.ycor = y;
@@ -28,6 +29,8 @@ public class Frost extends PApplet implements Powerup, ApplicationConstants {
 			damage = 2;
 			direction = dir;
 			shooting = new ArrayList();
+			frostIcon = img;
+			frostIcon.resize(5, 5);
 		}else {
 			return;
 		}
@@ -59,7 +62,7 @@ public class Frost extends PApplet implements Powerup, ApplicationConstants {
 	 public float getHeight(){
      return height;
 	 }
-	 public Image getSprite(){
+	 public PImage getSprite(){
      return frostIcon;
 	 }
 	
@@ -69,8 +72,19 @@ public class Frost extends PApplet implements Powerup, ApplicationConstants {
 		
 		app_.stroke(0);
 		app_.fill(0, 0, 255);
+		
 
-	    app_.ellipse(xcor, ycor-2, 1, 1);
+		if(direction == 1) {
+			app_.pushMatrix();
+			app_.scale(-1,1);
+			app_.image(frostIcon, -xcor, ycor-2);
+			app_.popMatrix();
+		}
+		else
+		{
+			app_.image(frostIcon, xcor, ycor - 2);
+		}
+	    
 	    
 	     
 	    

@@ -88,9 +88,24 @@ public class Character implements ApplicationConstants
 			app_.pushMatrix();
 			app_.scale(PIXEL_TO_WORLD, -PIXEL_TO_WORLD); //Character image is in pixels not world units
 			app_.image(sprites[spriteIndex], 0, -height/PIXEL_TO_WORLD);//draw image
+			
+			
 			app_.popMatrix();
 			
 			app_.popMatrix();
+			
+			app_.pushMatrix();
+			app_.scale(0.3f); //Character image is in pixels not world units
+			if(activePowerUp == 0) {
+			app_.image(sprites[5], -165, 110);
+			}
+			else if(activePowerUp == 1){
+				app_.image(sprites[6], -165, 110);
+			}
+			
+			app_.popMatrix();
+			
+		//}
 		}
 		
 		/**
@@ -219,18 +234,18 @@ public class Character implements ApplicationConstants
 		 if(activePowerUp == 0) {
 	
 			 if(airborne) {
-		   Fire temp = new Fire(x_+ (width/2 * -dir),y_- (vy_+gravity), 0, dir);
+		   Fire temp = new Fire(x_+ (width/2 * -dir),y_- (vy_+gravity), 0, dir, sprites[8]);
 		   fireBalls.add(temp);
 		 }else {
-			 Fire temp = new Fire(x_+ (width/2*-dir),y_, 0, dir); 
+			 Fire temp = new Fire(x_+ (width/2*-dir),y_, 0, dir, sprites[8]); 
 			 fireBalls.add(temp);
 		 }
 		 }else if(activePowerUp == 1) {
 			 if(airborne) {
-			   Frost temp = new Frost(x_+ (width/2 * -dir),y_- (vy_+gravity), 0, dir);
+			   Frost temp = new Frost(x_+ (width/2 * -dir),y_- (vy_+gravity), 0, dir, sprites[9]);
 			   frostBalls.add(temp);
 			 }else {
-				 Frost temp = new Frost(x_+ (width/2*-dir),y_, 0, dir); 
+				 Frost temp = new Frost(x_+ (width/2*-dir),y_, 0, dir, sprites[9]); 
 				 frostBalls.add(temp);
 			 }
 		 }

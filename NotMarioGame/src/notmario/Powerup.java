@@ -1,6 +1,7 @@
 package notmario;
 
 import processing.core.PApplet;
+import processing.core.PImage;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -24,7 +25,7 @@ public interface Powerup
 	    public float getHeight();/*{
 	        return height;
 	    }*/
-	    public Image getSprite();/*{
+	    public PImage getSprite();/*{
 	        return sprite;
 	    }*/
 	    /*{

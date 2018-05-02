@@ -432,7 +432,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		currentLevel=1;
 		myGame.setLevel(currentLevel);
 		
-		player1_ = new Character(0, 0, 1, 255, 0, 0, Arrays.copyOfRange(ourSprites, 4, 9));
+		player1_ = new Character(0, 0, 1, 255, 0, 0, ArrayUtils.addAll(Arrays.copyOfRange(ourSprites, 4, 9), Arrays.copyOfRange(ourSprites,10, 15)));
 		
 		enemies = new Enemy[20];
 
