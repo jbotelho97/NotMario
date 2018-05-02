@@ -73,7 +73,7 @@ public class LevelHandler {
 			}
 
 			if (levelCollection[currentLevel][platformIndex].isInside(x, y)) {
-				System.out.println(platformIndex);
+				//System.out.println(platformIndex);
 				return true;
 			}
 		}
@@ -90,7 +90,7 @@ public class LevelHandler {
 			}
 
 			if (levelCollection[currentLevel][platformIndex].playerEdge(player, dir)) {
-				System.out.println(platformIndex);
+				//System.out.println(platformIndex);
 				return true;
 			}
 		}
