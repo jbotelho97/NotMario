@@ -108,7 +108,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 			
 		}
 
-	//20 - Spud, 21- A.Spud 22 -spudzilla
+	//20 - Spud, 21- A.Spud, 22 - spudzilla
 	public void generateEnemies(LevelHandler h){
         //If you want a test enemy, un comment next two lines.
 
@@ -131,7 +131,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 		//  Draw all objects
 		if (frame_ % 5 == 0) 
 		{
-			background(255);
+			background(70,141,245);
 
 			// define world reference frame:  
 			//    Origin at windows's center and 
