@@ -105,7 +105,7 @@ public class LevelHandler {
 	 */
 	public boolean isGoal(Character player, int dir) {
 		Rectangle[] rect = levelCollection[currentLevel];
-		return rect[13].isInside(player, dir);
+		return rect[14].isInside(player, dir);
 	}
 
 	public boolean enemyInside(Enemy e) {
@@ -153,8 +153,9 @@ public class LevelHandler {
 		levelCollection[1][9] = new Rectangle(330, -65, 20, 85, 255, 0, 0);
 		levelCollection[1][10] = new Rectangle(350, -65, 125, 55, 255, 0, 0);
 		levelCollection[1][11] = new Rectangle(475, -65, 50, 125, 255, 0, 0);
-		levelCollection[1][12] = new Rectangle(450, -65, 25, 70, 255, 0, 0);
-		levelCollection[1][13] = new GoalBox(460, 0, 5, 10, 0, 0, 255, sprites[16]);
+		levelCollection[1][12] = new Rectangle(450, -65, 25, 71, 255, 0, 0);
+		levelCollection[1][13] = new Rectangle(440, -65, 10, 65, 255, 0, 0);
+		levelCollection[1][14] = new GoalBox(460, 0, 5, 10, 0, 0, 255, sprites[16]);
 			
 	}
 	
