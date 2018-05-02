@@ -112,12 +112,13 @@ public class MyWorld extends PApplet implements ApplicationConstants
 	    
 	    case 1:
 			enemies[0] = new Spud(25,-3f,ourSprites[20]);//Test Spud
-	        enemies[1] = new Spud(175,-5.0f,ourSprites[20]);//Test Spud
-	        enemies[2] = new ArmoredSpud(255,-10.0f,ourSprites[21]);//Test Spud
-	        enemies[3] = new ArmoredSpud(375, -10.0f, ourSprites[21]);
-	        enemies[4] = new Spudzilla(400, -10.0f, ourSprites[22]);
-	        enemies[5] = new ArmoredSpud(425, -10.0f, ourSprites[21]);
-	        enemyCount += 6;
+			enemies[1] = new Spud(99,10f,ourSprites[20]);//Test Spud
+	        enemies[2] = new Spud(175,-5.0f,ourSprites[20]);//Test Spud
+	        enemies[3] = new ArmoredSpud(255,-10.0f,ourSprites[21]);//Test Spud
+	        enemies[4] = new ArmoredSpud(375, -10.0f, ourSprites[21]);
+	        enemies[5] = new Spudzilla(400, -10.0f, ourSprites[22]);
+	        enemies[6] = new ArmoredSpud(425, -10.0f, ourSprites[21]);
+	        enemyCount += 7;
         }
     }
 
@@ -157,7 +158,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 				drawWinMenu();
 			}
 			else if(currentLevel == 3) {
-				System.out.println("activated" + ":" + currentLevel);
+				//System.out.println("activated" + ":" + currentLevel);
 				drawDeathMenu();
 			}
 			else
@@ -406,7 +407,7 @@ public class MyWorld extends PApplet implements ApplicationConstants
 	
 	public void mousePressed() {
 		if(currentLevel == 0) {
-			System.out.println(((mouseX-WORLD_ORIGIN_X)*PIXEL_TO_WORLD) + " " + ((mouseY-WORLD_ORIGIN_Y)*-PIXEL_TO_WORLD));
+			//System.out.println(((mouseX-WORLD_ORIGIN_X)*PIXEL_TO_WORLD) + " " + ((mouseY-WORLD_ORIGIN_Y)*-PIXEL_TO_WORLD));
 			if(myGame.isInside(((mouseX-WORLD_ORIGIN_X)*PIXEL_TO_WORLD), ((mouseY-WORLD_ORIGIN_Y)*-PIXEL_TO_WORLD))) {
 				if(myGame.returnIndex() == 0)
 					Restart();

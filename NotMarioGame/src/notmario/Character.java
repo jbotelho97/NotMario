@@ -262,7 +262,7 @@ public class Character implements ApplicationConstants
 	public void setActivePowerUp(int number) {
 		activePowerUp = number;
 		if(activePowerUp == 2) {
-			System.out.println("activated");
+			//System.out.println("activated");
 			setHealth(100);
 		
 		}
