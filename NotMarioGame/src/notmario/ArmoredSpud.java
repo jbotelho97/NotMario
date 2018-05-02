@@ -29,4 +29,7 @@ public class ArmoredSpud extends Enemy {
     public void turnAround(){
         xspeed *= -1;
     }
+    public void setXspeed() {
+    	xspeed = 0;
+    }
 }

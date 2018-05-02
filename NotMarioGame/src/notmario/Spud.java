@@ -40,5 +40,8 @@ public class Spud extends Enemy {
     public void turnAround(){
         xspeed *= -1;
     }
+    public void setXSpeed() {
+    	xspeed = 0;
+    }
 
 }

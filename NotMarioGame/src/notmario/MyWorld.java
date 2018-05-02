@@ -173,7 +173,8 @@ public class MyWorld extends PApplet implements ApplicationConstants
 	                    }
 	                    enemies[i].moveCycle(myGame); //Unique Movement Cycle
 	                    if(player1_.getActivePowerUp() == 0 || player1_.getActivePowerUp() == 1) {
-	                    int y = enemies[i].powerUpCollision(player1_.getPowerUpFire(), player1_.getPowerUpFrost());
+	                    
+	                    int y = enemies[i].powerUpCollision(player1_.getPowerUpFire(), player1_.getPowerUpFrost(), enemies[i]);
 	                    }
 	                    int x = enemies[i].collision(player1_); //Checks if player collides with enemy.
 	                    switch (x) {
